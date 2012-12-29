@@ -6,8 +6,18 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.util.FPSLogger;
+import org.andengine.extension.svg.opengl.texture.atlas.bitmap.SVGBitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
+import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
+import org.andengine.util.debug.Debug;
 
 import android.view.KeyEvent;
 
@@ -35,6 +45,9 @@ public class MainActivity extends SimpleBaseGameActivity {
 	private Camera mCamera;
 	public SceneType currentScene = SceneType.SPLASH;
 	
+	private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
+	private ITextureRegion textureRegion;
+	
 	// ===========================================================
 	// Constructors
 	// ===========================================================
@@ -57,6 +70,18 @@ public class MainActivity extends SimpleBaseGameActivity {
 	@Override
 	protected void onCreateResources() {
 		// TODO Auto-generated method stub
+		this.mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.NEAREST);
+	
+		SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+		this.textureRegion = SVGBitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBuildableBitmapTextureAtlas, this, "badge.svg", 256, 256);
+		
+		try {
+			this.mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.mBuildableBitmapTextureAtlas.load();
+		} catch (final TextureAtlasBuilderException e) {
+			Debug.e(e);
+		}
+		
 		
 	}
 
@@ -66,6 +91,8 @@ public class MainActivity extends SimpleBaseGameActivity {
 
 		final Scene scene = new Scene();
 		scene.setBackground(new Background(0, 0, 0.8784f));
+		scene.attachChild( new Sprite(100, 100, textureRegion, this.getVertexBufferObjectManager()) );
+		
 		return scene;
 	}
 	
