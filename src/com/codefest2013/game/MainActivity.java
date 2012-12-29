@@ -76,7 +76,7 @@ public class MainActivity extends SimpleBaseGameActivity {
 		this.mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 128, 128, TextureOptions.NEAREST);
 	
 		SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-		this.textureRegion = SVGBitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBuildableBitmapTextureAtlas, this, "test.svg", 128, 128);
+		this.textureRegion = SVGBitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBuildableBitmapTextureAtlas, this, "badge.svg", 128, 128);
 		
 		try {
 			this.mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
