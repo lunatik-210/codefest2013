@@ -7,6 +7,7 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.util.FPSLogger;
 import org.andengine.extension.svg.opengl.texture.atlas.bitmap.SVGBitmapTextureAtlasTextureRegionFactory;
@@ -18,6 +19,8 @@ import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSourc
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.debug.Debug;
 
@@ -48,8 +51,8 @@ public class MainActivity extends SimpleBaseGameActivity {
 	public SceneType currentScene = SceneType.SPLASH;
 	
 	private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
-	private ITextureRegion textureRegion;
-	private Sprite player;
+	private TiledTextureRegion textureRegion;
+	private AnimatedSprite player;
 	
 	// ===========================================================
 	// Constructors
@@ -73,11 +76,11 @@ public class MainActivity extends SimpleBaseGameActivity {
 	@Override
 	protected void onCreateResources() {
 		// TODO Auto-generated method stub
-		this.mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 128, 128, TextureOptions.NEAREST);
+		this.mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
 	
 		SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-		this.textureRegion = SVGBitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBuildableBitmapTextureAtlas, this, "badge.svg", 128, 128);
-		
+		this.textureRegion = (TiledTextureRegion)SVGBitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mBuildableBitmapTextureAtlas, this, "goblinLeft.svg", 512, 512, 1, 12);
+			
 		try {
 			this.mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			this.mBuildableBitmapTextureAtlas.load();
@@ -95,8 +98,9 @@ public class MainActivity extends SimpleBaseGameActivity {
 		
 		scene.setBackground(new Background(0, 0, 0.8784f));
 		
-		player = new Sprite(100, 100, textureRegion, this.getVertexBufferObjectManager());
-		scene.attachChild( player );
+		player = new AnimatedSprite(100, 100, 128, 128, textureRegion, this.getVertexBufferObjectManager());
+		player.animate(80);
+		scene.attachChild(player);
 		
 		scene.setOnSceneTouchListener( new IOnSceneTouchListener() {
 				@Override
