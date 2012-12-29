@@ -4,11 +4,13 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.util.FPSLogger;
 import org.andengine.extension.svg.opengl.texture.atlas.bitmap.SVGBitmapTextureAtlasTextureRegionFactory;
+import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
@@ -47,6 +49,7 @@ public class MainActivity extends SimpleBaseGameActivity {
 	
 	private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
 	private ITextureRegion textureRegion;
+	private Sprite player;
 	
 	// ===========================================================
 	// Constructors
@@ -70,10 +73,10 @@ public class MainActivity extends SimpleBaseGameActivity {
 	@Override
 	protected void onCreateResources() {
 		// TODO Auto-generated method stub
-		this.mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.NEAREST);
+		this.mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 128, 128, TextureOptions.NEAREST);
 	
 		SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-		this.textureRegion = SVGBitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBuildableBitmapTextureAtlas, this, "badge.svg", 256, 256);
+		this.textureRegion = SVGBitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mBuildableBitmapTextureAtlas, this, "test.svg", 128, 128);
 		
 		try {
 			this.mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -81,8 +84,7 @@ public class MainActivity extends SimpleBaseGameActivity {
 		} catch (final TextureAtlasBuilderException e) {
 			Debug.e(e);
 		}
-		
-		
+
 	}
 
 	@Override
@@ -90,8 +92,28 @@ public class MainActivity extends SimpleBaseGameActivity {
 		this.mEngine.registerUpdateHandler(new FPSLogger());
 
 		final Scene scene = new Scene();
+		
 		scene.setBackground(new Background(0, 0, 0.8784f));
-		scene.attachChild( new Sprite(100, 100, textureRegion, this.getVertexBufferObjectManager()) );
+		
+		player = new Sprite(100, 100, textureRegion, this.getVertexBufferObjectManager());
+		scene.attachChild( player );
+		
+		scene.setOnSceneTouchListener( new IOnSceneTouchListener() {
+				@Override
+				public boolean onSceneTouchEvent(Scene arg0, TouchEvent arg1) {
+					Debug.d("Touch screen1: " + mCamera.getHeight() + " " + mCamera.getWidth() );
+					Debug.d("Touch screen2: " + arg1.getX() + " " + arg1.getY() );
+					if( arg1.getX() < mCamera.getWidth()/2 )
+					{
+						player.setPosition(player.getX()-5, player.getY());
+					}
+					else
+					{
+						player.setPosition(player.getX()+5, player.getY());
+					}
+					return true;
+				}
+			});
 		
 		return scene;
 	}
@@ -115,7 +137,6 @@ public class MainActivity extends SimpleBaseGameActivity {
 		}
 		return false;
 	}
-
 
 	// ===========================================================
 	// Methods
