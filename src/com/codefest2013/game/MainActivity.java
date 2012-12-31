@@ -79,10 +79,10 @@ public class MainActivity extends SimpleBaseGameActivity {
 		this.mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
 	
 		SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-		this.textureRegion = (TiledTextureRegion)SVGBitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mBuildableBitmapTextureAtlas, this, "goblinLeft.svg", 512, 512, 1, 12);
-			
+		this.textureRegion = (TiledTextureRegion)SVGBitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(this.mBuildableBitmapTextureAtlas, this, "goblinRight.svg", 1024, 1024, 12, 1);
+
 		try {
-			this.mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			this.mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
 			this.mBuildableBitmapTextureAtlas.load();
 		} catch (final TextureAtlasBuilderException e) {
 			Debug.e(e);
@@ -99,7 +99,7 @@ public class MainActivity extends SimpleBaseGameActivity {
 		scene.setBackground(new Background(0, 0, 0.8784f));
 		
 		player = new AnimatedSprite(100, 100, 128, 128, textureRegion, this.getVertexBufferObjectManager());
-		player.animate(80);
+		player.animate(50);
 		scene.attachChild(player);
 		
 		scene.setOnSceneTouchListener( new IOnSceneTouchListener() {
