@@ -6,14 +6,18 @@ import org.andengine.entity.sprite.AnimatedSprite;
 public class Player implements IUpdateHandler {
 	public final static int LEFT_DIRECTION = 0;
 	public final static int RIGHT_DIRECTION = 1;
-	public AnimatedSprite sprite;
 	
-	private final int SPEED = MainActivity.CAMERA_WIDTH/90;
+	private final int SPEED = MainActivity.CAMERA_WIDTH/100;
+	private final float RATIO = 1.4f;
+	
+	private final long d = 60;
+	private final long frameDuration[] = new long[] {d, d, d, d, d, d, d, d, d, d, d, d};
+	private final int leftAnimationSeq[] = new int[] {23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12};
+	
+	public AnimatedSprite sprite;
 	
 	private int speed = 0;
 	private int currentDirection = LEFT_DIRECTION;
-	
-	private final float RATIO = 1.3f;
 	
 	public Player(float x, float y)
 	{	
@@ -37,15 +41,13 @@ public class Player implements IUpdateHandler {
 		currentDirection = direction;
 		speed = SPEED;
 		
-		long ds = 50;
-		
 		switch( currentDirection )
 		{
 			case LEFT_DIRECTION:
-				sprite.animate(new long[] {ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds}, new int[] {23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12}, -1);
+				sprite.animate(frameDuration, leftAnimationSeq, -1);
 				break;
 			case RIGHT_DIRECTION:
-				sprite.animate(new long[] {ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds}, 0, 11, -1);
+				sprite.animate(frameDuration, 0, 11, -1);
 				break;
 		}
 	}
