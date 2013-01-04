@@ -17,7 +17,9 @@ import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 import org.andengine.util.debug.Debug;
 
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
+import android.view.WindowManager;
 
 public class MainActivity extends SimpleBaseGameActivity {
 	
@@ -32,9 +34,9 @@ public class MainActivity extends SimpleBaseGameActivity {
 	// ===========================================================
 	// Constants
 	// ===========================================================
-
-	public static final int CAMERA_WIDTH = 720;
-	public static final int CAMERA_HEIGHT = 480;
+	
+	public static int CAMERA_WIDTH = 720;
+	public static int CAMERA_HEIGHT = 480;
 
 	// ===========================================================
 	// Fields
@@ -63,6 +65,14 @@ public class MainActivity extends SimpleBaseGameActivity {
 	@Override
 	public EngineOptions onCreateEngineOptions() {
 		instance = this;
+		
+		final DisplayMetrics displayMetrics = new DisplayMetrics();
+		WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
+		wm.getDefaultDisplay().getMetrics(displayMetrics);
+		wm.getDefaultDisplay().getRotation();
+		CAMERA_WIDTH = displayMetrics.widthPixels;
+		CAMERA_HEIGHT = displayMetrics.heightPixels;
+		
 	    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
 	    return new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, 
 	    		new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera);

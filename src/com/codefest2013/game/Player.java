@@ -8,14 +8,18 @@ public class Player implements IUpdateHandler {
 	public final static int RIGHT_DIRECTION = 1;
 	public AnimatedSprite sprite;
 	
-	private final int SPEED = 5;
+	private final int SPEED = MainActivity.CAMERA_WIDTH/90;
 	
 	private int speed = 0;
 	private int currentDirection = LEFT_DIRECTION;
 	
+	private final float RATIO = 1.3f;
+	
 	public Player(float x, float y)
 	{	
-		sprite = new AnimatedSprite(x, y, 128, 124, MainActivity.getSharedInstance().goblinTextureRegion, 
+		float height = MainActivity.CAMERA_HEIGHT/6;
+		
+		sprite = new AnimatedSprite(x, y, RATIO*height, height, MainActivity.getSharedInstance().goblinTextureRegion, 
 				MainActivity.getSharedInstance().getVertexBufferObjectManager());
 	}
 	
@@ -32,14 +36,16 @@ public class Player implements IUpdateHandler {
 	{
 		currentDirection = direction;
 		speed = SPEED;
+		
+		long ds = 50;
+		
 		switch( currentDirection )
 		{
 			case LEFT_DIRECTION:
-				sprite.animate(new long[] {50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50}, 
-						   new int[] {23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12}, -1);
+				sprite.animate(new long[] {ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds}, new int[] {23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12}, -1);
 				break;
 			case RIGHT_DIRECTION:
-				sprite.animate(new long[] {50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50}, 0, 11, -1);
+				sprite.animate(new long[] {ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds, ds}, 0, 11, -1);
 				break;
 		}
 	}

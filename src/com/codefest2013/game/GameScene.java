@@ -12,7 +12,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 	public GameScene()
 	{
 		setBackground(new Background(0, 0, 0.8784f));
-		player = new Player(100, 300);
+		player = new Player(MainActivity.CAMERA_WIDTH/2, MainActivity.CAMERA_HEIGHT-MainActivity.CAMERA_HEIGHT/5);
 		attachChild(player.sprite);
 		registerUpdateHandler(player);
 		setOnSceneTouchListener(this);
