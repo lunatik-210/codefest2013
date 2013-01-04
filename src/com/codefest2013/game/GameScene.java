@@ -4,10 +4,12 @@ import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.util.debug.Debug;
 
 public class GameScene extends Scene implements IOnSceneTouchListener {
 
 	private Player player;
+	private int fingersNumber = 0;
 	
 	public GameScene()
 	{
@@ -23,6 +25,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 		switch( arg1.getAction() )
 		{
 			case TouchEvent.ACTION_DOWN:
+				++fingersNumber;
 				if( arg1.getX() < MainActivity.CAMERA_WIDTH/2 )
 				{
 					player.setDirection(Player.LEFT_DIRECTION);
@@ -30,10 +33,13 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 				else
 				{
 					player.setDirection(Player.RIGHT_DIRECTION);
-				}	
+				}
 				return true;
 			case TouchEvent.ACTION_UP:
-				player.stop();
+				if( --fingersNumber == 0 )
+				{
+					player.stop();
+				}
 				return true;
 		}
 		return false;

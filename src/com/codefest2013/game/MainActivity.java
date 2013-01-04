@@ -74,8 +74,12 @@ public class MainActivity extends SimpleBaseGameActivity {
 		CAMERA_HEIGHT = displayMetrics.heightPixels;
 		
 	    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-	    return new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, 
+	    
+	    final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, 
 	    		new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera);
+	    engineOptions.getTouchOptions().setNeedsMultiTouch(true);
+	    
+	    return engineOptions;
 	}
 
 	@Override
