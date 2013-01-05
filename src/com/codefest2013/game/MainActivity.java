@@ -1,6 +1,6 @@
 package com.codefest2013.game;
 
-import org.andengine.engine.camera.Camera;
+import org.andengine.engine.camera.BoundCamera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
@@ -37,12 +37,15 @@ public class MainActivity extends SimpleBaseGameActivity {
 	
 	public static int CAMERA_WIDTH = 720;
 	public static int CAMERA_HEIGHT = 480;
+	
+	public static int WORLD_WIDTH = 720;
+	public static int WORLD_HEIGHT = 480;
 
 	// ===========================================================
 	// Fields
 	// ===========================================================
 
-	private Camera mCamera;
+	public BoundCamera mCamera;
 	public SceneType currentScene = SceneType.SPLASH;
 	
 	private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
@@ -72,8 +75,12 @@ public class MainActivity extends SimpleBaseGameActivity {
 		wm.getDefaultDisplay().getRotation();
 		CAMERA_WIDTH = displayMetrics.widthPixels;
 		CAMERA_HEIGHT = displayMetrics.heightPixels;
+		WORLD_WIDTH = CAMERA_WIDTH * 2;
+		WORLD_HEIGHT = CAMERA_HEIGHT;		
 		
-	    mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+	    //mCamera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
+	    mCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, 0, WORLD_WIDTH, 0, WORLD_HEIGHT);
+	    mCamera.setBoundsEnabled(true);
 	    
 	    final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, 
 	    		new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera);

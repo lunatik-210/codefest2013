@@ -4,19 +4,20 @@ import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.util.debug.Debug;
 
-public class GameScene extends Scene implements IOnSceneTouchListener {
+public class GameScene extends Scene implements IOnSceneTouchListener  {
 
 	private Player player;
 	private int fingersNumber = 0;
 	
 	public GameScene()
 	{
+		super();
 		setBackground(new Background(0, 0, 0.8784f));
 		player = new Player(MainActivity.CAMERA_WIDTH/2, MainActivity.CAMERA_HEIGHT-MainActivity.CAMERA_HEIGHT/5);
 		attachChild(player.sprite);
 		registerUpdateHandler(player);
+		MainActivity.getSharedInstance().mCamera.setChaseEntity(player.sprite);
 		setOnSceneTouchListener(this);
 	}
 	
@@ -26,7 +27,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 		{
 			case TouchEvent.ACTION_DOWN:
 				++fingersNumber;
-				if( arg1.getX() < MainActivity.CAMERA_WIDTH/2 )
+				if( arg1.getX() < MainActivity.getSharedInstance().mCamera.getCenterX() )
 				{
 					player.setDirection(Player.LEFT_DIRECTION);
 				}

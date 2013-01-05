@@ -8,7 +8,7 @@ public class Player implements IUpdateHandler {
 	public final static int RIGHT_DIRECTION = 1;
 	
 	private final int SPEED = MainActivity.CAMERA_WIDTH/100;
-	private final float RATIO = 1.5f;
+	private final float RATIO = 1.7f;
 	
 	private final long d = 60;
 	private final long frameDuration[] = new long[] {d, d, d, d, d, d, d, d, d, d, d, d};
@@ -59,7 +59,7 @@ public class Player implements IUpdateHandler {
 			sprite.setPosition(sprite.getX()+speed, sprite.getY());
 			return;
 		}
-		if( sprite.getX() > MainActivity.CAMERA_WIDTH - sprite.getWidth() )
+		if( sprite.getX() > MainActivity.WORLD_WIDTH - sprite.getWidth() )
 		{
 			sprite.setPosition(sprite.getX()-speed, sprite.getY());
 			return;
