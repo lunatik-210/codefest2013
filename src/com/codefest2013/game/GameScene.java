@@ -7,43 +7,43 @@ import org.andengine.input.touch.TouchEvent;
 
 public class GameScene extends Scene implements IOnSceneTouchListener  {
 
-	private Player player;
-	private int fingersNumber = 0;
-	
-	public GameScene()
-	{
-		super();
-		setBackground(new Background(0, 0, 0.8784f));
-		player = new Player(MainActivity.CAMERA_WIDTH/2, MainActivity.CAMERA_HEIGHT-MainActivity.CAMERA_HEIGHT/5);
-		attachChild(player.sprite);
-		registerUpdateHandler(player);
-		MainActivity.getSharedInstance().mCamera.setChaseEntity(player.sprite);
-		setOnSceneTouchListener(this);
-	}
-	
-	@Override
-	public boolean onSceneTouchEvent(Scene arg0, TouchEvent arg1) {
-		switch( arg1.getAction() )
-		{
-			case TouchEvent.ACTION_DOWN:
-				++fingersNumber;
-				if( arg1.getX() < MainActivity.getSharedInstance().mCamera.getCenterX() )
-				{
-					player.setDirection(Player.LEFT_DIRECTION);
-				}
-				else
-				{
-					player.setDirection(Player.RIGHT_DIRECTION);
-				}
-				return true;
-			case TouchEvent.ACTION_UP:
-				if( --fingersNumber == 0 )
-				{
-					player.stop();
-				}
-				return true;
-		}
-		return false;
-	}
-	
+    private Player player;
+    private int fingersNumber = 0;
+    
+    public GameScene()
+    {
+        super();
+        setBackground(new Background(0, 0, 0.8784f));
+        player = new Player(MainActivity.CAMERA_WIDTH/2, MainActivity.CAMERA_HEIGHT-MainActivity.CAMERA_HEIGHT/5);
+        attachChild(player.sprite);
+        registerUpdateHandler(player);
+        MainActivity.getSharedInstance().camera.setChaseEntity(player.sprite);
+        setOnSceneTouchListener(this);
+    }
+    
+    @Override
+    public boolean onSceneTouchEvent(Scene arg0, TouchEvent arg1) {
+        switch( arg1.getAction() )
+        {
+            case TouchEvent.ACTION_DOWN:
+                ++fingersNumber;
+                if( arg1.getX() < MainActivity.getSharedInstance().camera.getCenterX() )
+                {
+                    player.setDirection(Player.LEFT_DIRECTION);
+                }
+                else
+                {
+                    player.setDirection(Player.RIGHT_DIRECTION);
+                }
+                return true;
+            case TouchEvent.ACTION_UP:
+                if( --fingersNumber == 0 )
+                {
+                    player.stop();
+                }
+                return true;
+        }
+        return false;
+    }
+    
 }
