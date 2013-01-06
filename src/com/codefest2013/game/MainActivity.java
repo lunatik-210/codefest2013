@@ -49,7 +49,7 @@ public class MainActivity extends BaseGameActivity
     private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
     public TiledTextureRegion goblinTextureRegion;
     
-    public static MainActivity instance;
+    private static MainActivity instance;
     
     public EngineOptions onCreateEngineOptions() {
         instance = this;
@@ -145,7 +145,7 @@ public class MainActivity extends BaseGameActivity
         mMainScene = new GameScene();
     }
 
-    public static MainActivity getSharedInstance() {
+    public static MainActivity getInstance() {
         return instance;
     }
 }

@@ -17,7 +17,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener  {
         player = new Player(MainActivity.CAMERA_WIDTH/2, MainActivity.CAMERA_HEIGHT-MainActivity.CAMERA_HEIGHT/5);
         attachChild(player.sprite);
         registerUpdateHandler(player);
-        MainActivity.getSharedInstance().camera.setChaseEntity(player.sprite);
+        MainActivity.getInstance().camera.setChaseEntity(player.sprite);
         setOnSceneTouchListener(this);
     }
     
@@ -27,7 +27,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener  {
         {
             case TouchEvent.ACTION_DOWN:
                 ++fingersNumber;
-                if( arg1.getX() < MainActivity.getSharedInstance().camera.getCenterX() )
+                if( arg1.getX() < MainActivity.getInstance().camera.getCenterX() )
                 {
                     player.setDirection(Player.LEFT_DIRECTION);
                 }

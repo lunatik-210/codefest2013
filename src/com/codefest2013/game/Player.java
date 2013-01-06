@@ -23,8 +23,8 @@ public class Player implements IUpdateHandler {
     {   
         float height = MainActivity.CAMERA_HEIGHT/6;
         
-        sprite = new AnimatedSprite(x, y, RATIO*height, height, MainActivity.getSharedInstance().goblinTextureRegion, 
-                MainActivity.getSharedInstance().getVertexBufferObjectManager());
+        sprite = new AnimatedSprite(x, y, RATIO*height, height, MainActivity.getInstance().goblinTextureRegion, 
+                MainActivity.getInstance().getVertexBufferObjectManager());
     }
     
     @Override
