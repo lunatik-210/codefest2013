@@ -7,7 +7,7 @@ public class Player implements IUpdateHandler {
     public final static int LEFT_DIRECTION = 0;
     public final static int RIGHT_DIRECTION = 1;
     
-    private final int SPEED = MainActivity.CAMERA_WIDTH/100;
+    private final float SPEED = MainActivity.CAMERA_WIDTH*0.01f;
     private final float RATIO = 1.7f;
     
     private final long d = 60;
@@ -16,14 +16,14 @@ public class Player implements IUpdateHandler {
     
     public AnimatedSprite sprite;
     
-    private int speed = 0;
+    private float speed = 0;
     private int currentDirection = LEFT_DIRECTION;
     
     public Player(float x, float y)
     {   
         float height = MainActivity.CAMERA_HEIGHT/6;
         
-        sprite = new AnimatedSprite(x, y, RATIO*height, height, MainActivity.getInstance().goblinTextureRegion, 
+        sprite = new AnimatedSprite(x, y, RATIO*height, height, MainActivity.getInstance().mGoblinTextureRegion, 
                 MainActivity.getInstance().getVertexBufferObjectManager());
     }
     

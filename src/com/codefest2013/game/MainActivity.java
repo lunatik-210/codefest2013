@@ -15,6 +15,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
+import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
@@ -30,6 +31,12 @@ public class MainActivity extends BaseGameActivity
     
     private BitmapTextureAtlas mSplashTextureAtlas;
     private ITextureRegion mSplashTextureRegion;
+
+    private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
+    public TiledTextureRegion mGoblinTextureRegion;
+
+    private BitmapTextureAtlas mBackgroundTextureAtlas;
+    public ITextureRegion mBackgroundTextureRegion;
     
     private enum SceneType
     {
@@ -39,20 +46,17 @@ public class MainActivity extends BaseGameActivity
     private SceneType mCurrentScene = SceneType.SPLASH;
     
     //XXX: move these constants into resources class or something
-    public static int CAMERA_WIDTH = 720;
-    public static int CAMERA_HEIGHT = 480;
-    public static int WORLD_WIDTH = 720;
-    public static int WORLD_HEIGHT = 480;
+    public static float CAMERA_WIDTH = 720.0f;
+    public static float CAMERA_HEIGHT = 480.0f;
+    public static float WORLD_WIDTH = 720.0f;
+    public static float WORLD_HEIGHT = 480.0f;
     
-    public BoundCamera camera;
+    public BoundCamera mCamera;
     
-    private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
-    public TiledTextureRegion goblinTextureRegion;
-    
-    private static MainActivity instance;
+    private static MainActivity mInstance;
     
     public EngineOptions onCreateEngineOptions() {
-        instance = this;
+    	mInstance = this;
         
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager wm = (WindowManager)getSystemService(WINDOW_SERVICE);
@@ -60,15 +64,15 @@ public class MainActivity extends BaseGameActivity
         wm.getDefaultDisplay().getRotation();
         CAMERA_WIDTH = displayMetrics.widthPixels;
         CAMERA_HEIGHT = displayMetrics.heightPixels;
-        WORLD_WIDTH = CAMERA_WIDTH * 2;
+        WORLD_WIDTH = CAMERA_HEIGHT * 2.0645f;
         WORLD_HEIGHT = CAMERA_HEIGHT;       
         
         //camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
-        camera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, 0, WORLD_WIDTH, 0, WORLD_HEIGHT);
-        camera.setBoundsEnabled(true);
+        mCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT, 0, WORLD_WIDTH, 0, WORLD_HEIGHT);
+        mCamera.setBoundsEnabled(true);
         
         final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, 
-                new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), camera);
+                new RatioResolutionPolicy(CAMERA_WIDTH, CAMERA_HEIGHT), mCamera);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
         
         return engineOptions;
@@ -95,7 +99,7 @@ public class MainActivity extends BaseGameActivity
     @Override
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception
     {
-        mSplashScene = new SplashScene(mEngine, mSplashTextureRegion, CAMERA_WIDTH, CAMERA_HEIGHT);
+        mSplashScene = new SplashScene(mEngine, mSplashTextureRegion, (int)CAMERA_WIDTH, (int)CAMERA_HEIGHT);
         pOnCreateSceneCallback.onCreateSceneFinished(mSplashScene);
     }
 
@@ -123,11 +127,17 @@ public class MainActivity extends BaseGameActivity
      */
     public void loadResources() 
     {
-        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 1024, 1024, TextureOptions.NEAREST);
-        
+    	BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        mBackgroundTextureAtlas = new BitmapTextureAtlas(this.getTextureManager(), 1024, 1024,
+        		BitmapTextureFormat.RGB_565, TextureOptions.DEFAULT);
+        mBackgroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBackgroundTextureAtlas, this, "background.png", 0, 0);
+        mBackgroundTextureAtlas.load();
+    	
         SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        this.goblinTextureRegion = (TiledTextureRegion)SVGBitmapTextureAtlasTextureRegionFactory
-                .createTiledFromAsset(this.mBuildableBitmapTextureAtlas, this, "goblinWalks.svg", 1024, 1024, 12, 2);
+        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 1024, 1024, 
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        this.mGoblinTextureRegion = (TiledTextureRegion)SVGBitmapTextureAtlasTextureRegionFactory
+                .createTiledFromAsset(this.mBuildableBitmapTextureAtlas, this,"goblinWalks.svg", 1024, 1024, 12, 2);
 
         try {
             mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
@@ -146,6 +156,6 @@ public class MainActivity extends BaseGameActivity
     }
 
     public static MainActivity getInstance() {
-        return instance;
+        return mInstance;
     }
 }
