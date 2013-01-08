@@ -23,6 +23,11 @@ public class ResourcesManager {
     public static float CAMERA_HEIGHT;
     public static float WORLD_WIDTH;
     public static float WORLD_HEIGHT;
+    
+    // it was calculated by size of room(background) image
+    // WORLD_SCALE_CONSTANT = width / height
+    // XXX I think that scaling system is not so well implemented right now
+    private static final float WORLD_SCALE_CONSTANT = 2.0645f;
 
     private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
     public TiledTextureRegion goblinTextureRegion;
@@ -44,7 +49,7 @@ public class ResourcesManager {
         wm.getDefaultDisplay().getRotation();
         CAMERA_WIDTH = displayMetrics.widthPixels;
         CAMERA_HEIGHT = displayMetrics.heightPixels;
-        WORLD_WIDTH = CAMERA_HEIGHT * 2.0645f;
+        WORLD_WIDTH = CAMERA_HEIGHT * WORLD_SCALE_CONSTANT;
         WORLD_HEIGHT = CAMERA_HEIGHT;
 	}
 	
