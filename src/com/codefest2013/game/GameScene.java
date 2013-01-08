@@ -2,7 +2,6 @@ package com.codefest2013.game;
 
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
@@ -13,9 +12,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener  {
     
     public GameScene()
     {
-        super();
-        setBackground(new Background(0, 0, 0.8784f));
-        
         // sprite as background
         attachChild(new Sprite(0, 0, ResourcesManager.WORLD_WIDTH, ResourcesManager.WORLD_HEIGHT,
         		ResourcesManager.getInstance().backgroundTextureRegion,
