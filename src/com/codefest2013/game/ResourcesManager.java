@@ -24,9 +24,11 @@ public class ResourcesManager {
     public static float WORLD_WIDTH;
     public static float WORLD_HEIGHT;
     
-    // it was calculated by size of room(background) image
-    // WORLD_SCALE_CONSTANT = width / height
-    // XXX I think that scaling system is not so well implemented right now
+    /**
+     * it was calculated by size of room(background) image
+     * WORLD_SCALE_CONSTANT = width / height
+     * XXX I think that scaling system is not so well implemented right now 
+     */
     private static final float WORLD_SCALE_CONSTANT = 2.0645f;
 
     private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
@@ -44,11 +46,13 @@ public class ResourcesManager {
 	public static void init()
 	{
         final DisplayMetrics displayMetrics = new DisplayMetrics();
-        WindowManager wm = (WindowManager)MainActivity.getInstance().getSystemService(MainActivity.getInstance().WINDOW_SERVICE);
+        WindowManager wm = (WindowManager)MainActivity.getInstance().getSystemService(MainActivity.WINDOW_SERVICE);
         wm.getDefaultDisplay().getMetrics(displayMetrics);
         wm.getDefaultDisplay().getRotation();
         CAMERA_WIDTH = displayMetrics.widthPixels;
         CAMERA_HEIGHT = displayMetrics.heightPixels;
+        //CAMERA_WIDTH = 1280;
+        //CAMERA_HEIGHT = 1024;
         WORLD_WIDTH = CAMERA_HEIGHT * WORLD_SCALE_CONSTANT;
         WORLD_HEIGHT = CAMERA_HEIGHT;
 	}
@@ -59,7 +63,7 @@ public class ResourcesManager {
 		
     	BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         mBackgroundTextureAtlas = new BitmapTextureAtlas(instance.getTextureManager(), 1024, 1024,
-        		BitmapTextureFormat.RGB_565, TextureOptions.DEFAULT);
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         backgroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBackgroundTextureAtlas, instance, "background.png", 0, 0);
         mBackgroundTextureAtlas.load();
     	

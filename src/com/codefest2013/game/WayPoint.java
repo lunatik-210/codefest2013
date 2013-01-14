@@ -1,3 +1,4 @@
+package com.codefest2013.game;
 
 public class WayPoint {
 	public int x;

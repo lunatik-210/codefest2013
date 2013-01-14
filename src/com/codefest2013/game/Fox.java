@@ -1,3 +1,5 @@
+package com.codefest2013.game;
+
 import java.util.ArrayList;
 import java.util.Random;
 

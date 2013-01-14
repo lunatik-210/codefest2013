@@ -13,6 +13,9 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+
 public class MainActivity extends BaseGameActivity
 {
     private SplashScene mSplashScene;
@@ -40,8 +43,13 @@ public class MainActivity extends BaseGameActivity
         		0, ResourcesManager.WORLD_WIDTH, 0, ResourcesManager.WORLD_HEIGHT);
         mCamera.setBoundsEnabled(true);
         
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager)MainActivity.getInstance().getSystemService(MainActivity.WINDOW_SERVICE);
+        wm.getDefaultDisplay().getMetrics(displayMetrics);
+        wm.getDefaultDisplay().getRotation();
+        
         final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, 
-                new RatioResolutionPolicy(ResourcesManager.CAMERA_WIDTH, ResourcesManager.CAMERA_HEIGHT), mCamera);
+                new RatioResolutionPolicy( (float)displayMetrics.widthPixels / (float)displayMetrics.heightPixels), mCamera);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
         
         return engineOptions;
