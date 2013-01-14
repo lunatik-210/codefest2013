@@ -1,4 +1,8 @@
-package com.codefest2013.game;
+package com.codefest2013.game.scenes;
+
+import com.codefest2013.game.MainActivity;
+import com.codefest2013.game.ResourcesManager;
+import com.codefest2013.game.world.Player;
 
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;

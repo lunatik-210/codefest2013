@@ -1,4 +1,4 @@
-package com.codefest2013.game;
+package com.codefest2013.game.scenes;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
