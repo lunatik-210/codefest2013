@@ -16,15 +16,11 @@ import org.andengine.ui.activity.BaseGameActivity;
 import com.codefest2013.game.scenes.GameScene;
 import com.codefest2013.game.scenes.SplashScene;
 
-import android.util.DisplayMetrics;
-import android.view.WindowManager;
-
 public class MainActivity extends BaseGameActivity
 {
     private SplashScene mSplashScene;
     private Scene mMainScene;
     
-    private BitmapTextureAtlas mSplashTextureAtlas;
     private ITextureRegion mSplashTextureRegion;
 
     private enum SceneType
@@ -61,7 +57,7 @@ public class MainActivity extends BaseGameActivity
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception
     {
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        mSplashTextureAtlas = new BitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.DEFAULT);
+        BitmapTextureAtlas mSplashTextureAtlas = new BitmapTextureAtlas(this.getTextureManager(), 256, 256, TextureOptions.DEFAULT);
         mSplashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mSplashTextureAtlas, this, "splash.png", 0, 0);
         mSplashTextureAtlas.load();
 

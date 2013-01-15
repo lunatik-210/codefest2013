@@ -24,7 +24,6 @@ public class SplashScene extends Scene {
             }
         };
 
-        mSplash.setScale(1.5f);
         mSplash.setPosition((cameraWidth - mSplash.getWidth()) * 0.5f, (cameraHeight - mSplash.getHeight()) * 0.5f);
         this.attachChild(mSplash);
 	}
