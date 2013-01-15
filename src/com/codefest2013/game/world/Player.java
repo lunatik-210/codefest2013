@@ -1,9 +1,11 @@
-package com.codefest2013.game;
+package com.codefest2013.game.world;
 
-import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.sprite.AnimatedSprite;
 
-public class Player implements IUpdateHandler {
+import com.codefest2013.game.MainActivity;
+import com.codefest2013.game.ResourcesManager;
+
+public class Player {
     public final static int LEFT_DIRECTION = 0;
     public final static int RIGHT_DIRECTION = 1;
     
@@ -25,15 +27,6 @@ public class Player implements IUpdateHandler {
         
         sprite = new AnimatedSprite(x, y, RATIO*height, height, ResourcesManager.getInstance().goblinTextureRegion, 
                 MainActivity.getInstance().getVertexBufferObjectManager());
-    }
-    
-    @Override
-    public void onUpdate(float arg0) {
-        this.move();
-    }
-
-    @Override
-    public void reset() {
     }
     
     public void setDirection( int direction )

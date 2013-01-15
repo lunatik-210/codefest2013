@@ -13,6 +13,9 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
 
+import com.codefest2013.game.scenes.GameScene;
+import com.codefest2013.game.scenes.SplashScene;
+
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
