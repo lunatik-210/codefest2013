@@ -22,11 +22,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener  {
         		ResourcesManager.getInstance().backgroundTextureRegion,
         		MainActivity.getInstance().getVertexBufferObjectManager() ));
         
-        mWorld = new World();
+        mWorld = new World(this);
         
-        attachChild(mWorld.getPlayer().sprite);
         MainActivity.getInstance().mCamera.setChaseEntity(mWorld.getPlayer().sprite);
-        registerUpdateHandler(mWorld);
         
         setOnSceneTouchListener(this);
     }
