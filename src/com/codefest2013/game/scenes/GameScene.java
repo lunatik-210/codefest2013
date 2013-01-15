@@ -4,10 +4,12 @@ import com.codefest2013.game.MainActivity;
 import com.codefest2013.game.ResourcesManager;
 import com.codefest2013.game.scenes.objects.Player;
 
+import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 
-public class GameScene extends Scene {
+public class GameScene extends Scene implements IOnSceneTouchListener {
 
 	private Player mPlayer = null;
     
@@ -21,9 +23,14 @@ public class GameScene extends Scene {
 		mPlayer = new Player(ResourcesManager.CAMERA_WIDTH/2, ResourcesManager.CAMERA_HEIGHT-ResourcesManager.CAMERA_HEIGHT/5);
 		attachChild(mPlayer.sprite);
 		registerUpdateHandler(mPlayer);
-		setOnSceneTouchListener(mPlayer);
 		
+		setOnSceneTouchListener(this);
         MainActivity.getInstance().mCamera.setChaseEntity(mPlayer.sprite);
     }
+
+	@Override
+	public boolean onSceneTouchEvent(Scene arg0, TouchEvent arg1) {
+		return mPlayer.onSceneTouchEvent(arg0, arg1);
+	}
     
 }
