@@ -12,7 +12,6 @@ import org.andengine.input.touch.TouchEvent;
 
 public class GameScene extends Scene implements IOnSceneTouchListener  {
 
-    //private Player player;
     private World mWorld;
     private int fingersNumber = 0;
     
@@ -25,7 +24,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener  {
         
         mWorld = new World();
         
-        //player = new Player(ResourcesManager.CAMERA_WIDTH/2, ResourcesManager.CAMERA_HEIGHT-ResourcesManager.CAMERA_HEIGHT/5);
         attachChild(mWorld.getPlayer().sprite);
         MainActivity.getInstance().mCamera.setChaseEntity(mWorld.getPlayer().sprite);
         registerUpdateHandler(mWorld);

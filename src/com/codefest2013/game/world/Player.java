@@ -1,6 +1,5 @@
 package com.codefest2013.game.world;
 
-import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.sprite.AnimatedSprite;
 
 import com.codefest2013.game.MainActivity;
