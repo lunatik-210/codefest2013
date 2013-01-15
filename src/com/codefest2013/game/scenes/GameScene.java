@@ -3,6 +3,7 @@ package com.codefest2013.game.scenes;
 import com.codefest2013.game.MainActivity;
 import com.codefest2013.game.ResourcesManager;
 import com.codefest2013.game.world.Player;
+import com.codefest2013.game.world.World;
 
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
@@ -11,7 +12,8 @@ import org.andengine.input.touch.TouchEvent;
 
 public class GameScene extends Scene implements IOnSceneTouchListener  {
 
-    private Player player;
+    //private Player player;
+    private World mWorld;
     private int fingersNumber = 0;
     
     public GameScene()
@@ -21,11 +23,14 @@ public class GameScene extends Scene implements IOnSceneTouchListener  {
         		ResourcesManager.getInstance().backgroundTextureRegion,
         		MainActivity.getInstance().getVertexBufferObjectManager() ));
         
-        player = new Player(ResourcesManager.CAMERA_WIDTH/2, ResourcesManager.CAMERA_HEIGHT-ResourcesManager.CAMERA_HEIGHT/5);
-        attachChild(player.sprite);
-        registerUpdateHandler(player);
-        MainActivity.getInstance().mCamera.setChaseEntity(player.sprite);
-        setOnSceneTouchListener(this);   
+        mWorld = new World();
+        
+        //player = new Player(ResourcesManager.CAMERA_WIDTH/2, ResourcesManager.CAMERA_HEIGHT-ResourcesManager.CAMERA_HEIGHT/5);
+        attachChild(mWorld.getPlayer().sprite);
+        MainActivity.getInstance().mCamera.setChaseEntity(mWorld.getPlayer().sprite);
+        registerUpdateHandler(mWorld);
+        
+        setOnSceneTouchListener(this);
     }
     
     @Override
@@ -36,17 +41,17 @@ public class GameScene extends Scene implements IOnSceneTouchListener  {
                 ++fingersNumber;
                 if( arg1.getX() < MainActivity.getInstance().mCamera.getCenterX() )
                 {
-                    player.setDirection(Player.LEFT_DIRECTION);
+                	mWorld.getPlayer().setDirection(Player.LEFT_DIRECTION);
                 }
                 else
                 {
-                    player.setDirection(Player.RIGHT_DIRECTION);
+                	mWorld.getPlayer().setDirection(Player.RIGHT_DIRECTION);
                 }
                 return true;
             case TouchEvent.ACTION_UP:
                 if( --fingersNumber == 0 )
                 {
-                    player.stop();
+                	mWorld.getPlayer().stop();
                 }
                 return true;
         }
