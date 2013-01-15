@@ -41,18 +41,13 @@ public class MainActivity extends BaseGameActivity
     public EngineOptions onCreateEngineOptions() {
     	mInstance = this;
     	ResourcesManager.init();
-    	
+
         mCamera = new BoundCamera(0, 0, ResourcesManager.CAMERA_WIDTH, ResourcesManager.CAMERA_HEIGHT,
         		0, ResourcesManager.WORLD_WIDTH, 0, ResourcesManager.WORLD_HEIGHT);
         mCamera.setBoundsEnabled(true);
         
-        final DisplayMetrics displayMetrics = new DisplayMetrics();
-        WindowManager wm = (WindowManager)MainActivity.getInstance().getSystemService(MainActivity.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(displayMetrics);
-        wm.getDefaultDisplay().getRotation();
-        
         final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, 
-                new RatioResolutionPolicy( (float)displayMetrics.widthPixels / (float)displayMetrics.heightPixels), mCamera);
+                new RatioResolutionPolicy( ResourcesManager.CAMERA_WIDTH / ResourcesManager.CAMERA_HEIGHT), mCamera);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
         
         return engineOptions;

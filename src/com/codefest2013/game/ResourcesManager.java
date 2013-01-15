@@ -31,10 +31,7 @@ public class ResourcesManager {
      */
     private static final float WORLD_SCALE_CONSTANT = 2.0645f;
 
-    private BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas;
     public TiledTextureRegion goblinTextureRegion;
-
-    private BitmapTextureAtlas mBackgroundTextureAtlas;
     public ITextureRegion backgroundTextureRegion;
     
 	private static ResourcesManager mInstance = new ResourcesManager();
@@ -45,33 +42,57 @@ public class ResourcesManager {
 	
 	public static void init()
 	{
-        final DisplayMetrics displayMetrics = new DisplayMetrics();
-        WindowManager wm = (WindowManager)MainActivity.getInstance().getSystemService(MainActivity.WINDOW_SERVICE);
-        wm.getDefaultDisplay().getMetrics(displayMetrics);
-        wm.getDefaultDisplay().getRotation();
+        final DisplayMetrics displayMetrics = MainActivity.getInstance().getResources().getDisplayMetrics();
+
         CAMERA_WIDTH = displayMetrics.widthPixels;
         CAMERA_HEIGHT = displayMetrics.heightPixels;
-        //CAMERA_WIDTH = 1280;
-        //CAMERA_HEIGHT = 1024;
+
         WORLD_WIDTH = CAMERA_HEIGHT * WORLD_SCALE_CONSTANT;
         WORLD_HEIGHT = CAMERA_HEIGHT;
 	}
 	
 	public void load()
 	{
+		/*
+		final DisplayMetrics displayMetrics = MainActivity.getInstance().getResources().getDisplayMetrics();
+        
+		float mScaleFactor = 1;
+	    int deviceDpi = displayMetrics.densityDpi;
+	    switch(deviceDpi){
+		    case DisplayMetrics.DENSITY_LOW:
+			    // Scale factor already set to 1
+			    break;
+		    case DisplayMetrics.DENSITY_MEDIUM:
+			    // Increase scale to a suitable value for mid-size displays
+			    mScaleFactor = 1.5f;
+			    break;
+		    case DisplayMetrics.DENSITY_HIGH:
+			    // Increase scale to a suitable value for larger displays
+			    mScaleFactor = 2;
+			    break;
+		    case DisplayMetrics.DENSITY_XHIGH:
+			    // Increase scale to suitable value for largest displays
+			    mScaleFactor = 2.5f;
+			    break;
+		    default:
+			    // Scale factor already set to 1
+			    break;
+	    }
+	    */
+	    
 		BaseGameActivity instance = MainActivity.getInstance();
 		
     	BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        mBackgroundTextureAtlas = new BitmapTextureAtlas(instance.getTextureManager(), 1024, 1024,
+    	BitmapTextureAtlas mBackgroundTextureAtlas = new BitmapTextureAtlas(instance.getTextureManager(), 1024, 1024,
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         backgroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBackgroundTextureAtlas, instance, "background.png", 0, 0);
         mBackgroundTextureAtlas.load();
     	
         SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
+        BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         goblinTextureRegion = (TiledTextureRegion)SVGBitmapTextureAtlasTextureRegionFactory
-                .createTiledFromAsset(this.mBuildableBitmapTextureAtlas, instance,"goblinWalks.svg", 1024, 1024, 12, 2);
+                .createTiledFromAsset(mBuildableBitmapTextureAtlas, instance,"goblinWalks.svg", 1024, 1024, 12, 2);
 
         try {
             mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
