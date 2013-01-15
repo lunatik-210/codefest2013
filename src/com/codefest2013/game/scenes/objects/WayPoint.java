@@ -1,4 +1,4 @@
-package com.codefest2013.game.world;
+package com.codefest2013.game.scenes.objects;
 
 public class WayPoint {
 	public int x;

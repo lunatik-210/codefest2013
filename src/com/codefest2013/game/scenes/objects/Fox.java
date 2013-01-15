@@ -1,4 +1,4 @@
-package com.codefest2013.game.world;
+package com.codefest2013.game.scenes.objects;
 
 import java.util.ArrayList;
 import java.util.Random;

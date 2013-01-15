@@ -1,11 +1,15 @@
-package com.codefest2013.game.world;
+package com.codefest2013.game.scenes.objects;
 
+import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.scene.IOnSceneTouchListener;
+import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.AnimatedSprite;
+import org.andengine.input.touch.TouchEvent;
 
 import com.codefest2013.game.MainActivity;
 import com.codefest2013.game.ResourcesManager;
 
-public class Player {
+public class Player implements IUpdateHandler, IOnSceneTouchListener {
     public final static int LEFT_DIRECTION = 0;
     public final static int RIGHT_DIRECTION = 1;
     
@@ -20,6 +24,7 @@ public class Player {
     
     private float speed = 0;
     private int currentDirection = LEFT_DIRECTION;
+    private int fingersNumber = 0;
     
     public Player(float x, float y)
     {   
@@ -29,7 +34,41 @@ public class Player {
                 MainActivity.getInstance().getVertexBufferObjectManager());
     }
     
-    public void setDirection( int direction )
+	@Override
+	public void onUpdate(float arg0) {
+		move();
+	}
+
+	@Override
+	public void reset() {
+	}
+
+	@Override
+	public boolean onSceneTouchEvent(Scene arg0, TouchEvent arg1) {
+        switch( arg1.getAction() )
+        {
+            case TouchEvent.ACTION_DOWN:
+                ++fingersNumber;
+                if( arg1.getX() < MainActivity.getInstance().mCamera.getCenterX() )
+                {
+                	setDirection(LEFT_DIRECTION);
+                }
+                else
+                {
+                	setDirection(RIGHT_DIRECTION);
+                }
+                return true;
+            case TouchEvent.ACTION_UP:
+                if( --fingersNumber == 0 )
+                {
+                	stop();
+                }
+                return true;
+        }
+        return false;
+	}
+    
+    private void setDirection( int direction )
     {
         currentDirection = direction;
         speed = SPEED;
@@ -45,7 +84,7 @@ public class Player {
         }
     }
     
-    public void move()
+    private void move()
     {
         if( sprite.getX() < 0.0f )
         {
@@ -68,7 +107,7 @@ public class Player {
         }
     }
     
-    public void stop()
+    private void stop()
     {
         speed = 0;
         switch(currentDirection)
@@ -81,5 +120,4 @@ public class Player {
                 break;
         }
     }
-    
 }
