@@ -107,6 +107,23 @@ public class Squirrel extends Entity {
 		rect.clearEntityModifiers(); // not tested
 	}
 	
+	public float getDimensionOfCurrentPath(int speed) {
+		float pathLength = 0;
+		if (currentWay.size() < 2){
+			return 0f;
+		}
+		for (int i = 1; i < currentWay.size(); i++) {
+			WayPoint previous = wps[currentWay.get(i - 1)];
+			WayPoint next = wps[currentWay.get(i)];
+			pathLength += Math.sqrt(Math.pow(next.x-previous.x, 2)  +  Math.pow(next.y-previous.y, 2));
+		}
+		return pathLength/speed;
+	}
+	
+	public float getDimensionOfCurrentPath() {
+		return getDimensionOfCurrentPath(this.speed);
+	}
+	
 	private void setNextGoal(){
 		int randIndex = throwablePoints.get(r.nextInt(throwablePoints.size()));
 		int indexDiff = randIndex - currentIndex;
@@ -145,23 +162,6 @@ public class Squirrel extends Entity {
 			path.to(realX, realY);
 		}
 		return path;
-	}
-	
-	private float getDimensionOfCurrentPath(int speed) {
-		float pathLength = 0;
-		if (currentWay.size() < 2){
-			return 0f;
-		}
-		for (int i = 1; i < currentWay.size(); i++) {
-			WayPoint previous = wps[currentWay.get(i - 1)];
-			WayPoint next = wps[currentWay.get(i)];
-			pathLength += Math.sqrt(Math.pow(next.x-previous.x, 2)  +  Math.pow(next.y-previous.y, 2));
-		}
-		return pathLength/speed;
-	}
-	
-	private float getDimensionOfCurrentPath() {
-		return getDimensionOfCurrentPath(this.speed);
 	}
 	
 	private void rotate(float angle){
