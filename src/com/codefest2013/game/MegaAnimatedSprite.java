@@ -244,6 +244,6 @@ public class MegaAnimatedSprite extends Entity {
 	{
 		this.textures.get(this.textureIndex).setVisible(false);
 		this.textures.get(index).setVisible(true);
-		currentVisibleSprite = this.textures.get(index);		
+		currentVisibleSprite = this.textures.get(index);
 	}
 }

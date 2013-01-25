@@ -1,6 +1,5 @@
 package com.codefest2013.game;
 
-import org.andengine.extension.svg.opengl.texture.atlas.bitmap.SVGBitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -10,7 +9,6 @@ import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtla
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.util.debug.Debug;
 
@@ -31,7 +29,6 @@ public class ResourcesManager {
     private static final float PROPORTION_CONSTANT = 2.0686f;
     public static float WORLD_SCALE_CONSTANT;
 
-    public TiledTextureRegion goblinTextureRegion;
     public ITextureRegion[] goblinLeftWalk = new ITextureRegion[12];
     public ITextureRegion[] goblinRightWalk = new ITextureRegion[12];
     
@@ -187,19 +184,6 @@ public class ResourcesManager {
         	String name = "goblin/leftWalk/" + i + ".png";
         	goblinLeftWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, instance, name);
         }
-        try {
-            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
-            mBuildableBitmapTextureAtlas.load();
-        } catch (final TextureAtlasBuilderException e) {
-            Debug.e(e);
-        }     
-        
-        SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        goblinTextureRegion = (TiledTextureRegion)SVGBitmapTextureAtlasTextureRegionFactory
-                .createTiledFromAsset(mBuildableBitmapTextureAtlas, instance,"goblin/goblinWalks.svg", 1024, 1024, 12, 2);
-
         try {
             mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
             mBuildableBitmapTextureAtlas.load();
