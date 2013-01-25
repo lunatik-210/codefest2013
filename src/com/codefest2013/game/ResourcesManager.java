@@ -168,7 +168,7 @@ public class ResourcesManager {
         BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         goblinTextureRegion = (TiledTextureRegion)SVGBitmapTextureAtlasTextureRegionFactory
-                .createTiledFromAsset(mBuildableBitmapTextureAtlas, instance,"goblinWalks.svg", 1024, 1024, 12, 2);
+                .createTiledFromAsset(mBuildableBitmapTextureAtlas, instance,"goblin/goblinWalks.svg", 1024, 1024, 12, 2);
 
         try {
             mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
