@@ -1,5 +1,7 @@
 package com.codefest2013.game;
 
+import org.andengine.engine.Engine;
+import org.andengine.engine.LimitedFPSEngine;
 import org.andengine.engine.camera.BoundCamera;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
@@ -49,6 +51,12 @@ public class MainActivity extends BaseGameActivity
         return engineOptions;
     }
 
+    @Override
+    public Engine onCreateEngine(EngineOptions pEngineOptions) {
+    	// TODO Auto-generated method stub
+    	return new LimitedFPSEngine(pEngineOptions, 60);
+    }
+    
     /**
      * Load resources for splash screen only
      * Another resources are loading in ResourcesManager class
