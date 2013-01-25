@@ -32,6 +32,8 @@ public class ResourcesManager {
     public static float WORLD_SCALE_CONSTANT;
 
     public TiledTextureRegion goblinTextureRegion;
+    public ITextureRegion[] goblinLeftWalk = new ITextureRegion[12];
+    public ITextureRegion[] goblinRightWalk = new ITextureRegion[12];
     
     /**
      * Parts of background image
@@ -164,8 +166,36 @@ public class ResourcesManager {
         textureAtlas.load();
         
         
-        SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        for(int i=0; i<12; ++i)
+        {
+        	String name = "goblin/rightWalk/" + i + ".png";
+        	goblinRightWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, instance, name);
+        }
+        try {
+            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+            mBuildableBitmapTextureAtlas.load();
+        } catch (final TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        
+        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        for(int i=0; i<12; ++i)
+        {
+        	String name = "goblin/leftWalk/" + i + ".png";
+        	goblinLeftWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, instance, name);
+        }
+        try {
+            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+            mBuildableBitmapTextureAtlas.load();
+        } catch (final TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }     
+        
+        SVGBitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         goblinTextureRegion = (TiledTextureRegion)SVGBitmapTextureAtlasTextureRegionFactory
                 .createTiledFromAsset(mBuildableBitmapTextureAtlas, instance,"goblin/goblinWalks.svg", 1024, 1024, 12, 2);

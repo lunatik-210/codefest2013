@@ -121,13 +121,21 @@ public class MegaAnimatedSprite extends Entity {
 	}
 	
 	/**
+	 * Stops the animation directly
+	 */
+	public void stopAnimation(int index) {
+		setFrameIndex(index);
+		stopAnimation();
+	}
+	
+	/**
 	 * Stops the animation at the end and then invokes the specified optional callback
 	 * 
 	 * @param callback
 	 */
 	public void stopAnimationAtEnd(Runnable callback) {
 		if (!this.isAnimating) {
-                        if (callback != null)
+            if (callback != null)
 			    callback.run();
 			return;
 		}
@@ -164,9 +172,7 @@ public class MegaAnimatedSprite extends Entity {
 				return;
 			}
 			
-			this.textures.get(this.textureIndex).setVisible(false);
-			this.textures.get(tmpTextureIndex).setVisible(true);
-			currentVisibleSprite = this.textures.get(tmpTextureIndex);
+			setFrameIndex(tmpTextureIndex);
 			
 			this.textureIndex = tmpTextureIndex;
 		}
@@ -232,5 +238,12 @@ public class MegaAnimatedSprite extends Entity {
 
 	public int getFrameCount() {
 		return this.textures.size();
+	}
+	
+	private void setFrameIndex(int index)
+	{
+		this.textures.get(this.textureIndex).setVisible(false);
+		this.textures.get(index).setVisible(true);
+		currentVisibleSprite = this.textures.get(index);		
 	}
 }
