@@ -9,6 +9,12 @@ import com.codefest2013.game.ResourcesManager;
 
 public class Background extends Entity {
 	
+	/**
+	 * Relatives coordinates
+	 * x = [0, 2.0686]
+	 * y = [0, 1]
+	 */
+	
 	private final float FIREPLACE_WIDTH = 0.5858f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	private final float FIREPLACE_HEIGHT = 0.5151f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	private final float FIREPLACE_X = 1.44f * ResourcesManager.WORLD_SCALE_CONSTANT;
@@ -28,6 +34,14 @@ public class Background extends Entity {
 	private final float LAMP_HEIGHT = 0.1717f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	private final float LAMP_X = 0.8787f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	private final float LAMP_Y = 0.0000f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	
+	private final float STOCKING_WIDTH = 0.0909f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STOCKING_HEIGHT = 0.1414f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STOCKING_X = 1.5500f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STOCKING_Y = 0.3900f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	
+	private final float STEP_X = 0.0400f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STEP_Y = 0.0100f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	
 	public Background()
 	{
@@ -72,5 +86,14 @@ public class Background extends Entity {
 				ResourcesManager.getInstance().fireplace2, MainActivity.getInstance().getVertexBufferObjectManager() ) );
 		firePlaceSprite.animate(1.0f / 6f);
 		attachChild(firePlaceSprite);
+		
+		attachChild( new Sprite(STOCKING_X, STOCKING_Y, STOCKING_WIDTH, STOCKING_HEIGHT, 
+				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		
+		attachChild( new Sprite(STOCKING_X + STOCKING_WIDTH + STEP_X, STOCKING_Y+STEP_Y, STOCKING_WIDTH, STOCKING_HEIGHT, 
+				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		
+		attachChild( new Sprite(STOCKING_X + STOCKING_WIDTH*2 + STEP_X*2, STOCKING_Y+STEP_Y*2, STOCKING_WIDTH, STOCKING_HEIGHT, 
+				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
 	}
 }

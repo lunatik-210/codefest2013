@@ -62,6 +62,11 @@ public class ResourcesManager {
      */
     public ITextureRegion lamp;
     
+    /**
+     * Stocking texture
+     */
+    public ITextureRegion stocking;
+    
 	private static ResourcesManager mInstance = new ResourcesManager();
 	
 	private ResourcesManager()
@@ -130,17 +135,14 @@ public class ResourcesManager {
         textureAtlas = new BitmapTextureAtlas(instance.getTextureManager(), 1024, 1024,
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         fireplace1 = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/fireplace1.png", 0, 0);
-        textureAtlas.load();
-        
-        textureAtlas = new BitmapTextureAtlas(instance.getTextureManager(), 1024, 1024,
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        fireplace2 = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/fireplace2.png", 0, 0);
+        fireplace2 = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/fireplace2.png", 0, 512);
         textureAtlas.load();
         
         textureAtlas = new BitmapTextureAtlas(instance.getTextureManager(), 1024, 1024,
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         tree = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/tree.png", 0, 0);
         lamp = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/lamp.png", 500, 0);
+        stocking = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/stocking.png", 500, 170);
         textureAtlas.load();
         
         textureAtlas = new BitmapTextureAtlas(instance.getTextureManager(), 1024, 1024,
