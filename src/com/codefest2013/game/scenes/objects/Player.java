@@ -4,7 +4,6 @@ import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
@@ -19,10 +18,6 @@ public class Player implements IUpdateHandler, IOnSceneTouchListener {
     private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.01f;
     private final float RATIO = 1.7f;
     
-    private final long d = 60;
-    private final long frameDuration[] = new long[] {d, d, d, d, d, d, d, d, d, d, d, d};
-    private final int leftAnimationSeq[] = new int[] {23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12};
-    
     public Entity sprite;
     private MegaAnimatedSprite lieftSprite;
     private MegaAnimatedSprite rightSprite;
@@ -36,9 +31,6 @@ public class Player implements IUpdateHandler, IOnSceneTouchListener {
         float height = ResourcesManager.CAMERA_HEIGHT/6;
         
         sprite = new Entity(x, y);
-        
-        //sprite = new AnimatedSprite(x, y, RATIO*height, height, ResourcesManager.getInstance().goblinTextureRegion, 
-        //        MainActivity.getInstance().getVertexBufferObjectManager());
         
         lieftSprite = new MegaAnimatedSprite(12);
 		for( int i=0; i<10; ++i )
