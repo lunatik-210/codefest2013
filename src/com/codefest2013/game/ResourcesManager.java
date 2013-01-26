@@ -74,9 +74,10 @@ public class ResourcesManager {
     public ITextureRegion stocking;
     
     /**
-     * Fireplace music
+     * Music
      */
     public Music fireplaceMusic;
+    public Music tickTookMusic;
     
 	private static ResourcesManager mInstance = new ResourcesManager();
 	
@@ -93,7 +94,7 @@ public class ResourcesManager {
 
         WORLD_WIDTH = CAMERA_HEIGHT * PROPORTION_CONSTANT;
         WORLD_HEIGHT = CAMERA_HEIGHT;
-        
+
         WORLD_SCALE_CONSTANT = WORLD_HEIGHT;
 	}
 	
@@ -204,6 +205,7 @@ public class ResourcesManager {
         
         MusicFactory.setAssetBasePath("afx/");
         try {
+        	tickTookMusic = MusicFactory.createMusicFromAsset(instance.getMusicManager(), instance, "ticktook.mp3");
         	fireplaceMusic = MusicFactory.createMusicFromAsset(instance.getMusicManager(), instance, "fireplace.mp3");
         } catch (IOException e) {
         e.printStackTrace();

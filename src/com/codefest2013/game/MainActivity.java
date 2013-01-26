@@ -94,7 +94,7 @@ public class MainActivity extends BaseGameActivity
             {
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().load();
-                loadScenes();         
+                loadScenes();
                 mSplashScene.detachSplash();
                 mEngine.setScene(mMainScene);
                 mCurrentScene = SceneType.MAIN;
