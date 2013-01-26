@@ -95,5 +95,8 @@ public class Background extends Entity {
 		
 		attachChild( new Sprite(STOCKING_X + STOCKING_WIDTH*2 + STEP_X*2, STOCKING_Y+STEP_Y*2, STOCKING_WIDTH, STOCKING_HEIGHT, 
 				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		
+		ResourcesManager.getInstance().fireplaceMusic.play();
+		ResourcesManager.getInstance().fireplaceMusic.setVolume(1.0f);
 	}
 }

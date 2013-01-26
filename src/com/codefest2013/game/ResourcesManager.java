@@ -1,5 +1,9 @@
 package com.codefest2013.game;
 
+import java.io.IOException;
+
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -29,6 +33,9 @@ public class ResourcesManager {
     private static final float PROPORTION_CONSTANT = 2.0686f;
     public static float WORLD_SCALE_CONSTANT;
 
+    /**
+     * Goblin animation
+     */
     public ITextureRegion[] goblinLeftWalk = new ITextureRegion[12];
     public ITextureRegion[] goblinRightWalk = new ITextureRegion[12];
     
@@ -65,6 +72,11 @@ public class ResourcesManager {
      * Stocking texture
      */
     public ITextureRegion stocking;
+    
+    /**
+     * Fireplace music
+     */
+    public Music fireplaceMusic;
     
 	private static ResourcesManager mInstance = new ResourcesManager();
 	
@@ -190,6 +202,14 @@ public class ResourcesManager {
         } catch (final TextureAtlasBuilderException e) {
             Debug.e(e);
         }
+        
+        MusicFactory.setAssetBasePath("afx/");
+        try {
+        	fireplaceMusic = MusicFactory.createMusicFromAsset(instance.getMusicManager(), instance, "fireplace.mp3");
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+
 	}
 
 	public static ResourcesManager getInstance()
