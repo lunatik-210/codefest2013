@@ -141,7 +141,7 @@ public class ResourcesManager {
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         tree = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/tree.png", 0, 0);
         lamp = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/lamp.png", 500, 0);
-        stocking = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/stocking.png", 500, 170);
+        stocking = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, instance, "background/stocking.png", 500, 180);
         textureAtlas.load();
         
         textureAtlas = new BitmapTextureAtlas(instance.getTextureManager(), 1024, 1024,
