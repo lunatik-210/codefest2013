@@ -174,7 +174,6 @@ public class ResourcesManager {
         }
         textureAtlas.load();
         
-        
         BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         for(int i=0; i<12; ++i)

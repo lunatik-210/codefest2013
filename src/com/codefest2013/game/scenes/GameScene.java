@@ -8,21 +8,29 @@ import com.codefest2013.game.scenes.objects.Player;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.util.debug.Debug;
 
 public class GameScene extends Scene implements IOnSceneTouchListener {
 
 	private Player mPlayer = null;
+    private Background mBackground = null;
     
     public GameScene()
     {
-    	attachChild(new Background());
-        
-		mPlayer = new Player(ResourcesManager.CAMERA_WIDTH/2, ResourcesManager.CAMERA_HEIGHT-ResourcesManager.CAMERA_HEIGHT/5);
-		attachChild(mPlayer.sprite);
+    	mBackground = new Background();
+    	mPlayer = new Player(ResourcesManager.CAMERA_WIDTH/2, 
+    			ResourcesManager.CAMERA_HEIGHT-ResourcesManager.CAMERA_HEIGHT/5);
+    	
+    	attachChild(mBackground);
+		attachChild(mPlayer);
+		
 		registerUpdateHandler(mPlayer);
 		
 		setOnSceneTouchListener(this);
-        MainActivity.getInstance().mCamera.setChaseEntity(mPlayer.sprite);
+        MainActivity.getInstance().mCamera.setChaseEntity(mPlayer);
+        
+		ResourcesManager.getInstance().fireplaceMusic.play();
+		ResourcesManager.getInstance().fireplaceMusic.setVolume(1.0f);
     }
 
 	@Override
@@ -30,4 +38,11 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 		return mPlayer.onSceneTouchEvent(arg0, arg1);
 	}
     
+	@Override
+	protected void onManagedUpdate(float pSecondsElapsed) {
+		super.onManagedUpdate(pSecondsElapsed);
+		//Debug.d("Fireplace: " + mBackground.getFirePlaceSprite().get() + " " + 
+		//		mBackground.getFirePlaceSprite().getScaleCenterY() );
+		
+	}
 }

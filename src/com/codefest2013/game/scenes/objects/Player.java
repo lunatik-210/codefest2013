@@ -1,6 +1,5 @@
 package com.codefest2013.game.scenes.objects;
 
-import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
@@ -11,14 +10,14 @@ import com.codefest2013.game.MainActivity;
 import com.codefest2013.game.MegaAnimatedSprite;
 import com.codefest2013.game.ResourcesManager;
 
-public class Player implements IUpdateHandler, IOnSceneTouchListener {
+public class Player extends Entity implements IOnSceneTouchListener {
     public final static int LEFT_DIRECTION = 0;
     public final static int RIGHT_DIRECTION = 1;
     
-    private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.01f;
+    private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.35f;
+    private final float ANIMATION_SPEED = 1.0f/8f;
     private final float RATIO = 1.7f;
     
-    public Entity sprite;
     private MegaAnimatedSprite lieftSprite;
     private MegaAnimatedSprite rightSprite;
     
@@ -28,9 +27,9 @@ public class Player implements IUpdateHandler, IOnSceneTouchListener {
     
     public Player(float x, float y)
     {   
+    	super(x, y);
+    	
         float height = ResourcesManager.CAMERA_HEIGHT/6;
-        
-        sprite = new Entity(x, y);
         
         lieftSprite = new MegaAnimatedSprite(12);
 		for( int i=0; i<10; ++i )
@@ -48,18 +47,15 @@ public class Player implements IUpdateHandler, IOnSceneTouchListener {
 		
 		lieftSprite.setVisible(true);
 		rightSprite.setVisible(false);
-		sprite.attachChild(lieftSprite);
-		sprite.attachChild(rightSprite);
+		attachChild(lieftSprite);
+		attachChild(rightSprite);
     }
     
-	@Override
-	public void onUpdate(float arg0) {
-		move();
-	}
-
-	@Override
-	public void reset() {
-	}
+    @Override
+    protected void onManagedUpdate(float pSecondsElapsed) {
+    	super.onManagedUpdate(pSecondsElapsed);
+    	move(pSecondsElapsed);
+    }
 
 	@Override
 	public boolean onSceneTouchEvent(Scene arg0, TouchEvent arg1) {
@@ -96,35 +92,35 @@ public class Player implements IUpdateHandler, IOnSceneTouchListener {
             case LEFT_DIRECTION:
         		lieftSprite.setVisible(true);
         		rightSprite.setVisible(false);
-        		lieftSprite.animate(1/20f);
+        		lieftSprite.animate(ANIMATION_SPEED);
                 break;
             case RIGHT_DIRECTION:
         		lieftSprite.setVisible(false);
         		rightSprite.setVisible(true);
-        		rightSprite.animate(1/20f);
+        		rightSprite.animate(ANIMATION_SPEED);
                 break;
         }
     }
     
-    private void move()
+    private void move(float pSecondsElapsed)
     {
-        if( sprite.getX() < 0.0f )
+        if( getX() < 0.0f )
         {
-            sprite.setPosition(sprite.getX()+speed, sprite.getY());
+            setPosition(getX()+speed*pSecondsElapsed, getY());
             return;
         }
-        if( sprite.getX() > ResourcesManager.WORLD_WIDTH - lieftSprite.getWidth() )
+        if( getX() > ResourcesManager.WORLD_WIDTH - lieftSprite.getWidth() )
         {
-            sprite.setPosition(sprite.getX()-speed, sprite.getY());
+            setPosition(getX()-speed*pSecondsElapsed, getY());
             return;
         }
         switch(currentDirection)
         {
             case LEFT_DIRECTION:
-                sprite.setPosition(sprite.getX()-speed, sprite.getY());
+                setPosition(getX()-speed*pSecondsElapsed, getY());
                 break;
             case RIGHT_DIRECTION:
-                sprite.setPosition(sprite.getX()+speed, sprite.getY());
+                setPosition(getX()+speed*pSecondsElapsed, getY());
                 break;
         }
     }

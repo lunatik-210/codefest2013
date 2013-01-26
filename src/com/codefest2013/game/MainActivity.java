@@ -20,6 +20,8 @@ import com.codefest2013.game.scenes.SplashScene;
 
 public class MainActivity extends BaseGameActivity
 {
+	private final int FPS = 60;
+	
     private SplashScene mSplashScene;
     private Scene mMainScene;
     
@@ -54,8 +56,7 @@ public class MainActivity extends BaseGameActivity
 
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions) {
-    	// TODO Auto-generated method stub
-    	return new LimitedFPSEngine(pEngineOptions, 60);
+    	return new LimitedFPSEngine(pEngineOptions, FPS);
     }
     
     /**

@@ -43,6 +43,9 @@ public class Background extends Entity {
 	private final float STEP_X = 0.0400f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	private final float STEP_Y = 0.0100f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	
+	private MegaAnimatedSprite clockSprite;
+	private MegaAnimatedSprite firePlaceSprite;
+	
 	public Background()
 	{
 		attachChild( new Sprite(0, 0, ResourcesManager.WORLD_WIDTH/2, ResourcesManager.WORLD_HEIGHT/2,
@@ -70,22 +73,22 @@ public class Background extends Entity {
 		attachChild( new Sprite(LAMP_X, LAMP_Y, LAMP_WIDTH, LAMP_HEIGHT, 
 				ResourcesManager.getInstance().lamp, MainActivity.getInstance().getVertexBufferObjectManager() ) );
 		
-		MegaAnimatedSprite clockSprite = new MegaAnimatedSprite(10);
+		clockSprite = new MegaAnimatedSprite(10);
 		for( int i=0; i<10; ++i )
 		{
-			clockSprite.attachTexture( new Sprite(CLOCK_X, CLOCK_Y, CLOCK_WIDTH, CLOCK_HEIGHT,
+			getClockSprite().attachTexture( new Sprite(CLOCK_X, CLOCK_Y, CLOCK_WIDTH, CLOCK_HEIGHT,
 					ResourcesManager.getInstance().clock[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
 		}
-		clockSprite.animate(1.0f / 6f);
-		attachChild(clockSprite);
+		getClockSprite().animate(1.0f / 6f);
+		attachChild(getClockSprite());
 		
-		MegaAnimatedSprite firePlaceSprite = new MegaAnimatedSprite(2);
-		firePlaceSprite.attachTexture( new Sprite(FIREPLACE_X, FIREPLACE_Y, FIREPLACE_WIDTH, FIREPLACE_HEIGHT,
+		firePlaceSprite = new MegaAnimatedSprite(2);
+		getFirePlaceSprite().attachTexture( new Sprite(FIREPLACE_X, FIREPLACE_Y, FIREPLACE_WIDTH, FIREPLACE_HEIGHT,
 				ResourcesManager.getInstance().fireplace1, MainActivity.getInstance().getVertexBufferObjectManager() ) );
-		firePlaceSprite.attachTexture( new Sprite(FIREPLACE_X, FIREPLACE_Y, FIREPLACE_WIDTH, FIREPLACE_HEIGHT,
+		getFirePlaceSprite().attachTexture( new Sprite(FIREPLACE_X, FIREPLACE_Y, FIREPLACE_WIDTH, FIREPLACE_HEIGHT,
 				ResourcesManager.getInstance().fireplace2, MainActivity.getInstance().getVertexBufferObjectManager() ) );
-		firePlaceSprite.animate(1.0f / 6f);
-		attachChild(firePlaceSprite);
+		getFirePlaceSprite().animate(1.0f / 6f);
+		attachChild(getFirePlaceSprite());
 		
 		attachChild( new Sprite(STOCKING_X, STOCKING_Y, STOCKING_WIDTH, STOCKING_HEIGHT, 
 				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
@@ -95,8 +98,14 @@ public class Background extends Entity {
 		
 		attachChild( new Sprite(STOCKING_X + STOCKING_WIDTH*2 + STEP_X*2, STOCKING_Y+STEP_Y*2, STOCKING_WIDTH, STOCKING_HEIGHT, 
 				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
-		
-		ResourcesManager.getInstance().fireplaceMusic.play();
-		ResourcesManager.getInstance().fireplaceMusic.setVolume(1.0f);
 	}
+
+	public MegaAnimatedSprite getClockSprite() {
+		return clockSprite;
+	}
+
+	public MegaAnimatedSprite getFirePlaceSprite() {
+		return firePlaceSprite;
+	}
+	
 }
