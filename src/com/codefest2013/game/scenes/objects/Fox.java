@@ -44,6 +44,14 @@ public class Fox {
 		throwablePoints.add(current);
 		return randomElement;
 		//*/
+		if (throwablePoints.indexOf(current) == -1)
+		{
+			
+		} else {
+			
+		}
+		
+		
 		
 		int randomIndex = r.nextInt(throwablePoints.size());
 		while (randomIndex == current)
