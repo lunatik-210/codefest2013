@@ -48,30 +48,44 @@ public class Background extends Entity {
 	
 	public Background()
 	{
-		attachChild( new Sprite(0, 0, ResourcesManager.WORLD_WIDTH/2, ResourcesManager.WORLD_HEIGHT/2,
-        		ResourcesManager.getInstance().bgLT,
-        		MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		Sprite sprite = null;
 		
-		attachChild( new Sprite(ResourcesManager.WORLD_WIDTH/2, 0, ResourcesManager.WORLD_WIDTH/2, 
+		sprite = new Sprite(0, 0, ResourcesManager.WORLD_WIDTH/2, ResourcesManager.WORLD_HEIGHT/2,
+        		ResourcesManager.getInstance().bgLT,
+        		MainActivity.getInstance().getVertexBufferObjectManager());
+		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
+		
+		sprite = new Sprite(ResourcesManager.WORLD_WIDTH/2, 0, ResourcesManager.WORLD_WIDTH/2, 
 				ResourcesManager.WORLD_HEIGHT/2,
         		ResourcesManager.getInstance().bgRT,
-        		MainActivity.getInstance().getVertexBufferObjectManager() ) );
+        		MainActivity.getInstance().getVertexBufferObjectManager());
+		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
 		
-		attachChild( new Sprite(0, ResourcesManager.WORLD_HEIGHT/2, ResourcesManager.WORLD_WIDTH/2, 
+		sprite = new Sprite(0, ResourcesManager.WORLD_HEIGHT/2, ResourcesManager.WORLD_WIDTH/2, 
 				ResourcesManager.WORLD_HEIGHT/2,
         		ResourcesManager.getInstance().bgLB,
-        		MainActivity.getInstance().getVertexBufferObjectManager() ) );
-
-		attachChild( new Sprite(ResourcesManager.WORLD_WIDTH/2, ResourcesManager.WORLD_HEIGHT/2, 
-				ResourcesManager.WORLD_WIDTH/2, ResourcesManager.WORLD_HEIGHT/2,
-        		ResourcesManager.getInstance().bgRB,
-        		MainActivity.getInstance().getVertexBufferObjectManager() ) );
+        		MainActivity.getInstance().getVertexBufferObjectManager()); 
+		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
 		
-		attachChild( new Sprite(TREE_X, TREE_Y, TREE_WIDTH, TREE_HEIGHT, 
-				ResourcesManager.getInstance().tree, MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		sprite = new Sprite(ResourcesManager.WORLD_WIDTH/2, ResourcesManager.WORLD_HEIGHT/2, 
+					ResourcesManager.WORLD_WIDTH/2, ResourcesManager.WORLD_HEIGHT/2,
+	        		ResourcesManager.getInstance().bgRB,
+	        		MainActivity.getInstance().getVertexBufferObjectManager());
+		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
 		
-		attachChild( new Sprite(LAMP_X, LAMP_Y, LAMP_WIDTH, LAMP_HEIGHT, 
-				ResourcesManager.getInstance().lamp, MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		sprite = new Sprite(TREE_X, TREE_Y, TREE_WIDTH, TREE_HEIGHT, 
+				ResourcesManager.getInstance().tree, MainActivity.getInstance().getVertexBufferObjectManager());
+		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
+		
+		sprite = new Sprite(LAMP_X, LAMP_Y, LAMP_WIDTH, LAMP_HEIGHT, 
+				ResourcesManager.getInstance().lamp, MainActivity.getInstance().getVertexBufferObjectManager());
+		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
 		
 		clockSprite = new MegaAnimatedSprite(10);
 		for( int i=0; i<10; ++i )
@@ -90,14 +104,20 @@ public class Background extends Entity {
 		firePlaceSprite.animate(1.0f / 6f);
 		attachChild(firePlaceSprite);
 		
-		attachChild( new Sprite(STOCKING_X, STOCKING_Y, STOCKING_WIDTH, STOCKING_HEIGHT, 
-				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		sprite = new Sprite(STOCKING_X, STOCKING_Y, STOCKING_WIDTH, STOCKING_HEIGHT, 
+				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager());
+		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
+
+		sprite = new Sprite(STOCKING_X + STOCKING_WIDTH + STEP_X, STOCKING_Y+STEP_Y, STOCKING_WIDTH, STOCKING_HEIGHT, 
+				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager());
+		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
 		
-		attachChild( new Sprite(STOCKING_X + STOCKING_WIDTH + STEP_X, STOCKING_Y+STEP_Y, STOCKING_WIDTH, STOCKING_HEIGHT, 
-				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
-		
-		attachChild( new Sprite(STOCKING_X + STOCKING_WIDTH*2 + STEP_X*2, STOCKING_Y+STEP_Y*2, STOCKING_WIDTH, STOCKING_HEIGHT, 
-				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		sprite = new Sprite(STOCKING_X + STOCKING_WIDTH*2 + STEP_X*2, STOCKING_Y+STEP_Y*2, STOCKING_WIDTH, STOCKING_HEIGHT, 
+				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager());
+		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
 	}
 	
 	public Sprite getClockSprite() {

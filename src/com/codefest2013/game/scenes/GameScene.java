@@ -58,11 +58,11 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 		
 		val = Math.abs(mBackground.getClockSprite().getSceneCenterCoordinates()[0]-mPlayer.getX());
 		val /= 990;
-		if(val > 0.20) {
+		if(val > 0.3) {
 			ResourcesManager.getInstance().tickTookMusic.setVolume(0.0f);
 		}
 		else {
-			ResourcesManager.getInstance().tickTookMusic.setVolume(1-(val/0.20f));
+			ResourcesManager.getInstance().tickTookMusic.setVolume(1-(val/0.30f));
 		}
 		super.onManagedUpdate(pSecondsElapsed);
 	}

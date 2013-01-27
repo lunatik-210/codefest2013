@@ -237,7 +237,6 @@ public class ResourcesManager {
             Debug.e(e);
         }
         
-        
         MusicFactory.setAssetBasePath("afx/");
         try {
         	tickTookMusic = MusicFactory.createMusicFromAsset(instance.getMusicManager(), instance, "ticktook.mp3");
