@@ -1,65 +1,78 @@
 package com.codefest2013.game.scenes.objects;
 
-import java.util.ArrayList;
-import java.util.Random;
+
+import org.andengine.entity.Entity;
+import com.codefest2013.game.MegaAnimatedSprite;
+import com.codefest2013.game.ResourcesManager;
 
 
-public class Fox {
-	private WayPoint wps[];
-	private ArrayList<Integer> throwablePoints;
-	private int current;
-	private Random r;
-	public Fox(WayPoint[] wayPointsArray, int startIndex){
-		/*
-		 * i don't know but 
-		 * 
-		if (wayPointsArray.length < startIndex)
-		{
-			throw new Exception("Start index can't be more than count of points");
-		}
-		*/
-		r = new Random();
-		wps = wayPointsArray;
-		current = startIndex;
-		throwablePoints = new ArrayList<Integer>();
-		for(int i=0; i<wps.length; i++)
-		{
-			if (wps[i].isThrowable)
-			{
-				throwablePoints.add(i);
-			}
-		}
-	}
-	public Fox(WayPoint[] wayPointsArray){
-		this(wayPointsArray, 0);
-	}
-	
-	public int selectNext()
-	{
-		/*
-		 * it wont work if we call not in throwable point	
-		int randomIndex = r.nextInt(throwablePoints.size());
-		int randomElement = throwablePoints.get(randomIndex);
-		throwablePoints.remove(randomIndex);
-		throwablePoints.add(current);
-		return randomElement;
-		//*/
-		if (throwablePoints.indexOf(current) == -1)
-		{
-			
-		} else {
-			
-		}
-		
-		
-		
-		int randomIndex = r.nextInt(throwablePoints.size());
-		while (randomIndex == current)
-		{
-			randomIndex = r.nextInt(throwablePoints.size());
-		}
-		current = randomIndex; // no need in real life
-		return throwablePoints.get(randomIndex);
-		
-	}
+public class Fox extends Entity {
+    public final static int LEFT_DIRECTION = 0;
+    public final static int RIGHT_DIRECTION = 1;
+    
+    private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.35f;
+    private final float ANIMATION_SPEED = 1.0f/8f;
+    private final float RATIO = 1.7f;
+    
+    private MegaAnimatedSprite lieftSprite;
+    private MegaAnimatedSprite rightSprite;
+    
+    private float speed = 0;
+    private int currentDirection = LEFT_DIRECTION;
+    private int fingersNumber = 0;
+    
+    public Fox(float x, float y)
+    {   
+    	super(x, y);
+    	
+    }
+    
+//    @Override
+//    protected void onManagedUpdate(float pSecondsElapsed) {
+//    	super.onManagedUpdate(pSecondsElapsed);
+//    	move(pSecondsElapsed);
+//    }
+//
+//    private void setDirection( int direction )
+//    {
+//        currentDirection = direction;
+//        speed = SPEED;
+//        
+//        switch( currentDirection )
+//        {
+//            case LEFT_DIRECTION:
+//        		lieftSprite.setVisible(true);
+//        		rightSprite.setVisible(false);
+//        		lieftSprite.animate(ANIMATION_SPEED);
+//                break;
+//            case RIGHT_DIRECTION:
+//        		lieftSprite.setVisible(false);
+//        		rightSprite.setVisible(true);
+//        		rightSprite.animate(ANIMATION_SPEED);
+//                break;
+//        }
+//    }
+//    
+//    private void move(float pSecondsElapsed)
+//    {
+//        if( getX() < 0.0f )
+//        {
+//            setPosition(getX()+speed*pSecondsElapsed, getY());
+//            return;
+//        }
+//        if( getX() > ResourcesManager.WORLD_WIDTH - lieftSprite.getWidth() )
+//        {
+//            setPosition(getX()-speed*pSecondsElapsed, getY());
+//            return;
+//        }
+//        switch(currentDirection)
+//        {
+//            case LEFT_DIRECTION:
+//                setPosition(getX()-speed*pSecondsElapsed, getY());
+//                break;
+//            case RIGHT_DIRECTION:
+//                setPosition(getX()+speed*pSecondsElapsed, getY());
+//                break;
+//        }
+//    }
 }
