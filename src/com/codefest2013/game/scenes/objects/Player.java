@@ -18,7 +18,7 @@ public class Player extends Entity implements IOnSceneTouchListener {
     private final float ANIMATION_SPEED = 1.0f/8f;
     private final float RATIO = 1.7f;
     
-    private MegaAnimatedSprite lieftSprite;
+    private MegaAnimatedSprite leftSprite;
     private MegaAnimatedSprite rightSprite;
     
     private float speed = 0;
@@ -31,10 +31,10 @@ public class Player extends Entity implements IOnSceneTouchListener {
     	
         float height = ResourcesManager.CAMERA_HEIGHT/6;
         
-        lieftSprite = new MegaAnimatedSprite(12);
+        leftSprite = new MegaAnimatedSprite(12);
 		for( int i=0; i<10; ++i )
 		{
-			lieftSprite.attachTexture( new Sprite(0, 0, RATIO*height, height,
+			leftSprite.attachTexture( new Sprite(0, 0, RATIO*height, height,
 					ResourcesManager.getInstance().goblinLeftWalk[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
 		}
 		
@@ -45,9 +45,9 @@ public class Player extends Entity implements IOnSceneTouchListener {
 					ResourcesManager.getInstance().goblinRightWalk[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
 		}
 		
-		lieftSprite.setVisible(true);
+		leftSprite.setVisible(true);
 		rightSprite.setVisible(false);
-		attachChild(lieftSprite);
+		attachChild(leftSprite);
 		attachChild(rightSprite);
     }
     
@@ -90,12 +90,12 @@ public class Player extends Entity implements IOnSceneTouchListener {
         switch( currentDirection )
         {
             case LEFT_DIRECTION:
-        		lieftSprite.setVisible(true);
+        		leftSprite.setVisible(true);
         		rightSprite.setVisible(false);
-        		lieftSprite.animate(ANIMATION_SPEED);
+        		leftSprite.animate(ANIMATION_SPEED);
                 break;
             case RIGHT_DIRECTION:
-        		lieftSprite.setVisible(false);
+        		leftSprite.setVisible(false);
         		rightSprite.setVisible(true);
         		rightSprite.animate(ANIMATION_SPEED);
                 break;
@@ -109,7 +109,7 @@ public class Player extends Entity implements IOnSceneTouchListener {
             setPosition(getX()+speed*pSecondsElapsed, getY());
             return;
         }
-        if( getX() > ResourcesManager.WORLD_WIDTH - lieftSprite.getWidth() )
+        if( getX() > ResourcesManager.WORLD_WIDTH - leftSprite.getWidth() )
         {
             setPosition(getX()-speed*pSecondsElapsed, getY());
             return;
@@ -131,7 +131,7 @@ public class Player extends Entity implements IOnSceneTouchListener {
         switch(currentDirection)
         {
             case LEFT_DIRECTION:
-            	lieftSprite.stopAnimation(0);
+            	leftSprite.stopAnimation(0);
                 break;
             case RIGHT_DIRECTION:
                 rightSprite.stopAnimation(0);
