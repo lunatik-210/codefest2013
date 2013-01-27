@@ -53,8 +53,6 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 			attachChild(new Rectangle(wp[i].x*ResourcesManager.WORLD_SCALE_CONSTANT, wp[i].y*ResourcesManager.WORLD_SCALE_CONSTANT, 8, 8, MainActivity.getInstance().getVertexBufferObjectManager()));
 		}
 		
-		
-		
 		registerUpdateHandler(mPlayer);
 		
 		setOnSceneTouchListener(this);
