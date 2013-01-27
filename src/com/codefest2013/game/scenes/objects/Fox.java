@@ -5,15 +5,15 @@ import java.util.Random;
 
 
 public class Fox {
-	private ArrayList<WayPoint> wps;
+	private WayPoint wps[];
 	private ArrayList<Integer> throwablePoints;
 	private int current;
 	private Random r;
-	public Fox(ArrayList<WayPoint> wayPointsArray, int startIndex){
+	public Fox(WayPoint[] wayPointsArray, int startIndex){
 		/*
 		 * i don't know but 
 		 * 
-		if (wayPointsArray.size() < startIndex)
+		if (wayPointsArray.length < startIndex)
 		{
 			throw new Exception("Start index can't be more than count of points");
 		}
@@ -22,15 +22,15 @@ public class Fox {
 		wps = wayPointsArray;
 		current = startIndex;
 		throwablePoints = new ArrayList<Integer>();
-		for(int i=0; i<wps.size(); i++)
+		for(int i=0; i<wps.length; i++)
 		{
-			if (wps.get(i).isThrowable)
+			if (wps[i].isThrowable)
 			{
 				throwablePoints.add(i);
 			}
 		}
 	}
-	public Fox(ArrayList<WayPoint> wayPointsArray){
+	public Fox(WayPoint[] wayPointsArray){
 		this(wayPointsArray, 0);
 	}
 	
