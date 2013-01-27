@@ -1,5 +1,9 @@
 package com.codefest2013.game;
 
+import java.io.IOException;
+
+import org.andengine.audio.music.Music;
+import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.LimitedFPSEngine;
 import org.andengine.engine.camera.BoundCamera;
@@ -26,6 +30,7 @@ public class MainActivity extends BaseGameActivity
     private Scene mMainScene;
     
     private ITextureRegion mSplashTextureRegion;
+    private Music mSplashMusic;
 
     private enum SceneType
     {
@@ -71,6 +76,13 @@ public class MainActivity extends BaseGameActivity
         mSplashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mSplashTextureAtlas, this, "splash.png", 0, 0);
         mSplashTextureAtlas.load();
 
+        MusicFactory.setAssetBasePath("afx/");
+        try {
+        	mSplashMusic = MusicFactory.createMusicFromAsset(getMusicManager(), this, "splashMusic.mp3");
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
+        
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
 
@@ -88,10 +100,10 @@ public class MainActivity extends BaseGameActivity
     @Override
     public void onPopulateScene(Scene pScene, OnPopulateSceneCallback pOnPopulateSceneCallback) throws Exception
     {
-        mEngine.registerUpdateHandler(new TimerHandler(3f, new ITimerCallback() 
+        mEngine.registerUpdateHandler(new TimerHandler(1f, new ITimerCallback() 
         {
             public void onTimePassed(final TimerHandler pTimerHandler) 
-            {
+            {	
                 mEngine.unregisterUpdateHandler(pTimerHandler);
                 ResourcesManager.getInstance().load();
                 loadScenes();
@@ -100,7 +112,6 @@ public class MainActivity extends BaseGameActivity
                 mCurrentScene = SceneType.MAIN;
             }
         }));
-
         pOnPopulateSceneCallback.onPopulateSceneFinished();
     }
     
