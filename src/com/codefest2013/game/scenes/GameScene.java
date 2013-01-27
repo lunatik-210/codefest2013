@@ -3,7 +3,7 @@ package com.codefest2013.game.scenes;
 import com.codefest2013.game.MainActivity;
 import com.codefest2013.game.ResourcesManager;
 import com.codefest2013.game.scenes.objects.Background;
-import com.codefest2013.game.scenes.objects.Fox;
+import com.codefest2013.game.scenes.objects.Squirrel;
 import com.codefest2013.game.scenes.objects.Player;
 import com.codefest2013.game.scenes.objects.WayPoint;
 
@@ -15,7 +15,7 @@ import org.andengine.input.touch.TouchEvent;
 public class GameScene extends Scene implements IOnSceneTouchListener {
 
 	private Player mPlayer = null;
-	private Fox mFox = null;
+	private Squirrel mFox = null;
     private Background mBackground = null;
     
     public GameScene()
