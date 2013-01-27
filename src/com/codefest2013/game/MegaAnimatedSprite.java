@@ -240,6 +240,11 @@ public class MegaAnimatedSprite extends Entity {
 		return this.textures.size();
 	}
 	
+	public Sprite getCurrentSprite()
+	{
+		return currentVisibleSprite;
+	}
+	
 	private void setFrameIndex(int index)
 	{
 		this.textures.get(this.textureIndex).setVisible(false);

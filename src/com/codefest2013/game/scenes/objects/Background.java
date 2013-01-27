@@ -76,19 +76,19 @@ public class Background extends Entity {
 		clockSprite = new MegaAnimatedSprite(10);
 		for( int i=0; i<10; ++i )
 		{
-			getClockSprite().attachTexture( new Sprite(CLOCK_X, CLOCK_Y, CLOCK_WIDTH, CLOCK_HEIGHT,
+			clockSprite.attachTexture( new Sprite(CLOCK_X, CLOCK_Y, CLOCK_WIDTH, CLOCK_HEIGHT,
 					ResourcesManager.getInstance().clock[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
 		}
-		getClockSprite().animate(1.0f / 6f);
-		attachChild(getClockSprite());
+		clockSprite.animate(1.0f / 6f);
+		attachChild(clockSprite);
 		
 		firePlaceSprite = new MegaAnimatedSprite(2);
-		getFirePlaceSprite().attachTexture( new Sprite(FIREPLACE_X, FIREPLACE_Y, FIREPLACE_WIDTH, FIREPLACE_HEIGHT,
+		firePlaceSprite.attachTexture( new Sprite(FIREPLACE_X, FIREPLACE_Y, FIREPLACE_WIDTH, FIREPLACE_HEIGHT,
 				ResourcesManager.getInstance().fireplace1, MainActivity.getInstance().getVertexBufferObjectManager() ) );
-		getFirePlaceSprite().attachTexture( new Sprite(FIREPLACE_X, FIREPLACE_Y, FIREPLACE_WIDTH, FIREPLACE_HEIGHT,
+		firePlaceSprite.attachTexture( new Sprite(FIREPLACE_X, FIREPLACE_Y, FIREPLACE_WIDTH, FIREPLACE_HEIGHT,
 				ResourcesManager.getInstance().fireplace2, MainActivity.getInstance().getVertexBufferObjectManager() ) );
-		getFirePlaceSprite().animate(1.0f / 6f);
-		attachChild(getFirePlaceSprite());
+		firePlaceSprite.animate(1.0f / 6f);
+		attachChild(firePlaceSprite);
 		
 		attachChild( new Sprite(STOCKING_X, STOCKING_Y, STOCKING_WIDTH, STOCKING_HEIGHT, 
 				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
@@ -99,13 +99,14 @@ public class Background extends Entity {
 		attachChild( new Sprite(STOCKING_X + STOCKING_WIDTH*2 + STEP_X*2, STOCKING_Y+STEP_Y*2, STOCKING_WIDTH, STOCKING_HEIGHT, 
 				ResourcesManager.getInstance().stocking, MainActivity.getInstance().getVertexBufferObjectManager() ) );
 	}
-
-	public MegaAnimatedSprite getClockSprite() {
-		return clockSprite;
+	
+	public Sprite getClockSprite() {
+		return clockSprite.getCurrentSprite();
 	}
 
-	public MegaAnimatedSprite getFirePlaceSprite() {
-		return firePlaceSprite;
+	public Sprite getFirePlaceSprite() {
+		return firePlaceSprite.getCurrentSprite();
 	}
+	
 	
 }
