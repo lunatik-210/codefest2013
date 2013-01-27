@@ -20,17 +20,14 @@ import android.util.DisplayMetrics;
 
 public class ResourcesManager {
 	
+	public final static float REAL_WORLD_WIDTH = 2048.0f;
+	public final static float REAL_WORLD_HEIGHT = 990.0f;
+	
     public static float CAMERA_WIDTH;
     public static float CAMERA_HEIGHT;
     public static float WORLD_WIDTH;
     public static float WORLD_HEIGHT;
     
-    /**
-     * it was calculated by size of room(background) image
-     * WORLD_SCALE_CONSTANT = width / height
-     * XXX I think that scaling system is not so well implemented right now 
-     */
-    private static final float PROPORTION_CONSTANT = 2.0686f;
     public static float WORLD_SCALE_CONSTANT;
 
     /**
@@ -95,10 +92,10 @@ public class ResourcesManager {
         CAMERA_WIDTH = displayMetrics.widthPixels;
         CAMERA_HEIGHT = displayMetrics.heightPixels;
 
-        WORLD_WIDTH = CAMERA_HEIGHT * PROPORTION_CONSTANT;
+        WORLD_WIDTH = CAMERA_HEIGHT * (REAL_WORLD_WIDTH/REAL_WORLD_HEIGHT);
         WORLD_HEIGHT = CAMERA_HEIGHT;
 
-        WORLD_SCALE_CONSTANT = WORLD_HEIGHT;
+        WORLD_SCALE_CONSTANT = WORLD_HEIGHT/REAL_WORLD_HEIGHT;
 	}
 	
 	public void load()

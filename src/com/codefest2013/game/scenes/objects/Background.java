@@ -9,39 +9,33 @@ import com.codefest2013.game.ResourcesManager;
 
 public class Background extends Entity {
 	
-	/**
-	 * Relatives coordinates
-	 * x = [0, 2.0686]
-	 * y = [0, 1]
-	 */
+	private final float FIREPLACE_WIDTH = 580.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_HEIGHT = 510.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_X = 1425.6f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_Y = 406.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	
-	private final float FIREPLACE_WIDTH = 0.5858f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float FIREPLACE_HEIGHT = 0.5151f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float FIREPLACE_X = 1.44f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float FIREPLACE_Y = 0.4101f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float TREE_WIDTH = 490.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float TREE_HEIGHT = 774.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float TREE_X = 280.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float TREE_Y = 97.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	
-	private final float TREE_WIDTH = 0.4949f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float TREE_HEIGHT = 0.7818f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float TREE_X = 0.2808f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float TREE_Y = 0.0979f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float CLOCK_WIDTH = 150.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float CLOCK_HEIGHT = 608.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float CLOCK_X = 32.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float CLOCK_Y = 232.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	
-	private final float CLOCK_WIDTH = 0.1515f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float CLOCK_HEIGHT = 0.6141f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float CLOCK_X = 0.0323f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float CLOCK_Y = 0.2343f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float LAMP_WIDTH = 250.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float LAMP_HEIGHT = 170.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float LAMP_X = 870.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float LAMP_Y = 0.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	
-	private final float LAMP_WIDTH = 0.2525f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float LAMP_HEIGHT = 0.1717f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float LAMP_X = 0.8787f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float LAMP_Y = 0.0000f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STOCKING_WIDTH = 90.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STOCKING_HEIGHT = 140.0f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STOCKING_X = 1534.5f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STOCKING_Y = 386.1f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	
-	private final float STOCKING_WIDTH = 0.0909f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float STOCKING_HEIGHT = 0.1414f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float STOCKING_X = 1.5500f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float STOCKING_Y = 0.3900f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	
-	private final float STEP_X = 0.0400f * ResourcesManager.WORLD_SCALE_CONSTANT;
-	private final float STEP_Y = 0.0100f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STEP_X = 39.6f * ResourcesManager.WORLD_SCALE_CONSTANT;
+	private final float STEP_Y = 9.9f * ResourcesManager.WORLD_SCALE_CONSTANT;
 	
 	private MegaAnimatedSprite clockSprite;
 	private MegaAnimatedSprite firePlaceSprite;

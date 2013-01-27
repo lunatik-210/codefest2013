@@ -48,21 +48,21 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
 		float val = Math.abs(mBackground.getFirePlaceSprite().getSceneCenterCoordinates()[0]-mPlayer.getX());
-		val /= 990;
-		if(val > 0.40) {
+		float threshold = 1000.0f*ResourcesManager.WORLD_SCALE_CONSTANT;
+		if(val > threshold) {
 			ResourcesManager.getInstance().fireplaceMusic.setVolume(0.0f);
 		}
 		else {
-			ResourcesManager.getInstance().fireplaceMusic.setVolume(1-(val/0.4f));
+			ResourcesManager.getInstance().fireplaceMusic.setVolume(1-(val/threshold));
 		}
-		
+	
 		val = Math.abs(mBackground.getClockSprite().getSceneCenterCoordinates()[0]-mPlayer.getX());
-		val /= 990;
-		if(val > 0.3) {
+		threshold = 600.0f*ResourcesManager.WORLD_SCALE_CONSTANT;
+		if(val > threshold) {
 			ResourcesManager.getInstance().tickTookMusic.setVolume(0.0f);
 		}
 		else {
-			ResourcesManager.getInstance().tickTookMusic.setVolume(1-(val/0.30f));
+			ResourcesManager.getInstance().tickTookMusic.setVolume(1-(val/threshold));
 		}
 		super.onManagedUpdate(pSecondsElapsed);
 	}
