@@ -22,11 +22,11 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
     	mBackground = new Background();
     	mPlayer = new Player(ResourcesManager.CAMERA_WIDTH/2, 
     			ResourcesManager.CAMERA_HEIGHT-ResourcesManager.CAMERA_HEIGHT/5);
-    	//mFox = new Fox(300,300);
+    	mFox = new Fox(300,300);
     	
     	attachChild(mBackground);
 		attachChild(mPlayer);
-		//attachChild(mFox);
+		attachChild(mFox);
 		
 		registerUpdateHandler(mPlayer);
 		

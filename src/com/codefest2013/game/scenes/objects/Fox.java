@@ -2,6 +2,9 @@ package com.codefest2013.game.scenes.objects;
 
 
 import org.andengine.entity.Entity;
+import org.andengine.entity.sprite.Sprite;
+
+import com.codefest2013.game.MainActivity;
 import com.codefest2013.game.MegaAnimatedSprite;
 import com.codefest2013.game.ResourcesManager;
 
@@ -14,7 +17,7 @@ public class Fox extends Entity {
     private final float ANIMATION_SPEED = 1.0f/8f;
     private final float RATIO = 1.7f;
     
-    private MegaAnimatedSprite lieftSprite;
+    private MegaAnimatedSprite leftSprite;
     private MegaAnimatedSprite rightSprite;
     
     private float speed = 0;
@@ -24,7 +27,27 @@ public class Fox extends Entity {
     public Fox(float x, float y)
     {   
     	super(x, y);
-    	
+        float height = ResourcesManager.CAMERA_HEIGHT/6;
+        
+        leftSprite = new MegaAnimatedSprite(12);
+		for( int i=0; i<10; ++i )
+		{
+			leftSprite.attachTexture( new Sprite(0, 0, RATIO*height, height,
+					ResourcesManager.getInstance().foxLeftWalk[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		}
+		
+		rightSprite = new MegaAnimatedSprite(12);
+		for( int i=0; i<10; ++i )
+		{
+			rightSprite.attachTexture( new Sprite(0, 0, RATIO*height, height,
+					ResourcesManager.getInstance().foxRightWalk[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
+		}
+		
+		leftSprite.setVisible(true);
+		leftSprite.setRotation(45);
+		rightSprite.setVisible(false);
+		attachChild(leftSprite);
+		attachChild(rightSprite);
     }
     
 //    @Override
