@@ -7,10 +7,12 @@ import com.codefest2013.game.scenes.objects.Fox;
 import com.codefest2013.game.scenes.objects.Player;
 import com.codefest2013.game.scenes.objects.WayPoint;
 
+import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.util.color.Color;
 
 public class GameScene extends Scene implements IOnSceneTouchListener {
 
@@ -23,13 +25,12 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
     	mBackground = new Background();
     	mPlayer = new Player(ResourcesManager.CAMERA_WIDTH/2, 
     			ResourcesManager.CAMERA_HEIGHT-ResourcesManager.CAMERA_HEIGHT/5);
-    	//mFox = new Fox(300,300);
+    	
     	
     	attachChild(mBackground);
 		attachChild(mPlayer);
-		//attachChild(mFox);
 		
-		WayPoint wp[] = {
+		WayPoint wps[] = {
 				new WayPoint(100, 220, 0, 0, false),
 				new WayPoint(172, 260, 0, 0, false),
 				new WayPoint(218, 184, 0, 0, false),
@@ -48,10 +49,14 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 				new WayPoint(1654, 210, 0, 0, false)
 		};
 		
-		for(int i=0; i<wp.length; i++)
+		for(int i=0; i<wps.length; i++)
 		{
-			attachChild(new Rectangle(wp[i].x*ResourcesManager.WORLD_SCALE_CONSTANT, wp[i].y*ResourcesManager.WORLD_SCALE_CONSTANT, 8, 8, MainActivity.getInstance().getVertexBufferObjectManager()));
+			wps[i].x = wps[i].x * ResourcesManager.WORLD_SCALE_CONSTANT;
+			wps[i].y = wps[i].y * ResourcesManager.WORLD_SCALE_CONSTANT;
+			attachChild(new Rectangle(wps[i].x, wps[i].y, 8, 8, MainActivity.getInstance().getVertexBufferObjectManager()));
 		}
+		mFox = new Fox(wps);
+		attachChild(mFox);
 		
 		
 		

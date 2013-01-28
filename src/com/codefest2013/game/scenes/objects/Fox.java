@@ -1,101 +1,47 @@
 package com.codefest2013.game.scenes.objects;
 
+import java.util.ArrayList;
+import java.util.Random;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.primitive.Rectangle;
+import org.andengine.util.color.Color;
 
 import com.codefest2013.game.MainActivity;
-import com.codefest2013.game.MegaAnimatedSprite;
-import com.codefest2013.game.ResourcesManager;
-
 
 public class Fox extends Entity {
-    public final static int LEFT_DIRECTION = 0;
-    public final static int RIGHT_DIRECTION = 1;
-    
-    private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.35f;
-    private final float ANIMATION_SPEED = 1.0f/8f;
-    private final float RATIO = 1.7f;
-    
-    private MegaAnimatedSprite leftSprite;
-    private MegaAnimatedSprite rightSprite;
-    
-    private float speed = 0;
-    private int currentDirection = LEFT_DIRECTION;
-    private int fingersNumber = 0;
-    
-    public Fox(float x, float y)
-    {   
-    	super(x, y);
-        float height = ResourcesManager.CAMERA_HEIGHT/6;
-        
-        leftSprite = new MegaAnimatedSprite(12);
-		for( int i=0; i<10; ++i )
+	private WayPoint wps[];
+	private ArrayList<Integer> throwablePoints;
+	private int current;
+	private int goal;
+	private Random r;
+	Rectangle rect;
+	
+	public Fox(WayPoint[] wayPointsArray, int startIndex){
+		r = new Random();
+		wps = wayPointsArray;
+		current = startIndex;
+		throwablePoints = new ArrayList<Integer>();
+		for(int i=0; i<wps.length; i++)
 		{
-			leftSprite.attachTexture( new Sprite(0, 0, RATIO*height, height,
-					ResourcesManager.getInstance().foxLeftWalk[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
+			if (wps[i].isThrowable)
+			{
+				throwablePoints.add(i);
+			}
 		}
-		
-		rightSprite = new MegaAnimatedSprite(12);
-		for( int i=0; i<10; ++i )
-		{
-			rightSprite.attachTexture( new Sprite(0, 0, RATIO*height, height,
-					ResourcesManager.getInstance().foxRightWalk[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
-		}
-		
-		leftSprite.setVisible(true);
-		leftSprite.setRotation(45);
-		rightSprite.setVisible(false);
-		attachChild(leftSprite);
-		attachChild(rightSprite);
-    }
-    
-//    @Override
-//    protected void onManagedUpdate(float pSecondsElapsed) {
-//    	super.onManagedUpdate(pSecondsElapsed);
-//    	move(pSecondsElapsed);
-//    }
-//
-//    private void setDirection( int direction )
-//    {
-//        currentDirection = direction;
-//        speed = SPEED;
-//        
-//        switch( currentDirection )
-//        {
-//            case LEFT_DIRECTION:
-//        		lieftSprite.setVisible(true);
-//        		rightSprite.setVisible(false);
-//        		lieftSprite.animate(ANIMATION_SPEED);
-//                break;
-//            case RIGHT_DIRECTION:
-//        		lieftSprite.setVisible(false);
-//        		rightSprite.setVisible(true);
-//        		rightSprite.animate(ANIMATION_SPEED);
-//                break;
-//        }
-//    }
-//    
-//    private void move(float pSecondsElapsed)
-//    {
-//        if( getX() < 0.0f )
-//        {
-//            setPosition(getX()+speed*pSecondsElapsed, getY());
-//            return;
-//        }
-//        if( getX() > ResourcesManager.WORLD_WIDTH - lieftSprite.getWidth() )
-//        {
-//            setPosition(getX()-speed*pSecondsElapsed, getY());
-//            return;
-//        }
-//        switch(currentDirection)
-//        {
-//            case LEFT_DIRECTION:
-//                setPosition(getX()-speed*pSecondsElapsed, getY());
-//                break;
-//            case RIGHT_DIRECTION:
-//                setPosition(getX()+speed*pSecondsElapsed, getY());
-//                break;
-//        }
-//    }
+		rect = new Rectangle(wps[0].x, wps[0].y, 20, 20, MainActivity.getInstance().getVertexBufferObjectManager());
+		rect.setColor(Color.YELLOW);
+		attachChild(rect);
+	}
+	public Fox(WayPoint[] wayPointsArray){
+		this(wayPointsArray, 0);
+	}
+	
+	public void start(){
+		//TODO: implement
+	} 
+	
+	public void stop(){
+		// TODO: implement
+	}
 }
