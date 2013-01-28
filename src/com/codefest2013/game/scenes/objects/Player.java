@@ -13,8 +13,8 @@ public class Player extends Entity implements IOnSceneTouchListener {
     public final static int LEFT_DIRECTION = 0;
     public final static int RIGHT_DIRECTION = 1;
     
-    private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.35f;
-    private final long ANIMATION_SPEED = 90;
+    private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.30f;
+    private final long ANIMATION_SPEED = 120;
     private final float RATIO = 1.7f;
     
     private AnimatedSprite leftSprite;
