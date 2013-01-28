@@ -7,12 +7,11 @@ import com.codefest2013.game.scenes.objects.Squirrel;
 import com.codefest2013.game.scenes.objects.Player;
 import com.codefest2013.game.scenes.objects.WayPoint;
 
-import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.util.color.Color;
+
 
 public class GameScene extends Scene implements IOnSceneTouchListener {
 
@@ -34,11 +33,11 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 				new WayPoint(100, 220, 0, 0, false),
 				new WayPoint(172, 260, 0, 0, false),
 				new WayPoint(218, 184, 0, 0, false),
-				new WayPoint(274, 76, 0, 0, false),
+				new WayPoint(274, 76, 0, 0, true),
 				new WayPoint(408, 112, 0, 0, false),
 				new WayPoint(476, 260, 0, 0, false),
 				new WayPoint(526, 98, 0, 0, false),
-				new WayPoint(664, 374, 0, 0, false),
+				new WayPoint(664, 374, 0, 0, true),
 				new WayPoint(664, 374, 0, 0, false),
 				new WayPoint(718, 264, 0, 0, false),
 				new WayPoint(950, 262, 0, 0, false),
@@ -46,7 +45,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 				new WayPoint(1082, 494, 0, 0, false),
 				new WayPoint(1282, 522, 0, 0, false),
 				new WayPoint(1364, 480, 0, 0, false),
-				new WayPoint(1654, 210, 0, 0, false)
+				new WayPoint(1654, 210, 0, 0, true)
 		};
 		
 		for(int i=0; i<wps.length; i++)
@@ -57,6 +56,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 		}
 		mSquirrel = new Squirrel(wps);
 		attachChild(mSquirrel);
+		mSquirrel.start();
 		
 		registerUpdateHandler(mPlayer);
 		
