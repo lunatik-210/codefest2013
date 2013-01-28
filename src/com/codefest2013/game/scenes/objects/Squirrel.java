@@ -9,7 +9,7 @@ import org.andengine.util.color.Color;
 
 import com.codefest2013.game.MainActivity;
 
-public class Fox extends Entity {
+public class Squirrel extends Entity {
 	private WayPoint wps[];
 	private ArrayList<Integer> throwablePoints;
 	private int current;
@@ -17,7 +17,7 @@ public class Fox extends Entity {
 	private Random r;
 	Rectangle rect;
 	
-	public Fox(WayPoint[] wayPointsArray, int startIndex){
+	public Squirrel(WayPoint[] wayPointsArray, int startIndex){
 		r = new Random();
 		wps = wayPointsArray;
 		current = startIndex;
@@ -33,7 +33,7 @@ public class Fox extends Entity {
 		rect.setColor(Color.YELLOW);
 		attachChild(rect);
 	}
-	public Fox(WayPoint[] wayPointsArray){
+	public Squirrel(WayPoint[] wayPointsArray){
 		this(wayPointsArray, 0);
 	}
 		
@@ -46,7 +46,7 @@ public class Fox extends Entity {
 	}
 	
 	private WayPoint getNextThrowablePoint(){
-		
+		return null;
 	}
 	
 	

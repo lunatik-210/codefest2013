@@ -3,7 +3,7 @@ package com.codefest2013.game.scenes;
 import com.codefest2013.game.MainActivity;
 import com.codefest2013.game.ResourcesManager;
 import com.codefest2013.game.scenes.objects.Background;
-import com.codefest2013.game.scenes.objects.Fox;
+import com.codefest2013.game.scenes.objects.Squirrel;
 import com.codefest2013.game.scenes.objects.Player;
 import com.codefest2013.game.scenes.objects.WayPoint;
 
@@ -17,7 +17,7 @@ import org.andengine.util.color.Color;
 public class GameScene extends Scene implements IOnSceneTouchListener {
 
 	private Player mPlayer = null;
-	private Fox mFox = null;
+	private Squirrel mSquirrel = null;
     private Background mBackground = null;
     
     public GameScene()
@@ -55,10 +55,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 			wps[i].y = wps[i].y * ResourcesManager.WORLD_SCALE_CONSTANT;
 			attachChild(new Rectangle(wps[i].x, wps[i].y, 8, 8, MainActivity.getInstance().getVertexBufferObjectManager()));
 		}
-		mFox = new Fox(wps);
-		attachChild(mFox);
-		
-		
+		mSquirrel = new Squirrel(wps);
+		attachChild(mSquirrel);
 		
 		registerUpdateHandler(mPlayer);
 		
