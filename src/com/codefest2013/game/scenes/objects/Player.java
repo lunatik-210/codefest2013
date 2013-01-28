@@ -3,11 +3,10 @@ package com.codefest2013.game.scenes.objects;
 import org.andengine.entity.Entity;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.input.touch.TouchEvent;
 
 import com.codefest2013.game.MainActivity;
-import com.codefest2013.game.MegaAnimatedSprite;
 import com.codefest2013.game.ResourcesManager;
 
 public class Player extends Entity implements IOnSceneTouchListener {
@@ -15,11 +14,11 @@ public class Player extends Entity implements IOnSceneTouchListener {
     public final static int RIGHT_DIRECTION = 1;
     
     private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.35f;
-    private final float ANIMATION_SPEED = 1.0f/8f;
+    private final long ANIMATION_SPEED = 90;
     private final float RATIO = 1.7f;
     
-    private MegaAnimatedSprite leftSprite;
-    private MegaAnimatedSprite rightSprite;
+    private AnimatedSprite leftSprite;
+    private AnimatedSprite rightSprite;
     
     private float speed = 0;
     private int currentDirection = LEFT_DIRECTION;
@@ -31,20 +30,14 @@ public class Player extends Entity implements IOnSceneTouchListener {
     	
         float height = ResourcesManager.CAMERA_HEIGHT/6;
         
-        leftSprite = new MegaAnimatedSprite(12);
-		for( int i=0; i<10; ++i )
-		{
-			leftSprite.attachTexture( new Sprite(0, 0, RATIO*height, height,
-					ResourcesManager.getInstance().goblinLeftWalk[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
-		}
-		
-		rightSprite = new MegaAnimatedSprite(12);
-		for( int i=0; i<10; ++i )
-		{
-			rightSprite.attachTexture( new Sprite(0, 0, RATIO*height, height,
-					ResourcesManager.getInstance().goblinRightWalk[i], MainActivity.getInstance().getVertexBufferObjectManager() ) );
-		}
-		
+        leftSprite = new AnimatedSprite(0, 0, RATIO*height, height, 
+        		ResourcesManager.getInstance().goblinTiledLeftWalk,
+        		MainActivity.getInstance().getVertexBufferObjectManager());
+        
+        rightSprite = new AnimatedSprite(0, 0, RATIO*height, height,
+        		ResourcesManager.getInstance().goblinTiledRightWalk,
+        		MainActivity.getInstance().getVertexBufferObjectManager());
+
 		leftSprite.setVisible(true);
 		rightSprite.setVisible(false);
 		attachChild(leftSprite);

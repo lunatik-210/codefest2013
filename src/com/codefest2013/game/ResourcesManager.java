@@ -13,6 +13,7 @@ import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtla
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.util.debug.Debug;
 
@@ -38,6 +39,9 @@ public class ResourcesManager {
     
     public ITextureRegion[] foxLeftWalk = new ITextureRegion[12];
     public ITextureRegion[] foxRightWalk = new ITextureRegion[12];
+    
+    public ITiledTextureRegion goblinTiledLeftWalk;
+    public ITiledTextureRegion goblinTiledRightWalk;
     
     /**
      * Parts of background image
@@ -227,6 +231,28 @@ public class ResourcesManager {
         	String name = "fox/rightWalk/" + i + ".png";
         	foxRightWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, instance, name);
         }
+        try {
+            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+            mBuildableBitmapTextureAtlas.load();
+        } catch (final TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        
+        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        goblinTiledRightWalk = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mBuildableBitmapTextureAtlas, instance, 
+        		"goblin/rightWalk/rightWalk.png", 3, 4);
+        try {
+            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+            mBuildableBitmapTextureAtlas.load();
+        } catch (final TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }        
+        
+        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        goblinTiledLeftWalk = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mBuildableBitmapTextureAtlas, instance, 
+        		"goblin/leftWalk/leftWalk.png", 3, 4);
         try {
             mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
             mBuildableBitmapTextureAtlas.load();
