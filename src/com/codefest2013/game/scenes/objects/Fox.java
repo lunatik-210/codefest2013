@@ -36,7 +36,7 @@ public class Fox extends Entity {
 	public Fox(WayPoint[] wayPointsArray){
 		this(wayPointsArray, 0);
 	}
-	
+		
 	public void start(){
 		//TODO: implement
 	} 
@@ -44,4 +44,10 @@ public class Fox extends Entity {
 	public void stop(){
 		// TODO: implement
 	}
+	
+	private WayPoint getNextThrowablePoint(){
+		
+	}
+	
+	
 }
