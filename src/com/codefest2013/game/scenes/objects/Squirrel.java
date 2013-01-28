@@ -10,15 +10,15 @@ import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.util.color.Color;
+import org.andengine.util.debug.Debug;
 
 import com.codefest2013.game.MainActivity;
 
 public class Squirrel extends Entity {
 	private WayPoint wps[];
 	private ArrayList<Integer> throwablePoints;
-	private ArrayList<WayPoint> currentWay;
-	private int current;
-	//private int goal;
+	private ArrayList<Integer> currentWay;
+	private int currentIndex;
 	private Random r;
 	Rectangle rect;
 	IPathModifierListener modifierListener;
@@ -26,9 +26,9 @@ public class Squirrel extends Entity {
 	public Squirrel(WayPoint[] wayPointsArray, int startIndex){
 		r = new Random();
 		wps = wayPointsArray;
-		current = startIndex;
+		currentIndex = startIndex;
 		throwablePoints = new ArrayList<Integer>();
-		currentWay = new ArrayList<WayPoint>();
+		currentWay = new ArrayList<Integer>();
 		for(int i=0; i<wps.length; i++)
 		{
 			if (wps[i].isThrowable)
@@ -83,28 +83,35 @@ public class Squirrel extends Entity {
 	
 	private void setNextGoal(){
 		int randIndex = throwablePoints.get(r.nextInt(throwablePoints.size()));
-		if (current > randIndex){
-			do {
-				current--;
-				currentWay.add(wps[current]);
-			} while (current > randIndex);
-		} else if (current < randIndex) {
-			do {
-				current++;
-				currentWay.add(wps[current]);
-			} while (current < randIndex);
-		} else {
-			setNextGoal(); // :>
+		int indexDiff = randIndex - currentIndex;
+		if (indexDiff == 0) {
+			//Debug.d("dbg", "Recursively call setNextGoal");
+			setNextGoal();
 		}
+		int indexModifier;
+		
+		if (currentIndex > randIndex){
+			indexModifier = -1;
+		} else {
+			indexModifier = 1;
+		}
+		do {
+			currentWay.add(currentIndex);
+			currentIndex += indexModifier;
+			Debug.d("dbg", "do: " + currentIndex + " != " + randIndex);
+		} while (currentIndex != randIndex);
 		
 		Path path = new Path(currentWay.size());
 		for (int i = 0; i < currentWay.size(); i++) {
-			path.to(currentWay.get(i).x, currentWay.get(i).y);
+			int indexInWps = currentWay.get(i);
+			path.to(wps[indexInWps].x, wps[indexInWps].y);
 		}
 		PathModifier pathModifier = new PathModifier(5, path, modifierListener);
 		pathModifier.setAutoUnregisterWhenFinished(true);
 		rect.registerEntityModifier(pathModifier);
 	}
-	
+	private float getLengthOfCurrentPath() {
+		return 5f;
+	}
 	
 }
