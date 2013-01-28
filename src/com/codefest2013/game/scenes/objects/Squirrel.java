@@ -61,7 +61,6 @@ public class Squirrel extends Entity {
 			
 			@Override
 			public void onPathFinished(PathModifier pPathModifier, IEntity pEntity) {
-				pEntity.clearEntityModifiers();
 				currentWay.clear();
 				setNextGoal();
 			}
