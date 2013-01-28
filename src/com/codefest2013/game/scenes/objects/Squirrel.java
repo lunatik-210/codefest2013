@@ -28,7 +28,7 @@ public class Squirrel extends Entity {
 		r = new Random();
 		wps = wayPointsArray;
 		currentIndex = startIndex;
-		speed = 40;
+		speed = 90;
 		throwablePoints = new ArrayList<Integer>();
 		currentWay = new ArrayList<Integer>();
 		for(int i=0; i<wps.length; i++)
@@ -62,6 +62,7 @@ public class Squirrel extends Entity {
 			@Override
 			public void onPathFinished(PathModifier pPathModifier, IEntity pEntity) {
 				currentWay.clear();
+				Debug.d("dbg", "restart " + currentIndex);
 				setNextGoal();
 			}
 		};
@@ -112,6 +113,7 @@ public class Squirrel extends Entity {
 		pathModifier.setAutoUnregisterWhenFinished(true);
 		rect.registerEntityModifier(pathModifier);
 	}
+	
 	private float getDimensionOfCurrentPath(int speed) {
 		float pathLength = 0;
 		if (currentWay.size() < 2){
