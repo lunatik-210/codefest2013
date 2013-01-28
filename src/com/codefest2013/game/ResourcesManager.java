@@ -34,15 +34,12 @@ public class ResourcesManager {
     /**
      * Goblin animation
      */
-    public ITextureRegion[] goblinLeftWalk = new ITextureRegion[12];
-    public ITextureRegion[] goblinRightWalk = new ITextureRegion[12];
-    
-    public ITextureRegion[] foxLeftWalk = new ITextureRegion[12];
-    public ITextureRegion[] foxRightWalk = new ITextureRegion[12];
-    
     public ITiledTextureRegion goblinTiledLeftWalk;
     public ITiledTextureRegion goblinTiledRightWalk;
     
+    public ITextureRegion[] foxLeftWalk = new ITextureRegion[12];
+    public ITextureRegion[] foxRightWalk = new ITextureRegion[12];
+       
     /**
      * Parts of background image
      */
@@ -181,32 +178,6 @@ public class ResourcesManager {
         
         BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        // rightWalk goblin
-        for(int i=0; i<12; ++i)
-        {
-        	String name = "goblin/rightWalk/" + i + ".png";
-        	goblinRightWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, instance, name);
-        }
-        try {
-            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
-            mBuildableBitmapTextureAtlas.load();
-        } catch (final TextureAtlasBuilderException e) {
-            Debug.e(e);
-        }
-        // leftWalk goblin
-        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        for(int i=0; i<12; ++i)
-        {
-        	String name = "goblin/leftWalk/" + i + ".png";
-        	goblinLeftWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, instance, name);
-        }
-        try {
-            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
-            mBuildableBitmapTextureAtlas.load();
-        } catch (final TextureAtlasBuilderException e) {
-            Debug.e(e);
-        }
         
         // leftWalk fox
         mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(instance.getTextureManager(), 1024, 1024, 
