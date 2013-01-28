@@ -9,9 +9,9 @@ import org.andengine.entity.modifier.CardinalSplineMoveModifier;
 import org.andengine.entity.modifier.CardinalSplineMoveModifier.CardinalSplineMoveModifierConfig;
 import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.andengine.entity.modifier.PathModifier;
+import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.andengine.entity.primitive.Rectangle;
-import org.andengine.util.algorithm.path.Path;
 import org.andengine.util.color.Color;
 
 import com.codefest2013.game.MainActivity;
@@ -61,6 +61,7 @@ public class Squirrel extends Entity {
 			
 			@Override
 			public void onPathFinished(PathModifier pPathModifier, IEntity pEntity) {
+				pEntity.clearEntityModifiers();
 				currentWay.clear();
 				setNextGoal();
 			}
@@ -100,7 +101,8 @@ public class Squirrel extends Entity {
 		} else {
 			setNextGoal(); // :>
 		}
-		org.andengine.entity.modifier.PathModifier.Path path = new org.andengine.entity.modifier.PathModifier.Path(currentWay.size());
+		
+		Path path = new Path(currentWay.size());
 		for (int i = 0; i < currentWay.size(); i++) {
 			path.to(currentWay.get(i).x, currentWay.get(i).y);
 		}
