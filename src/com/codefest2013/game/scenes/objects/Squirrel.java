@@ -13,6 +13,8 @@ import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.util.color.Color;
+import org.andengine.util.debug.Debug;
+import org.andengine.util.modifier.IModifier;
 
 import com.codefest2013.game.MainActivity;
 
@@ -25,6 +27,7 @@ public class Squirrel extends Entity {
 	private Random r;
 	Rectangle rect;
 	IPathModifierListener modifierListener;
+	IEntityModifierListener modifierListener2;
 	
 	public Squirrel(WayPoint[] wayPointsArray, int startIndex){
 		r = new Random();
@@ -39,6 +42,7 @@ public class Squirrel extends Entity {
 				throwablePoints.add(i);
 			}
 		}
+		/*
 		modifierListener = new IPathModifierListener() {
 			
 			@Override
@@ -66,8 +70,21 @@ public class Squirrel extends Entity {
 				setNextGoal();
 			}
 		};
+		*/
 		
-		
+		modifierListener2 = new IEntityModifierListener() {
+			@Override
+			public void onModifierStarted(IModifier<IEntity> arg0, IEntity arg1) {
+				arg1.setColor(Color.GREEN);
+			}
+			
+			@Override
+			public void onModifierFinished(IModifier<IEntity> arg0, IEntity arg1) {
+				arg1.clearEntityModifiers();
+				currentWay.clear();
+				setNextGoal();
+			}
+		};
 		
 		
 		rect = new Rectangle(wps[0].x, wps[0].y, 20, 20, MainActivity.getInstance().getVertexBufferObjectManager());
@@ -101,13 +118,35 @@ public class Squirrel extends Entity {
 		} else {
 			setNextGoal(); // :>
 		}
-		
+		/*
 		Path path = new Path(currentWay.size());
 		for (int i = 0; i < currentWay.size(); i++) {
 			path.to(currentWay.get(i).x, currentWay.get(i).y);
 		}
 		PathModifier pathModifier = new PathModifier(5, path, modifierListener);
-		rect.registerEntityModifier(pathModifier);
+		*/
+		final int controlPointCount = currentWay.size();
+		
+		if( controlPointCount < 4 )
+		{
+			Debug.d("Less Controll points: " + controlPointCount);
+			setNextGoal();
+		}
+		else
+		{
+			Debug.d("Controll points: " + controlPointCount);
+			
+			final float tension = 0.0f;
+			
+			CardinalSplineMoveModifierConfig config = new CardinalSplineMoveModifierConfig(controlPointCount, tension);
+			for (int i = 0; i < currentWay.size(); i++) {
+				config.setControlPoint(i, currentWay.get(i).x, currentWay.get(i).y);
+			}
+			
+			CardinalSplineMoveModifier modifier = new CardinalSplineMoveModifier(5, config, modifierListener2);
+			
+			rect.registerEntityModifier(modifier);
+		}
 	}
 	
 	
