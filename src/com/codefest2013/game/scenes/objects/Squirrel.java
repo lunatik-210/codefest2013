@@ -46,7 +46,8 @@ public class Squirrel extends Entity {
 	}
 	
 	private WayPoint getNextThrowablePoint(){
-		return null;
+		int randIndex = r.nextInt(throwablePoints.size());
+		return wps[throwablePoints.get(randIndex)];
 	}
 	
 	
