@@ -20,6 +20,7 @@ public class Squirrel extends Entity {
 	private ArrayList<Integer> currentWay;
 	private int currentIndex;
 	private Random r;
+	private int speed; // pixels per second 
 	Rectangle rect;
 	IPathModifierListener modifierListener;
 	
@@ -27,6 +28,7 @@ public class Squirrel extends Entity {
 		r = new Random();
 		wps = wayPointsArray;
 		currentIndex = startIndex;
+		speed = 40;
 		throwablePoints = new ArrayList<Integer>();
 		currentWay = new ArrayList<Integer>();
 		for(int i=0; i<wps.length; i++)
@@ -106,12 +108,24 @@ public class Squirrel extends Entity {
 			int indexInWps = currentWay.get(i);
 			path.to(wps[indexInWps].x, wps[indexInWps].y);
 		}
-		PathModifier pathModifier = new PathModifier(5, path, modifierListener);
+		PathModifier pathModifier = new PathModifier(getDimensionOfCurrentPath(), path, modifierListener);
 		pathModifier.setAutoUnregisterWhenFinished(true);
 		rect.registerEntityModifier(pathModifier);
 	}
-	private float getLengthOfCurrentPath() {
-		return 5f;
+	private float getDimensionOfCurrentPath(int speed) {
+		float pathLength = 0;
+		if (currentWay.size() < 2){
+			return 0f;
+		}
+		for (int i = 1; i < currentWay.size(); i++) {
+			WayPoint previous = wps[currentWay.get(i - 1)];
+			WayPoint next = wps[currentWay.get(i)];
+			pathLength += Math.sqrt(Math.pow(next.x-previous.x, 2)  +  Math.pow(next.y-previous.y, 2));
+		}
+		return pathLength/speed;
+	}
+	private float getDimensionOfCurrentPath() {
+		return getDimensionOfCurrentPath(this.speed);
 	}
 	
 }
