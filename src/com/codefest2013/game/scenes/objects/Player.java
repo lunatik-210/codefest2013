@@ -83,8 +83,8 @@ public class Player extends Entity implements IOnSceneTouchListener {
         switch( currentDirection )
         {
             case LEFT_DIRECTION:
+            	rightSprite.setVisible(false);
         		leftSprite.setVisible(true);
-        		rightSprite.setVisible(false);
         		leftSprite.animate(ANIMATION_SPEED);
                 break;
             case RIGHT_DIRECTION:
