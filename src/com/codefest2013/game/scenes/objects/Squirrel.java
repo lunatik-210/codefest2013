@@ -5,7 +5,6 @@ import java.util.Random;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
-import org.andengine.entity.modifier.IEntityModifier.IEntityModifierListener;
 import org.andengine.entity.modifier.PathModifier;
 import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
@@ -23,7 +22,6 @@ public class Squirrel extends Entity {
 	private Random r;
 	Rectangle rect;
 	IPathModifierListener modifierListener;
-	IEntityModifierListener modifierListener2;
 	
 	public Squirrel(WayPoint[] wayPointsArray, int startIndex){
 		r = new Random();
