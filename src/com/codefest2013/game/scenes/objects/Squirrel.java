@@ -64,6 +64,7 @@ public class Squirrel extends Entity {
 				currentWay.clear();
 				Debug.d("dbg", "restart " + currentIndex);
 				setNextGoal();
+				Debug.d("dbg_past", "restart " + currentIndex);
 			}
 		};
 		
@@ -90,6 +91,7 @@ public class Squirrel extends Entity {
 		if (indexDiff == 0) {
 			//Debug.d("dbg", "Recursively call setNextGoal");
 			setNextGoal();
+			return;
 		}
 		int indexModifier;
 		
