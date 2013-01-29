@@ -104,8 +104,7 @@ public class Squirrel extends Entity {
 	} 
 	
 	public void stop(){
-		// TODO: implement
-		
+		rect.clearEntityModifiers(); // not tested
 	}
 	
 	private void setNextGoal(){
