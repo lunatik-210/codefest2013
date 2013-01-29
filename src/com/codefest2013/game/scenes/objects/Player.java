@@ -97,15 +97,17 @@ public class Player extends Entity implements IOnSceneTouchListener {
     
     private void move(float pSecondsElapsed)
     {
-        if( getX() < 0.0f || getX() > ResourcesManager.WORLD_WIDTH - leftSprite.getWidth())
+    	final float leftCorner = 0.0f;
+    	final float rightCorner = ResourcesManager.WORLD_WIDTH - leftSprite.getWidth();
+        if( getX() < leftCorner || getX() > rightCorner)
         {
             switch(currentDirection)
             {
 		        case LEFT_DIRECTION:
-		            setPosition(getX()+1, getY());
+		            setPosition(leftCorner+1, getY());
 		            break;
 		        case RIGHT_DIRECTION:
-		            setPosition(getX()-1, getY());
+		            setPosition(rightCorner-1, getY());
 		            break;
             }
             stop();
