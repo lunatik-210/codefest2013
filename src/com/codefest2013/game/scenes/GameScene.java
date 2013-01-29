@@ -40,7 +40,7 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 				new WayPoint(474, 256, 0, 0, true),
 				new WayPoint(512, 182, 0, 0, false),
 				new WayPoint(526, 126, 0, 0, false),
-				new WayPoint(598, 210, 0, 0, false),
+				new WayPoint(548, 210, 0, 0, false),
 				new WayPoint(595, 286, 0, 0, true),
 				new WayPoint(632, 366, 0, 0, false),
 				new WayPoint(668, 372, 0, 0, false),
