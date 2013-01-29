@@ -19,7 +19,7 @@ public class Squirrel extends Entity {
 	private enum Direction {
 		RIGHT,
 		LEFT
-	} 
+	}
 	private WayPoint wps[];
 	private ArrayList<Integer> throwablePoints;
 	private ArrayList<Integer> currentWay;
@@ -159,6 +159,7 @@ public class Squirrel extends Entity {
 		}
 		return pathLength/speed;
 	}
+	
 	private float getDimensionOfCurrentPath() {
 		return getDimensionOfCurrentPath(this.speed);
 	}
