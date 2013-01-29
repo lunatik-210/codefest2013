@@ -13,7 +13,7 @@ public class Player extends Entity implements IOnSceneTouchListener {
     public final static int LEFT_DIRECTION = 0;
     public final static int RIGHT_DIRECTION = 1;
     
-    private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.30f;
+    private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.007f;
     private final long ANIMATION_SPEED = 120;
     private final float RATIO = 1.7f;
     
@@ -97,23 +97,26 @@ public class Player extends Entity implements IOnSceneTouchListener {
     
     private void move(float pSecondsElapsed)
     {
-        if( getX() < 0.0f )
+        if( getX() < 0.0f || getX() > ResourcesManager.WORLD_WIDTH - leftSprite.getWidth())
         {
-            setPosition(getX()+speed*pSecondsElapsed, getY());
-            return;
-        }
-        if( getX() > ResourcesManager.WORLD_WIDTH - leftSprite.getWidth() )
-        {
-            setPosition(getX()-speed*pSecondsElapsed, getY());
-            return;
+            switch(currentDirection)
+            {
+		        case LEFT_DIRECTION:
+		            setPosition(getX()+1, getY());
+		            break;
+		        case RIGHT_DIRECTION:
+		            setPosition(getX()-1, getY());
+		            break;
+            }
+            stop();
         }
         switch(currentDirection)
         {
             case LEFT_DIRECTION:
-                setPosition(getX()-speed*pSecondsElapsed, getY());
+                setPosition(getX()-speed, getY());
                 break;
             case RIGHT_DIRECTION:
-                setPosition(getX()+speed*pSecondsElapsed, getY());
+                setPosition(getX()+speed, getY());
                 break;
         }
     }
