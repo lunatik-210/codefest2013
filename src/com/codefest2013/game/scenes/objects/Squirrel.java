@@ -15,20 +15,29 @@ import org.andengine.util.debug.Debug;
 import com.codefest2013.game.MainActivity;
 
 public class Squirrel extends Entity {
+	
+	private enum Direction {
+		RIGHT,
+		LEFT
+	} 
 	private WayPoint wps[];
 	private ArrayList<Integer> throwablePoints;
 	private ArrayList<Integer> currentWay;
 	private int currentIndex;
 	private Random r;
-	private int speed; // pixels per second 
+	private int speed; // pixels per second.
+	private Direction currDirection = Direction.RIGHT;
+	
+	
 	Rectangle rect;
 	IPathModifierListener modifierListener;
 	
-	public Squirrel(WayPoint[] wayPointsArray, int startIndex){
-		r = new Random();
+	public Squirrel(WayPoint[] wayPointsArray, int startIndex, int speed){
 		wps = wayPointsArray;
 		currentIndex = startIndex;
-		speed = 90;
+		this.speed = speed;
+		
+		r = new Random();
 		throwablePoints = new ArrayList<Integer>();
 		currentWay = new ArrayList<Integer>();
 		for(int i=0; i<wps.length; i++)
@@ -42,9 +51,7 @@ public class Squirrel extends Entity {
 		modifierListener = new IPathModifierListener() {
 			
 			@Override
-			public void onPathWaypointStarted(PathModifier pPathModifier, IEntity pEntity, int index) {
-				// TODO Auto-generated method stub
-				
+			public void onPathWaypointStarted(PathModifier pPathModifier, IEntity pEntity, int index) {		
 			}
 			
 			@Override
@@ -54,9 +61,7 @@ public class Squirrel extends Entity {
 			}
 			
 			@Override
-			public void onPathStarted(PathModifier pPathModifier, IEntity pEntity) {
-				// TODO Auto-generated method stub
-				
+			public void onPathStarted(PathModifier pPathModifier, IEntity pEntity) {	
 			}
 			
 			@Override
@@ -72,6 +77,11 @@ public class Squirrel extends Entity {
 		rect.setColor(Color.YELLOW);
 		attachChild(rect);
 	}
+	
+	public Squirrel(WayPoint[] wayPointsArray, int startIndex){
+		this(wayPointsArray, 0, 100);
+	}
+	
 	public Squirrel(WayPoint[] wayPointsArray){
 		this(wayPointsArray, 0);
 	}
