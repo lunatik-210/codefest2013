@@ -56,7 +56,20 @@ public class Squirrel extends Entity {
 			
 			@Override
 			public void onPathWaypointFinished(PathModifier pPathModifier, IEntity pEntity, int index) {
-				pEntity.setColor(Color.GREEN);
+				int indexInWps = currentWay.get(index);
+				WayPoint wp = wps[indexInWps];
+				switch (currDirection) {
+				case RIGHT:
+					rotate(wp.rangle);
+					Debug.d("dbg", "wp: x:" + wp.x + " y: " + wp.y + " direction: right");
+					break;
+				case LEFT:
+					rotate(wp.langle);
+					Debug.d("dbg", "wp: x:" + wp.x + " y: " + wp.y + " direction: left");
+					break;
+				default:
+					Debug.e("Unknown direction from OnPathWaypointFinished");
+				}
 				
 			}
 			
@@ -106,8 +119,10 @@ public class Squirrel extends Entity {
 		int indexModifier;
 		
 		if (currentIndex > randIndex){
+			currDirection = Direction.LEFT;
 			indexModifier = -1;
 		} else {
+			currDirection = Direction.RIGHT;
 			indexModifier = 1;
 		}
 		do {
@@ -140,6 +155,10 @@ public class Squirrel extends Entity {
 	}
 	private float getDimensionOfCurrentPath() {
 		return getDimensionOfCurrentPath(this.speed);
+	}
+	
+	private void rotate(float angle){
+		rect.setRotation(angle);
 	}
 	
 }
