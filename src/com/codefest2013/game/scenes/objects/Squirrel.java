@@ -130,14 +130,21 @@ public class Squirrel extends Entity {
 			Debug.d("dbg", "do: " + currentIndex + " != " + randIndex);
 		} while (currentIndex != randIndex);
 		
-		Path path = new Path(currentWay.size());
-		for (int i = 0; i < currentWay.size(); i++) {
-			int indexInWps = currentWay.get(i);
-			path.to(wps[indexInWps].x, wps[indexInWps].y);
-		}
+		Path path = formPath();
 		PathModifier pathModifier = new PathModifier(getDimensionOfCurrentPath(), path, modifierListener);
 		pathModifier.setAutoUnregisterWhenFinished(true);
 		rect.registerEntityModifier(pathModifier);
+	}
+	
+	private Path formPath(){
+		Path path = new Path(currentWay.size());
+		for (int i = 0; i < currentWay.size(); i++) {
+			int indexInWps = currentWay.get(i);
+			float realX = wps[indexInWps].x - rect.getWidth()/2;
+			float realY = wps[indexInWps].y - rect.getHeight();
+			path.to(realX, realY);
+		}
+		return path;
 	}
 	
 	private float getDimensionOfCurrentPath(int speed) {
