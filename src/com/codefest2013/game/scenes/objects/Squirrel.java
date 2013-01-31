@@ -12,7 +12,7 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.util.color.Color;
 import org.andengine.util.debug.Debug;
 
-import com.codefest2013.game.MainActivity;
+import com.codefest2013.game.ResourceManager;
 
 public class Squirrel extends Entity {
 	
@@ -27,10 +27,10 @@ public class Squirrel extends Entity {
 	private Random r;
 	private int speed; // pixels per second.
 	private Direction currDirection = Direction.RIGHT;
+	private ResourceManager mResourceManager = ResourceManager.getInstance();
 	
-	
-	Rectangle rect;
-	IPathModifierListener modifierListener;
+	private Rectangle rect;
+	private IPathModifierListener modifierListener;
 	
 	public Squirrel(WayPoint[] wayPointsArray, int startIndex, int speed){
 		wps = wayPointsArray;
@@ -86,7 +86,7 @@ public class Squirrel extends Entity {
 			}
 		};
 		
-		rect = new Rectangle(wps[0].x, wps[0].y, 20, 20, MainActivity.getInstance().getVertexBufferObjectManager());
+		rect = new Rectangle(wps[0].x, wps[0].y, 20, 20, mResourceManager.engine.getVertexBufferObjectManager());
 		rect.setColor(Color.YELLOW);
 		attachChild(rect);
 	}

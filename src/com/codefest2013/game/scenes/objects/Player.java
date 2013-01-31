@@ -6,14 +6,15 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.input.touch.TouchEvent;
 
-import com.codefest2013.game.MainActivity;
-import com.codefest2013.game.ResourcesManager;
+import com.codefest2013.game.ResourceManager;
 
 public class Player extends Entity implements IOnSceneTouchListener {
+	private ResourceManager mResourceManager = ResourceManager.getInstance();
+	
     public final static int LEFT_DIRECTION = 0;
     public final static int RIGHT_DIRECTION = 1;
     
-    private final float SPEED = ResourcesManager.CAMERA_WIDTH*0.007f;
+    private final float SPEED = mResourceManager.CAMERA_WIDTH*0.007f;
     private final long ANIMATION_SPEED = 120;
     private final float RATIO = 1.7f;
     
@@ -28,15 +29,15 @@ public class Player extends Entity implements IOnSceneTouchListener {
     {   
     	super(x, y);
     	
-        float height = ResourcesManager.CAMERA_HEIGHT/6;
+        float height = mResourceManager.CAMERA_HEIGHT/6;
         
         leftSprite = new AnimatedSprite(0, 0, RATIO*height, height, 
-        		ResourcesManager.getInstance().goblinTiledLeftWalk,
-        		MainActivity.getInstance().getVertexBufferObjectManager());
+        		mResourceManager.goblinTiledLeftWalk,
+        		mResourceManager.engine.getVertexBufferObjectManager());
         
         rightSprite = new AnimatedSprite(0, 0, RATIO*height, height,
-        		ResourcesManager.getInstance().goblinTiledRightWalk,
-        		MainActivity.getInstance().getVertexBufferObjectManager());
+        		mResourceManager.goblinTiledRightWalk,
+        		mResourceManager.engine.getVertexBufferObjectManager());
 
 		leftSprite.setVisible(true);
 		rightSprite.setVisible(false);
@@ -56,7 +57,7 @@ public class Player extends Entity implements IOnSceneTouchListener {
         {
             case TouchEvent.ACTION_DOWN:
                 ++fingersNumber;
-                if( arg1.getX() < MainActivity.getInstance().mCamera.getCenterX() )
+                if( arg1.getX() < mResourceManager.engine.getCamera().getCenterX() )
                 {
                 	setDirection(LEFT_DIRECTION);
                 }
@@ -98,7 +99,7 @@ public class Player extends Entity implements IOnSceneTouchListener {
     private void move(float pSecondsElapsed)
     {
     	final float leftCorner = 0.0f;
-    	final float rightCorner = ResourcesManager.WORLD_WIDTH - leftSprite.getWidth();
+    	final float rightCorner = mResourceManager.WORLD_WIDTH - leftSprite.getWidth();
         if( getX() < leftCorner || getX() > rightCorner)
         {
             switch(currentDirection)

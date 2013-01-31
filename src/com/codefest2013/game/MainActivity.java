@@ -19,6 +19,7 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
+import org.andengine.util.debug.Debug;
 
 import com.codefest2013.game.scenes.GameScene;
 import com.codefest2013.game.scenes.SplashScene;
@@ -32,6 +33,8 @@ public class MainActivity extends BaseGameActivity
     
     private ITextureRegion mSplashTextureRegion;
     private Music mSplashMusic;
+    
+    private ResourceManager mResourceManager = ResourceManager.getInstance();
 
     private enum SceneType
     {
@@ -39,21 +42,16 @@ public class MainActivity extends BaseGameActivity
         MAIN
     }
     private SceneType mCurrentScene = SceneType.SPLASH;
-    
-    public BoundCamera mCamera;
-    
-    private static MainActivity mInstance;
-    
-    public EngineOptions onCreateEngineOptions() {
-    	mInstance = this;
-    	ResourcesManager.init();
 
-        mCamera = new BoundCamera(0, 0, ResourcesManager.CAMERA_WIDTH, ResourcesManager.CAMERA_HEIGHT,
-        		0, ResourcesManager.WORLD_WIDTH, 0, ResourcesManager.WORLD_HEIGHT);
-        mCamera.setBoundsEnabled(true);
+    public EngineOptions onCreateEngineOptions() {
+    	mResourceManager.setupContext(this);
+    	
+    	BoundCamera camera = new BoundCamera(0, 0, mResourceManager.CAMERA_WIDTH, mResourceManager.CAMERA_HEIGHT,
+        		0, mResourceManager.WORLD_WIDTH, 0, mResourceManager.WORLD_HEIGHT);
+    	camera.setBoundsEnabled(true);
         
         final EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, 
-                new RatioResolutionPolicy( ResourcesManager.CAMERA_WIDTH / ResourcesManager.CAMERA_HEIGHT), mCamera);
+                new RatioResolutionPolicy( mResourceManager.CAMERA_WIDTH / mResourceManager.CAMERA_HEIGHT), camera);
         engineOptions.getTouchOptions().setNeedsMultiTouch(true);
         engineOptions.getAudioOptions().setNeedsMusic(true);
         engineOptions.getAudioOptions().setNeedsSound(true);
@@ -65,7 +63,9 @@ public class MainActivity extends BaseGameActivity
 
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions) {
-    	return new LimitedFPSEngine(pEngineOptions, FPS);
+    	final Engine engine = new LimitedFPSEngine(pEngineOptions, FPS); 
+    	mResourceManager.setupEngine(engine);
+    	return engine;
     }
     
     /**
@@ -97,7 +97,7 @@ public class MainActivity extends BaseGameActivity
     public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception
     {
         mSplashScene = new SplashScene(mEngine, mSplashTextureRegion, 
-        		(int)ResourcesManager.CAMERA_WIDTH, (int)ResourcesManager.CAMERA_HEIGHT);
+        		(int)mResourceManager.CAMERA_WIDTH, (int)mResourceManager.CAMERA_HEIGHT);
         pOnCreateSceneCallback.onCreateSceneFinished(mSplashScene);
     }
 
@@ -109,7 +109,7 @@ public class MainActivity extends BaseGameActivity
             public void onTimePassed(final TimerHandler pTimerHandler) 
             {	
                 mEngine.unregisterUpdateHandler(pTimerHandler);
-                ResourcesManager.getInstance().load();
+                ResourceManager.loadResources();
                 loadScenes();
                 mSplashScene.detachSplash();
                 mEngine.setScene(mMainScene);
@@ -125,9 +125,5 @@ public class MainActivity extends BaseGameActivity
     private void loadScenes()
     {
         mMainScene = new GameScene();
-    }
-
-    public static MainActivity getInstance() {
-        return mInstance;
     }
 }

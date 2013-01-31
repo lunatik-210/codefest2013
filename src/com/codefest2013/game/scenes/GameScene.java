@@ -1,7 +1,6 @@
 package com.codefest2013.game.scenes;
 
-import com.codefest2013.game.MainActivity;
-import com.codefest2013.game.ResourcesManager;
+import com.codefest2013.game.ResourceManager;
 import com.codefest2013.game.scenes.objects.Background;
 import com.codefest2013.game.scenes.objects.Squirrel;
 import com.codefest2013.game.scenes.objects.Player;
@@ -14,7 +13,8 @@ import org.andengine.input.touch.TouchEvent;
 
 
 public class GameScene extends Scene implements IOnSceneTouchListener {
-
+	private ResourceManager mResourceManager = ResourceManager.getInstance();
+	
 	private Player mPlayer = null;
 	private Squirrel mSquirrel = null;
     private Background mBackground = null;
@@ -22,8 +22,8 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
     public GameScene()
     {
     	mBackground = new Background();
-    	mPlayer = new Player(ResourcesManager.CAMERA_WIDTH/2, 
-    			ResourcesManager.CAMERA_HEIGHT-ResourcesManager.CAMERA_HEIGHT/5);
+    	mPlayer = new Player(mResourceManager.CAMERA_WIDTH/2, 
+    			mResourceManager.CAMERA_HEIGHT-mResourceManager.CAMERA_HEIGHT/5);
     	
     	
     	attachChild(mBackground);
@@ -58,9 +58,9 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 		
 		for(int i=0; i<wps.length; i++)
 		{
-			wps[i].x = wps[i].x * ResourcesManager.WORLD_SCALE_CONSTANT;
-			wps[i].y = wps[i].y * ResourcesManager.WORLD_SCALE_CONSTANT;
-			attachChild(new Rectangle(wps[i].x, wps[i].y, 8, 8, MainActivity.getInstance().getVertexBufferObjectManager()));
+			wps[i].x = wps[i].x * mResourceManager.WORLD_SCALE_CONSTANT;
+			wps[i].y = wps[i].y * mResourceManager.WORLD_SCALE_CONSTANT;
+			attachChild(new Rectangle(wps[i].x, wps[i].y, 8, 8, ResourceManager.getInstance().engine.getVertexBufferObjectManager()));
 		}
 		mSquirrel = new Squirrel(wps);
 		attachChild(mSquirrel);
@@ -69,14 +69,15 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 		registerUpdateHandler(mPlayer);
 		
 		setOnSceneTouchListener(this);
-        MainActivity.getInstance().mCamera.setChaseEntity(mPlayer);
+		
+		ResourceManager.getInstance().engine.getCamera().setChaseEntity(mPlayer);
 
-		ResourcesManager.getInstance().fireplaceMusic.play();
-		ResourcesManager.getInstance().tickTookMusic.play();
-		ResourcesManager.getInstance().fireplaceMusic.setVolume(0.0f);
-		ResourcesManager.getInstance().tickTookMusic.setVolume(0.0f);
-		ResourcesManager.getInstance().fireplaceMusic.setLooping(true);
-		ResourcesManager.getInstance().tickTookMusic.setLooping(true);
+		mResourceManager.fireplaceMusic.play();
+		mResourceManager.tickTookMusic.play();
+		mResourceManager.fireplaceMusic.setVolume(0.0f);
+		mResourceManager.tickTookMusic.setVolume(0.0f);
+		mResourceManager.fireplaceMusic.setLooping(true);
+		mResourceManager.tickTookMusic.setLooping(true);
     }
     
 	@Override
@@ -87,21 +88,21 @@ public class GameScene extends Scene implements IOnSceneTouchListener {
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
 		float val = Math.abs(mBackground.getFirePlaceSprite().getSceneCenterCoordinates()[0]-mPlayer.getX());
-		float threshold = 1000.0f*ResourcesManager.WORLD_SCALE_CONSTANT;
+		float threshold = 1000.0f*mResourceManager.WORLD_SCALE_CONSTANT;
 		if(val > threshold) {
-			ResourcesManager.getInstance().fireplaceMusic.setVolume(0.0f);
+			mResourceManager.fireplaceMusic.setVolume(0.0f);
 		}
 		else {
-			ResourcesManager.getInstance().fireplaceMusic.setVolume(1-(val/threshold));
+			mResourceManager.fireplaceMusic.setVolume(1-(val/threshold));
 		}
 	
 		val = Math.abs(mBackground.getClockSprite().getSceneCenterCoordinates()[0]-mPlayer.getX());
-		threshold = 600.0f*ResourcesManager.WORLD_SCALE_CONSTANT;
+		threshold = 600.0f*mResourceManager.WORLD_SCALE_CONSTANT;
 		if(val > threshold) {
-			ResourcesManager.getInstance().tickTookMusic.setVolume(0.0f);
+			mResourceManager.tickTookMusic.setVolume(0.0f);
 		}
 		else {
-			ResourcesManager.getInstance().tickTookMusic.setVolume(1-(val/threshold));
+			mResourceManager.tickTookMusic.setVolume(1-(val/threshold));
 		}
 		super.onManagedUpdate(pSecondsElapsed);
 	}
