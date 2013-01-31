@@ -19,7 +19,6 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;
-import org.andengine.util.debug.Debug;
 
 import com.codefest2013.game.scenes.GameScene;
 import com.codefest2013.game.scenes.SplashScene;
@@ -63,7 +62,13 @@ public class MainActivity extends BaseGameActivity
 
     @Override
     public Engine onCreateEngine(EngineOptions pEngineOptions) {
-    	final Engine engine = new LimitedFPSEngine(pEngineOptions, FPS); 
+    	final Engine engine = new LimitedFPSEngine(pEngineOptions, FPS) {
+    		@Override
+    		public void onDestroy() {
+    			ResourceManager.unloadResources();
+    			super.onDestroy();
+    		}
+    	};
     	mResourceManager.setupEngine(engine);
     	return engine;
     }

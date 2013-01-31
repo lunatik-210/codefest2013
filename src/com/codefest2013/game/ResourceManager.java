@@ -193,7 +193,7 @@ public class ResourceManager extends Object {
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         for(int i=0; i<12; ++i)
         {
-        	String name = "fox/leftWalk/" + i + ".png";
+        	String name = "squirrel/leftWalk/" + i + ".png";
         	foxLeftWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, context, name);
         }
         try {
@@ -208,7 +208,7 @@ public class ResourceManager extends Object {
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         for(int i=0; i<12; ++i)
         {
-        	String name = "fox/rightWalk/" + i + ".png";
+        	String name = "squirrel/rightWalk/" + i + ".png";
         	foxRightWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, context, name);
         }
         try {
