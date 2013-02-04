@@ -12,7 +12,7 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.util.color.Color;
 import org.andengine.util.debug.Debug;
 
-import com.codefest2013.game.ResourceManager;
+import com.codefest2013.game.managers.ResourceManager;
 
 public class Squirrel extends Entity {
 	

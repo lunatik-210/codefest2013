@@ -1,4 +1,4 @@
-package com.codefest2013.game;
+package com.codefest2013.game.managers;
 
 import java.io.IOException;
 
@@ -132,7 +132,7 @@ public class ResourceManager extends Object {
 	
 	// Unloads all game resources.
 	public static void unloadResources() {
-		getInstance().unloadGameTextures();
+		getInstance().unloadTextures();
 		getInstance().unloadAudio();
 		getInstance().unloadFonts();
 	}
@@ -242,7 +242,7 @@ public class ResourceManager extends Object {
 	}
 	
 	// ============================ UNLOAD TEXTURES (GAME) =============== //
-	private void unloadGameTextures(){
+	private void unloadTextures(){
 		unloadTexture(goblinTiledLeftWalk);
 		unloadTexture(goblinTiledRightWalk);
 		unloadTexture(bgLB);

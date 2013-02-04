@@ -6,7 +6,7 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.input.touch.TouchEvent;
 
-import com.codefest2013.game.ResourceManager;
+import com.codefest2013.game.managers.ResourceManager;
 
 public class Player extends Entity implements IOnSceneTouchListener {
 	private ResourceManager mResourceManager = ResourceManager.getInstance();
@@ -47,8 +47,8 @@ public class Player extends Entity implements IOnSceneTouchListener {
     
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
+    	move();
     	super.onManagedUpdate(pSecondsElapsed);
-    	move(pSecondsElapsed);
     }
 
 	@Override
@@ -96,7 +96,7 @@ public class Player extends Entity implements IOnSceneTouchListener {
         }
     }
     
-    private void move(float pSecondsElapsed)
+    private void move()
     {
     	final float leftCorner = 0.0f;
     	final float rightCorner = mResourceManager.WORLD_WIDTH - leftSprite.getWidth();

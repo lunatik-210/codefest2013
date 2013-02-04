@@ -1,38 +1,32 @@
 package com.codefest2013.game.scenes;
 
-import org.andengine.engine.Engine;
-import org.andengine.engine.camera.Camera;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.util.GLState;
+
+import com.codefest2013.game.managers.ResourceManager;
 
 /**
  * Splash screen scene
  */
 public class SplashScene extends Scene {
-	private Sprite mSplash;
-
-	public SplashScene(Engine engine, ITextureRegion splashTextureRegion, int cameraWidth, int cameraHeight) {
-		mSplash = new Sprite(0, 0, splashTextureRegion, engine.getVertexBufferObjectManager())
-        {
-            @Override
-            protected void preDraw(GLState pGLState, Camera pCamera) 
-            {
-                super.preDraw(pGLState, pCamera);
-                pGLState.enableDither();
-            }
-        };
-
-        mSplash.setPosition((cameraWidth - mSplash.getWidth()) * 0.5f, (cameraHeight - mSplash.getHeight()) * 0.5f);
-        this.attachChild(mSplash);
-	}
-
-	public Sprite getSplash() {
-		return mSplash;
-	}
-
-	public void detachSplash() {
-		mSplash.detachSelf();
+	public SplashScene() {
+		ResourceManager mResourceManager = ResourceManager.getInstance();
+		
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        BitmapTextureAtlas mSplashTextureAtlas = new BitmapTextureAtlas(mResourceManager.engine.getTextureManager(),
+        		256, 256, TextureOptions.DEFAULT);
+        ITextureRegion mSplashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mSplashTextureAtlas,
+        		mResourceManager.context, "splash.png", 0, 0);
+        mSplashTextureAtlas.load();
+		
+        Sprite mSplash = new Sprite(0, 0, mSplashTextureRegion, mResourceManager.engine.getVertexBufferObjectManager());
+        mSplash.setPosition((mResourceManager.CAMERA_WIDTH - mSplash.getWidth()) * 0.5f,
+        		(mResourceManager.CAMERA_HEIGHT - mSplash.getHeight()) * 0.5f);
+        
+		this.attachChild(mSplash);
 	}
 }
