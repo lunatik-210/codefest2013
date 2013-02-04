@@ -55,4 +55,10 @@ public class MainActivity extends SimpleBaseGameActivity
 		SceneManager.getInstance().showScene(new ManagedGameScene());
 		return mEngine.getScene();
 	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		System.exit(0);
+	}
 }
