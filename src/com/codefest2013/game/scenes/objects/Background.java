@@ -1,6 +1,8 @@
 package com.codefest2013.game.scenes.objects;
 
 import org.andengine.entity.Entity;
+import org.andengine.entity.IEntity;
+import org.andengine.entity.modifier.RotationAtModifier;
 import org.andengine.entity.sprite.Sprite;
 
 import com.codefest2013.game.MegaAnimatedSprite;
@@ -76,7 +78,14 @@ public class Background extends Entity {
 		
 		sprite = new Sprite(LAMP_X, LAMP_Y, LAMP_WIDTH, LAMP_HEIGHT, 
 				mResourceManager.lamp, mResourceManager.engine.getVertexBufferObjectManager());
-		sprite.setIgnoreUpdate(true);
+		RotationAtModifier rotationAtModifier = new RotationAtModifier(1.5f, -20.0f, 20.0f, LAMP_WIDTH/2, 0) {
+			@Override
+			protected void onModifierFinished(IEntity pItem) {
+				reset(getDuration(), getToValue(), getFromValue());
+				super.onModifierFinished(pItem);
+			}
+		};
+		sprite.registerEntityModifier(rotationAtModifier);
 		attachChild(sprite);
 		
 		clockSprite = new MegaAnimatedSprite(10);
