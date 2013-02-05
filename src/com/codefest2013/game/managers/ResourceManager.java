@@ -40,6 +40,11 @@ public class ResourceManager extends Object {
     public float WORLD_SCALE_CONSTANT;
 
     /**
+     * Light
+     */
+    public ITextureRegion lightMask;
+    
+    /**
      * Goblin animation
      */
     public ITiledTextureRegion goblinTiledLeftWalk;
@@ -244,6 +249,11 @@ public class ResourceManager extends Object {
         tree = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/tree.png", 0, 0);
         lamp = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/lamp.png", 500, 0);
         stocking = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/stocking.png", 500, 180);
+        textureAtlas.load();
+        
+        textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512,
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        lightMask = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "LightMask.png", 0, 0);
         textureAtlas.load();
         
         textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,

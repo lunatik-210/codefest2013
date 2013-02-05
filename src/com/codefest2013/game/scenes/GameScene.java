@@ -1,5 +1,7 @@
 package com.codefest2013.game.scenes;
 
+import android.opengl.GLES20;
+
 import com.codefest2013.game.managers.ResourceManager;
 import com.codefest2013.game.scenes.objects.Background;
 import com.codefest2013.game.scenes.objects.Squirrel;
@@ -11,6 +13,7 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
 public class GameScene extends ManagedScene implements IOnSceneTouchListener {
@@ -83,7 +86,6 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
     	mPlayer = new Player(PLAYER_START_X, PLAYER_START_Y);
 		mSquirrel = new Squirrel(wps);
 		
-    	
     	attachChild(mBackground);
 		attachChild(mPlayer);
 		for(int i=0; i<wps.length; i++)
@@ -96,6 +98,12 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		
 		registerUpdateHandler(mPlayer);
 		mResourceManager.engine.getCamera().setChaseEntity(mPlayer);
+		
+		Sprite staticLight = new Sprite(0, 0, mResourceManager.WORLD_WIDTH, mResourceManager.WORLD_HEIGHT, 
+				mResourceManager.lightMask, mResourceManager.engine.getVertexBufferObjectManager());
+		staticLight.setBlendFunction(GLES20.GL_ZERO, GLES20.GL_SRC_ALPHA);
+		staticLight.setBlendingEnabled(true);
+		attachChild(staticLight);
 	}
 
 	@Override
