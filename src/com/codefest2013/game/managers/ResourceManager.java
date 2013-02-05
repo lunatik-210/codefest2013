@@ -41,8 +41,8 @@ public class ResourceManager extends Object {
     public ITiledTextureRegion goblinTiledLeftWalk;
     public ITiledTextureRegion goblinTiledRightWalk;
     
-    public ITextureRegion[] foxLeftWalk = new ITextureRegion[12];
-    public ITextureRegion[] foxRightWalk = new ITextureRegion[12];
+    public ITextureRegion[] squirrelLeftWalk = new ITextureRegion[12];
+    public ITextureRegion[] squirrelRightWalk = new ITextureRegion[12];
        
     /**
      * Parts of background image
@@ -194,7 +194,7 @@ public class ResourceManager extends Object {
         for(int i=0; i<12; ++i)
         {
         	String name = "squirrel/leftWalk/" + i + ".png";
-        	foxLeftWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, context, name);
+        	squirrelLeftWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, context, name);
         }
         try {
             mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
@@ -209,7 +209,7 @@ public class ResourceManager extends Object {
         for(int i=0; i<12; ++i)
         {
         	String name = "squirrel/rightWalk/" + i + ".png";
-        	foxRightWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, context, name);
+        	squirrelRightWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, context, name);
         }
         try {
             mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
@@ -255,8 +255,8 @@ public class ResourceManager extends Object {
 		unloadTexture(lamp);
 		unloadTexture(stocking);
 		unloadTextureArray(clock);
-		unloadTextureArray(foxLeftWalk);
-		unloadTextureArray(foxRightWalk);
+		unloadTextureArray(squirrelLeftWalk);
+		unloadTextureArray(squirrelRightWalk);
 	}
 	
 	private void unloadTexture(ITextureRegion texture)
