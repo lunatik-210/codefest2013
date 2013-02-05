@@ -110,6 +110,7 @@ public class Background extends Entity {
 		
 		sprite = new Sprite(STOCKING_X + STOCKING_WIDTH*2 + STEP_X*2, STOCKING_Y+STEP_Y*2, STOCKING_WIDTH, STOCKING_HEIGHT, 
 				mResourceManager.stocking, mResourceManager.engine.getVertexBufferObjectManager());
+		
 		sprite.setIgnoreUpdate(true);
 		sprite.setBlendFunction(GLES20.GL_SRC_COLOR, GLES20.GL_COLOR_CLEAR_VALUE);
 		attachChild(sprite);
@@ -122,6 +123,4 @@ public class Background extends Entity {
 	public Sprite getFirePlaceSprite() {
 		return firePlaceSprite.getCurrentSprite();
 	}
-	
-	
 }

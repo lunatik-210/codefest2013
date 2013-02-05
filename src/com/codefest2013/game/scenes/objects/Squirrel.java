@@ -10,7 +10,7 @@ import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.util.color.Color;
-import org.andengine.util.debug.Debug;
+//import org.andengine.util.debug.Debug;
 
 import com.codefest2013.game.managers.ResourceManager;
 
@@ -61,14 +61,15 @@ public class Squirrel extends Entity {
 				switch (currDirection) {
 				case RIGHT:
 					rotate(wp.rangle);
-					Debug.d("dbg", "wp: x:" + wp.x + " y: " + wp.y + " direction: right");
+					//Debug.d("dbg", "wp: x:" + wp.x + " y: " + wp.y + " direction: right");
 					break;
 				case LEFT:
 					rotate(wp.langle);
-					Debug.d("dbg", "wp: x:" + wp.x + " y: " + wp.y + " direction: left");
+					//Debug.d("dbg", "wp: x:" + wp.x + " y: " + wp.y + " direction: left");
 					break;
 				default:
-					Debug.e("Unknown direction from OnPathWaypointFinished");
+					break;
+					//Debug.e("Unknown direction from OnPathWaypointFinished");
 				}
 				
 			}
@@ -80,9 +81,9 @@ public class Squirrel extends Entity {
 			@Override
 			public void onPathFinished(PathModifier pPathModifier, IEntity pEntity) {
 				currentWay.clear();
-				Debug.d("dbg", "restart " + currentIndex);
+				//Debug.d("dbg", "restart " + currentIndex);
 				setNextGoal();
-				Debug.d("dbg_past", "restart " + currentIndex);
+				//Debug.d("dbg_past", "restart " + currentIndex);
 			}
 		};
 		
@@ -144,7 +145,7 @@ public class Squirrel extends Entity {
 		do {
 			currentWay.add(currentIndex);
 			currentIndex += indexModifier;
-			Debug.d("dbg", "do: " + currentIndex + " != " + randIndex);
+			//Debug.d("dbg", "do: " + currentIndex + " != " + randIndex);
 		} while (currentIndex != randIndex);
 		
 		Path path = formPath();

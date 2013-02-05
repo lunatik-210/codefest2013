@@ -1,7 +1,5 @@
 package com.codefest2013.game.scenes;
 
-import java.io.IOException;
-
 import com.codefest2013.game.managers.ResourceManager;
 import com.codefest2013.game.scenes.objects.Background;
 import com.codefest2013.game.scenes.objects.Squirrel;
@@ -9,7 +7,6 @@ import com.codefest2013.game.scenes.objects.Player;
 import com.codefest2013.game.scenes.objects.WayPoint;
 
 import org.andengine.audio.music.Music;
-import org.andengine.audio.music.MusicFactory;
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
@@ -22,14 +19,16 @@ public class ManagedGameScene extends ManagedScene implements IOnSceneTouchListe
 	private Player mPlayer = null;
 	private Squirrel mSquirrel = null;
     private Background mBackground = null;
-    private SplashScene mSplashScene = null;
-	private Music mSplashMusic = null;
 	
-    public ManagedScene thisManagedGameScene = this;
+    private ManagedScene thisManagedGameScene = this;
+    
+    private final float PLAYER_START_X = mResourceManager.CAMERA_WIDTH/2;
+    private final float PLAYER_START_Y = mResourceManager.CAMERA_HEIGHT-mResourceManager.CAMERA_HEIGHT/5;
+			
     
     public ManagedGameScene()
     {
-    	this(3.0f);
+    	this(0.0f);
     }
     
     public ManagedGameScene(float pLoadingScreenMinimumSecondsShown)
@@ -44,30 +43,15 @@ public class ManagedGameScene extends ManagedScene implements IOnSceneTouchListe
 
 	@Override
 	public Scene onLoadingScreenLoadAndShown() {
-		mSplashScene = new SplashScene();
-        MusicFactory.setAssetBasePath("afx/");
-        try {
-        	mSplashMusic = MusicFactory.createMusicFromAsset(mResourceManager.engine.getMusicManager(), mResourceManager.context, "splashMusic.mp3");
-        } catch (IOException e) {
-        	e.printStackTrace();
-        }
-        mSplashMusic.play();
-		return mSplashScene;
+		return null;
 	}
 
 	@Override
 	public void onLoadingScreenUnloadAndHidden() {
-		mSplashScene.detachSelf();
-		mSplashScene = null;
-		mSplashMusic.stop();
-		mSplashMusic.release();
-		mSplashMusic = null;
 	}
 
 	@Override
 	public void onLoadScene() {
-		ResourceManager.loadResources();
-		
 		WayPoint wps[] = {
 			new WayPoint(112, 230, 0, 0, false),
 			new WayPoint(170, 260, 0, 0, false),
@@ -96,8 +80,7 @@ public class ManagedGameScene extends ManagedScene implements IOnSceneTouchListe
 		};
 		
     	mBackground = new Background();
-    	mPlayer = new Player(mResourceManager.CAMERA_WIDTH/2, 
-    			mResourceManager.CAMERA_HEIGHT-mResourceManager.CAMERA_HEIGHT/5);
+    	mPlayer = new Player(PLAYER_START_X, PLAYER_START_Y);
 		mSquirrel = new Squirrel(wps);
 		
     	
@@ -112,7 +95,7 @@ public class ManagedGameScene extends ManagedScene implements IOnSceneTouchListe
 		attachChild(mSquirrel);
 		
 		registerUpdateHandler(mPlayer);
-		ResourceManager.getInstance().engine.getCamera().setChaseEntity(mPlayer);
+		mResourceManager.engine.getCamera().setChaseEntity(mPlayer);
 	}
 
 	@Override
@@ -131,14 +114,20 @@ public class ManagedGameScene extends ManagedScene implements IOnSceneTouchListe
 
 	@Override
 	public void onHideScene() {
+		mPlayer.setPosition(PLAYER_START_X, PLAYER_START_Y);
+		mSquirrel.stop();
+		mResourceManager.fireplaceMusic.pause();
+		mResourceManager.tickTookMusic.pause();
 	}
 
 	@Override
 	public void onUnloadScene() {
-		ResourceManager.getInstance().engine.runOnUpdateThread(new Runnable() {
+		mResourceManager.engine.runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
 				thisManagedGameScene.detachChildren();
+				for(int i = 0; i < thisManagedGameScene.getChildCount(); i++)
+					thisManagedGameScene.getChildByIndex(i).dispose();
 				thisManagedGameScene.clearEntityModifiers();
 				thisManagedGameScene.clearTouchAreas();
 				thisManagedGameScene.clearUpdateHandlers();
@@ -156,6 +145,12 @@ public class ManagedGameScene extends ManagedScene implements IOnSceneTouchListe
 	{
 		final float val = Math.abs(object.getSceneCenterCoordinates()[0]-mPlayer.getX());
 		final float threshold = distance*mResourceManager.WORLD_SCALE_CONSTANT;
+		/*
+		if( !music.isPlaying() )
+		{
+			return;
+		}
+		*/
 		if(val > threshold) {
 			music.setVolume(0.0f);
 		}

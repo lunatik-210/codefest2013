@@ -217,8 +217,8 @@ public class MegaAnimatedSprite extends Entity {
 		
 		for (int idx = 0;idx<this.textures.size();idx++) {
 			Sprite s = this.textures.get(idx);
-			s.getTextureRegion().getTexture().unload();
 			s.detachChildren();
+			s = null;
 		}
 		
 		this.detachChildren();

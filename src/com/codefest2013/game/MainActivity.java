@@ -8,12 +8,13 @@ import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-
 import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 import com.codefest2013.game.managers.ResourceManager;
 import com.codefest2013.game.managers.SceneManager;
 import com.codefest2013.game.scenes.ManagedGameScene;
+import com.codefest2013.game.scenes.ManagedMainMenu;
+import com.codefest2013.game.scenes.SplashScene;
 
 public class MainActivity extends SimpleBaseGameActivity
 {
@@ -52,14 +53,24 @@ public class MainActivity extends SimpleBaseGameActivity
 
 	@Override
 	protected Scene onCreateScene() {
-		SceneManager.getInstance().showScene(new ManagedGameScene());
+		SceneManager.getInstance().showScene(new SplashScene());
 		return mEngine.getScene();
 	}
 	
 	@Override
 	public void onBackPressed() {
+		if( SceneManager.getInstance().mCurrentScene.getClass().equals(ManagedGameScene.class) )
+		{
+			SceneManager.getInstance().showScene(new ManagedMainMenu());
+			return;
+		}
+		if( SceneManager.getInstance().mCurrentScene.getClass().equals(ManagedMainMenu.class) )
+		{
+			ResourceManager.unloadGameResources();
+			ResourceManager.unloadSharedResources();
+			System.exit(0);
+			super.onBackPressed();
+		}
 		super.onBackPressed();
-		ResourceManager.unloadResources();
-		System.exit(0);
 	}
 }

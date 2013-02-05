@@ -47,7 +47,6 @@ public class ResourceManager extends Object {
     /**
      * Button animation
      */
-    
     public ITiledTextureRegion button;
     
     /**
@@ -90,6 +89,13 @@ public class ResourceManager extends Object {
     public Music fireplaceMusic;
     public Music tickTookMusic;
     
+    /**
+     * Splash screen resources
+     */
+
+    public ITextureRegion mSplashTextureRegion;
+    public Music splashMusic;
+    
 	private static final ResourceManager INSTANCE = new ResourceManager();
 	
 	//====================================================
@@ -130,17 +136,65 @@ public class ResourceManager extends Object {
 	}
 	
 	// Loads all game resources.
-	public static void loadResources() {
+	public static void loadGameResources() {
 		getInstance().loadTextures();
 		getInstance().loadAudio();
 		getInstance().loadFonts();
 	}
 	
 	// Unloads all game resources.
-	public static void unloadResources() {
+	public static void unloadGameResources() {
 		getInstance().unloadTextures();
 		getInstance().unloadAudio();
 		getInstance().unloadFonts();
+	}
+	
+	public static void loadSharedResources()
+	{
+		getInstance().loadSharedTextures();
+		getInstance().loadSharedAudio();
+	}
+	
+	public static void unloadSharedResources()
+	{
+		getInstance().unloadSharedTextures();
+		getInstance().unloadSharedAudio();
+	}
+	
+	// ============================ LOAD SHARED RESOURCES (SPLASH, MENU) ================= //
+	
+	private void loadSharedTextures()
+	{
+        BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+        BitmapTextureAtlas textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.DEFAULT);
+        mSplashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "splash.png", 0, 0);
+        textureAtlas.load();
+        
+        textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512,
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        button = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, context, "buttons.png", 0, 0, 3, 1);
+        textureAtlas.load();
+	}
+	
+	private void unloadSharedTextures()
+	{
+		unloadTexture(mSplashTextureRegion);
+		unloadTexture(button);
+	}
+	
+	private void loadSharedAudio()
+	{
+        MusicFactory.setAssetBasePath("afx/");
+        try {
+        	splashMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), context, "splashMusic.mp3");
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+	}
+	
+	private void unloadSharedAudio()
+	{
+		unloadMusic(splashMusic);
 	}
 	
 	// ============================ LOAD TEXTURES (GAME) ================= //
@@ -191,16 +245,8 @@ public class ResourceManager extends Object {
         }
         textureAtlas.load();
         
-        textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512,
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        button = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, context, "buttons.png", 0, 0, 1, 2);
-        textureAtlas.load();
-        
-        BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        
         // leftWalk fox
-        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
+        BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         for(int i=0; i<12; ++i)
         {
@@ -265,7 +311,6 @@ public class ResourceManager extends Object {
 		unloadTexture(tree);
 		unloadTexture(lamp);
 		unloadTexture(stocking);
-		unloadTexture(button);
 		unloadTextureArray(clock);
 		unloadTextureArray(squirrelLeftWalk);
 		unloadTextureArray(squirrelRightWalk);
