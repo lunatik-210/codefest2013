@@ -45,6 +45,12 @@ public class ResourceManager extends Object {
     public ITextureRegion[] squirrelRightWalk = new ITextureRegion[12];
        
     /**
+     * Button animation
+     */
+    
+    public ITiledTextureRegion button;
+    
+    /**
      * Parts of background image
      */
     public ITextureRegion bgLB;
@@ -185,6 +191,11 @@ public class ResourceManager extends Object {
         }
         textureAtlas.load();
         
+        textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512,
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        button = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, context, "buttons.png", 0, 0, 1, 2);
+        textureAtlas.load();
+        
         BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         
@@ -254,6 +265,7 @@ public class ResourceManager extends Object {
 		unloadTexture(tree);
 		unloadTexture(lamp);
 		unloadTexture(stocking);
+		unloadTexture(button);
 		unloadTextureArray(clock);
 		unloadTextureArray(squirrelLeftWalk);
 		unloadTextureArray(squirrelRightWalk);

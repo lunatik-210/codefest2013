@@ -59,6 +59,7 @@ public class MainActivity extends SimpleBaseGameActivity
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
+		ResourceManager.unloadResources();
 		System.exit(0);
 	}
 }
