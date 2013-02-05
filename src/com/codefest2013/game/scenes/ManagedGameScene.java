@@ -49,7 +49,7 @@ public class ManagedGameScene extends ManagedScene implements IOnSceneTouchListe
         try {
         	mSplashMusic = MusicFactory.createMusicFromAsset(mResourceManager.engine.getMusicManager(), mResourceManager.context, "splashMusic.mp3");
         } catch (IOException e) {
-        e.printStackTrace();
+        	e.printStackTrace();
         }
         mSplashMusic.play();
 		return mSplashScene;
