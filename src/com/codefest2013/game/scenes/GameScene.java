@@ -13,7 +13,7 @@ import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.input.touch.TouchEvent;
 
-public class ManagedGameScene extends ManagedScene implements IOnSceneTouchListener {
+public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	private ResourceManager mResourceManager = ResourceManager.getInstance();
 	
 	private Player mPlayer = null;
@@ -26,12 +26,12 @@ public class ManagedGameScene extends ManagedScene implements IOnSceneTouchListe
     private final float PLAYER_START_Y = mResourceManager.CAMERA_HEIGHT-mResourceManager.CAMERA_HEIGHT/5;
 			
     
-    public ManagedGameScene()
+    public GameScene()
     {
     	this(0.0f);
     }
     
-    public ManagedGameScene(float pLoadingScreenMinimumSecondsShown)
+    public GameScene(float pLoadingScreenMinimumSecondsShown)
     {
     	super(pLoadingScreenMinimumSecondsShown);
     }

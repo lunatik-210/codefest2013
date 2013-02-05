@@ -47,7 +47,7 @@ public class SplashScene extends ManagedScene {
 
 	@Override
 	public void onShowScene() {
-		SceneManager.getInstance().showScene(new ManagedMainMenu());
+		SceneManager.getInstance().showScene(new MainMenu());
 	}
 
 	@Override

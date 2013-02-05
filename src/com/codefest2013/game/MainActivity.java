@@ -12,8 +12,8 @@ import org.andengine.ui.activity.SimpleBaseGameActivity;
 
 import com.codefest2013.game.managers.ResourceManager;
 import com.codefest2013.game.managers.SceneManager;
-import com.codefest2013.game.scenes.ManagedGameScene;
-import com.codefest2013.game.scenes.ManagedMainMenu;
+import com.codefest2013.game.scenes.GameScene;
+import com.codefest2013.game.scenes.MainMenu;
 import com.codefest2013.game.scenes.SplashScene;
 
 public class MainActivity extends SimpleBaseGameActivity
@@ -59,12 +59,12 @@ public class MainActivity extends SimpleBaseGameActivity
 	
 	@Override
 	public void onBackPressed() {
-		if( SceneManager.getInstance().mCurrentScene.getClass().equals(ManagedGameScene.class) )
+		if( SceneManager.getInstance().mCurrentScene.getClass().equals(GameScene.class) )
 		{
-			SceneManager.getInstance().showScene(new ManagedMainMenu());
+			SceneManager.getInstance().showScene(new MainMenu());
 			return;
 		}
-		if( SceneManager.getInstance().mCurrentScene.getClass().equals(ManagedMainMenu.class) )
+		if( SceneManager.getInstance().mCurrentScene.getClass().equals(MainMenu.class) )
 		{
 			ResourceManager.unloadGameResources();
 			ResourceManager.unloadSharedResources();
