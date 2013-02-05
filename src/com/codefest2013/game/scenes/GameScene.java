@@ -145,12 +145,6 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	{
 		final float val = Math.abs(object.getSceneCenterCoordinates()[0]-mPlayer.getX());
 		final float threshold = distance*mResourceManager.WORLD_SCALE_CONSTANT;
-		/*
-		if( !music.isPlaying() )
-		{
-			return;
-		}
-		*/
 		if(val > threshold) {
 			music.setVolume(0.0f);
 		}
