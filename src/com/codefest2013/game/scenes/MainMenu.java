@@ -4,6 +4,9 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.sprite.ButtonSprite;
 import org.andengine.entity.sprite.ButtonSprite.OnClickListener;
+import org.andengine.entity.text.Text;
+import org.andengine.entity.text.TextOptions;
+import org.andengine.util.HorizontalAlign;
 
 import com.codefest2013.game.managers.ResourceManager;
 import com.codefest2013.game.managers.SceneManager;
@@ -22,6 +25,10 @@ public class MainMenu extends ManagedScene {
 	private final float BUTTON_PANEL_Y = (mResourceManager.CAMERA_HEIGHT - BUTTON_HEIGHT*3) / 3;
 	
 	private final float BUTTON_Y_BIAS = BUTTON_PANEL_Y / 3;
+	
+	private final float TEXT_X_BIAS = BUTTON_WIDTH/2;
+	private final float TEXT_Y_BIAS = BUTTON_HEIGHT/2;
+	
 	
 	private ButtonSprite startButton = null;
 	private ButtonSprite aboutButton = null;
@@ -47,21 +54,21 @@ public class MainMenu extends ManagedScene {
 	}
 
 	@Override
-	public void onLoadScene() {		
+	public void onLoadScene() {
 		Entity buttonPanel = new Entity(BUTTON_PANEL_X, BUTTON_PANEL_Y);
-		startButton = createButton(0, 0, new OnClickListener() {
+		startButton = createButton(0, 0, "Start", new OnClickListener() {
 			@Override
 			public void onClick(ButtonSprite arg0, float arg1, float arg2) {
 				SceneManager.getInstance().showScene(new GameScene());
 			}
 		});
-		aboutButton = createButton(0, BUTTON_Y_BIAS+BUTTON_HEIGHT, new OnClickListener() {
+		aboutButton = createButton(0, BUTTON_Y_BIAS+BUTTON_HEIGHT, "About", new OnClickListener() {
 			@Override
 			public void onClick(ButtonSprite arg0, float arg1, float arg2) {
 				// TODO: smth
 			}
 		});
-		exitButton  = createButton(0, BUTTON_Y_BIAS*2+BUTTON_HEIGHT*2, new OnClickListener() {
+		exitButton  = createButton(0, BUTTON_Y_BIAS*2+BUTTON_HEIGHT*2, "Exit", new OnClickListener() {
 			@Override
 			public void onClick(ButtonSprite arg0, float arg1, float arg2) {
 				ResourceManager.unloadGameResources();
@@ -69,6 +76,7 @@ public class MainMenu extends ManagedScene {
 				System.exit(0);
 			}
 		});
+		
 		this.registerTouchArea(startButton);
 		this.registerTouchArea(aboutButton);
 		this.registerTouchArea(exitButton);
@@ -108,11 +116,15 @@ public class MainMenu extends ManagedScene {
 			}});
 	}
 	
-	private ButtonSprite createButton(float x, float y, OnClickListener clickListener)
+	private ButtonSprite createButton(final float x, final float y, final String buttonName, OnClickListener clickListener)
 	{
 		ButtonSprite sprite = new ButtonSprite(x, y, mResourceManager.button,
 				mResourceManager.engine.getVertexBufferObjectManager(), clickListener);
 		sprite.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+		Text text = new Text(0, 0, mResourceManager.splashFont, buttonName, 
+				new TextOptions(HorizontalAlign.CENTER), mResourceManager.engine.getVertexBufferObjectManager());
+		text.setPosition(TEXT_X_BIAS-text.getWidth()/2, TEXT_Y_BIAS-text.getHeight()/2);
+		sprite.attachChild(text);
 		return sprite;
 	}
 

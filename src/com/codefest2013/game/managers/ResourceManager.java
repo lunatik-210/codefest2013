@@ -17,6 +17,7 @@ import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder
 import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
+import org.andengine.util.color.Color;
 import org.andengine.util.debug.Debug;
 
 import android.content.Context;
@@ -191,7 +192,7 @@ public class ResourceManager extends Object {
 	private void loadSharedFonts()
 	{
 		splashFont = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), 
-				256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
+				256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32, Color.WHITE.hashCode());
 		splashFont.load();
 	}
 	
