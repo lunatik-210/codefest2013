@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.engine.Engine;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -18,6 +20,7 @@ import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.util.debug.Debug;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 
 public class ResourceManager extends Object {
@@ -93,8 +96,9 @@ public class ResourceManager extends Object {
      * Splash screen resources
      */
 
-    public ITextureRegion mSplashTextureRegion;
+    public ITextureRegion splashTextureRegion;
     public Music splashMusic;
+    public Font splashFont;
     
 	private static final ResourceManager INSTANCE = new ResourceManager();
 	
@@ -137,28 +141,30 @@ public class ResourceManager extends Object {
 	
 	// Loads all game resources.
 	public static void loadGameResources() {
-		getInstance().loadTextures();
-		getInstance().loadAudio();
-		getInstance().loadFonts();
+		getInstance().loadGameTextures();
+		getInstance().loadGameAudio();
+		getInstance().loadGameFonts();
 	}
 	
 	// Unloads all game resources.
 	public static void unloadGameResources() {
-		getInstance().unloadTextures();
-		getInstance().unloadAudio();
-		getInstance().unloadFonts();
+		getInstance().unloadGameTextures();
+		getInstance().unloadGameAudio();
+		getInstance().unloadGameFonts();
 	}
 	
 	public static void loadSharedResources()
 	{
 		getInstance().loadSharedTextures();
 		getInstance().loadSharedAudio();
+		getInstance().loadSharedFonts();
 	}
 	
 	public static void unloadSharedResources()
 	{
 		getInstance().unloadSharedTextures();
 		getInstance().unloadSharedAudio();
+		getInstance().unloadSharedFonts();
 	}
 	
 	// ============================ LOAD SHARED RESOURCES (SPLASH, MENU) ================= //
@@ -167,7 +173,7 @@ public class ResourceManager extends Object {
 	{
         BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
         BitmapTextureAtlas textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 256, 256, TextureOptions.DEFAULT);
-        mSplashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "splash.png", 0, 0);
+        splashTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "splash.png", 0, 0);
         textureAtlas.load();
         
         textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512,
@@ -178,8 +184,20 @@ public class ResourceManager extends Object {
 	
 	private void unloadSharedTextures()
 	{
-		unloadTexture(mSplashTextureRegion);
+		unloadTexture(splashTextureRegion);
 		unloadTexture(button);
+	}
+	
+	private void loadSharedFonts()
+	{
+		splashFont = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), 
+				256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32);
+		splashFont.load();
+	}
+	
+	private void unloadSharedFonts()
+	{
+		unloadFont(splashFont);
 	}
 	
 	private void loadSharedAudio()
@@ -198,7 +216,7 @@ public class ResourceManager extends Object {
 	}
 	
 	// ============================ LOAD TEXTURES (GAME) ================= //
-	private void loadTextures(){
+	private void loadGameTextures(){
     	BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
     	BitmapTextureAtlas textureAtlas = null;
 
@@ -299,7 +317,7 @@ public class ResourceManager extends Object {
 	}
 	
 	// ============================ UNLOAD TEXTURES (GAME) =============== //
-	private void unloadTextures(){
+	private void unloadGameTextures(){
 		unloadTexture(goblinTiledLeftWalk);
 		unloadTexture(goblinTiledRightWalk);
 		unloadTexture(bgLB);
@@ -334,7 +352,7 @@ public class ResourceManager extends Object {
 	}	
 	
 	// =========================== LOAD AUDIO ======================== //
-	private void loadAudio(){
+	private void loadGameAudio(){
         MusicFactory.setAssetBasePath("afx/");
         try {
         	tickTookMusic = MusicFactory.createMusicFromAsset(engine.getMusicManager(), context, "ticktook.mp3");
@@ -345,7 +363,7 @@ public class ResourceManager extends Object {
 	}
 	
 	// =========================== UNLOAD AUDIO ====================== //
-	private void unloadAudio(){
+	private void unloadGameAudio(){
 		unloadMusic(tickTookMusic);
 		unloadMusic(fireplaceMusic);
 	}
@@ -360,10 +378,18 @@ public class ResourceManager extends Object {
 	}
 
 	// ============================ LOAD FONTS ========================== //
-	private void loadFonts(){
+	private void loadGameFonts(){
 	}
 	
 	// ============================ UNLOAD FONTS ======================== //
-	private void unloadFonts(){
+	private void unloadGameFonts(){
+	}
+	
+	private void unloadFont(Font font)
+	{
+		if(font!=null)
+		{
+			font.unload();
+		}
 	}
 }

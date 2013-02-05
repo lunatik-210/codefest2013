@@ -15,13 +15,13 @@ public class MainMenu extends ManagedScene {
 	private ManagedScene thisManagedMainMenu = this;
 	
 	private final float BUTTON_SCALE_FACTOR = 1.921052632f;
-	private final float BUTTON_HEIGHT = mResourceManager.CAMERA_HEIGHT / 6;
+	private final float BUTTON_HEIGHT = mResourceManager.CAMERA_HEIGHT / 4;
 	private final float BUTTON_WIDTH = BUTTON_HEIGHT * BUTTON_SCALE_FACTOR;
 	
 	private final float BUTTON_PANEL_X = mResourceManager.CAMERA_WIDTH / 2 - BUTTON_WIDTH / 2;
-	private final float BUTTON_PANEL_Y = BUTTON_HEIGHT;
+	private final float BUTTON_PANEL_Y = (mResourceManager.CAMERA_HEIGHT - BUTTON_HEIGHT*3) / 3;
 	
-	private final float BUTTON_Y_BIAS = BUTTON_HEIGHT / 3;
+	private final float BUTTON_Y_BIAS = BUTTON_PANEL_Y / 3;
 	
 	private ButtonSprite startButton = null;
 	private ButtonSprite aboutButton = null;

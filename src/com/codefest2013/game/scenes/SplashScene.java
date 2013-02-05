@@ -24,7 +24,7 @@ public class SplashScene extends ManagedScene {
 		ResourceManager.loadSharedResources();
 		ResourceManager mResourceManager = ResourceManager.getInstance();
 		
-        Sprite mSplash = new Sprite(0, 0, mResourceManager.mSplashTextureRegion, mResourceManager.engine.getVertexBufferObjectManager());
+        Sprite mSplash = new Sprite(0, 0, mResourceManager.splashTextureRegion, mResourceManager.engine.getVertexBufferObjectManager());
         mSplash.setPosition((mResourceManager.CAMERA_WIDTH - mSplash.getWidth()) * 0.5f,
         		(mResourceManager.CAMERA_HEIGHT - mSplash.getHeight()) * 0.5f);
         
