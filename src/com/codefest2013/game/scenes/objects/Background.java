@@ -140,7 +140,7 @@ public class Background extends Entity {
 		sprite.registerEntityModifier(rotationAtModifier);
 		Sprite lightLampSprite = new Sprite(LAMP_LIGHT_MASK_X, LAMP_LIGHT_MASK_Y, LAMP_LIGHT_MASK_WIDTH, LAMP_LIGHT_MASK_HEIGHT,
 				mResourceManager.lampLightMask, mResourceManager.engine.getVertexBufferObjectManager());
-		lightLampSprite.setBlendFunction(GLES20.GL_DST_COLOR, GLES20.GL_ONE);
+		lightLampSprite.setBlendFunction(GLES20.GL_ONE_MINUS_SRC_ALPHA, GLES20.GL_ONE);
 		lightLampSprite.setBlendingEnabled(true);
 		sprite.attachChild(lightLampSprite);
 		attachChild(sprite);
