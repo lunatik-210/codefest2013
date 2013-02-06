@@ -3,6 +3,7 @@ package com.codefest2013.game.scenes.objects;
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.RotationAtModifier;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 
 import android.opengl.GLES20;
@@ -18,6 +19,11 @@ public class Background extends Entity {
 	private final float FIREPLACE_HEIGHT = 510.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float FIREPLACE_X = 1425.6f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float FIREPLACE_Y = 406.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	
+	private final float FIREPLACE_LIGHT_MASK_WIDTH = 959.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_HEIGHT = 289.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_X = 1095.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_Y = 705.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
 	
 	private final float TREE_WIDTH = 490.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float TREE_HEIGHT = 774.0f * mResourceManager.WORLD_SCALE_CONSTANT;
@@ -39,10 +45,10 @@ public class Background extends Entity {
 	private final float LAMP_ROTATION_CENTER_X = LAMP_WIDTH/2;
 	private final float LAMP_ROTATION_CENTER_Y = -20f * mResourceManager.WORLD_SCALE_CONSTANT;
 	
-	private final float LIGHT_MASK_WIDTH = 629.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float LIGHT_MASK_HEIGHT = 839.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float LIGHT_MASK_X = -191.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float LIGHT_MASK_Y = 113.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
+	private final float LAMP_LIGHT_MASK_WIDTH = 629.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float LAMP_LIGHT_MASK_HEIGHT = 839.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float LAMP_LIGHT_MASK_X = -191.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float LAMP_LIGHT_MASK_Y = 113.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
 	
 	private final float STOCKING_WIDTH = 90.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float STOCKING_HEIGHT = 140.0f * mResourceManager.WORLD_SCALE_CONSTANT;
@@ -130,13 +136,21 @@ public class Background extends Entity {
 				super.onModifierFinished(pItem);
 			}
 		};
+		
 		sprite.registerEntityModifier(rotationAtModifier);
-		Sprite lightLampSprite = new Sprite(LIGHT_MASK_X, LIGHT_MASK_Y, LIGHT_MASK_WIDTH, LIGHT_MASK_HEIGHT,
-				mResourceManager.lightLampMask, mResourceManager.engine.getVertexBufferObjectManager());
+		Sprite lightLampSprite = new Sprite(LAMP_LIGHT_MASK_X, LAMP_LIGHT_MASK_Y, LAMP_LIGHT_MASK_WIDTH, LAMP_LIGHT_MASK_HEIGHT,
+				mResourceManager.lampLightMask, mResourceManager.engine.getVertexBufferObjectManager());
 		lightLampSprite.setBlendFunction(GLES20.GL_DST_COLOR, GLES20.GL_ONE);
 		lightLampSprite.setBlendingEnabled(true);
 		sprite.attachChild(lightLampSprite);
 		attachChild(sprite);
+		
+		AnimatedSprite fireplaceLightSprite = new AnimatedSprite(FIREPLACE_LIGHT_MASK_X, FIREPLACE_LIGHT_MASK_Y, FIREPLACE_LIGHT_MASK_WIDTH,
+				FIREPLACE_LIGHT_MASK_HEIGHT, mResourceManager.fireplaceLightMask, mResourceManager.engine.getVertexBufferObjectManager());
+		fireplaceLightSprite.setBlendFunction(GLES20.GL_DST_COLOR, GLES20.GL_ONE);
+		fireplaceLightSprite.setBlendingEnabled(true);
+		fireplaceLightSprite.animate(75);
+		attachChild(fireplaceLightSprite);
 	}
 	
 	public Sprite getClockSprite() {
