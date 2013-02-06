@@ -5,6 +5,8 @@ import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.RotationAtModifier;
 import org.andengine.entity.sprite.Sprite;
 
+import android.opengl.GLES20;
+
 import com.codefest2013.game.MegaAnimatedSprite;
 import com.codefest2013.game.managers.ResourceManager;
 
@@ -31,6 +33,16 @@ public class Background extends Entity {
 	private final float LAMP_HEIGHT = 170.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float LAMP_X = 870.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float LAMP_Y = 0.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	
+	private final float LAMP_ROTATION_SPEED = 2.0f;
+	private final float LAMP_ROTATION_ANGLE = 8.0f;
+	private final float LAMP_ROTATION_CENTER_X = LAMP_WIDTH/2;
+	private final float LAMP_ROTATION_CENTER_Y = -20f * mResourceManager.WORLD_SCALE_CONSTANT;
+	
+	private final float LIGHT_MASK_WIDTH = 629.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float LIGHT_MASK_HEIGHT = 839.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float LIGHT_MASK_X = -191.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float LIGHT_MASK_Y = 113.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
 	
 	private final float STOCKING_WIDTH = 90.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float STOCKING_HEIGHT = 140.0f * mResourceManager.WORLD_SCALE_CONSTANT;
@@ -76,18 +88,6 @@ public class Background extends Entity {
 		sprite.setIgnoreUpdate(true);
 		attachChild(sprite);
 		
-		sprite = new Sprite(LAMP_X, LAMP_Y, LAMP_WIDTH, LAMP_HEIGHT, 
-				mResourceManager.lamp, mResourceManager.engine.getVertexBufferObjectManager());
-		RotationAtModifier rotationAtModifier = new RotationAtModifier(1.5f, -20.0f, 20.0f, LAMP_WIDTH/2, 0) {
-			@Override
-			protected void onModifierFinished(IEntity pItem) {
-				reset(getDuration(), getToValue(), getFromValue());
-				super.onModifierFinished(pItem);
-			}
-		};
-		sprite.registerEntityModifier(rotationAtModifier);
-		attachChild(sprite);
-		
 		clockSprite = new MegaAnimatedSprite(10);
 		for( int i=0; i<10; ++i )
 		{
@@ -102,7 +102,7 @@ public class Background extends Entity {
 				mResourceManager.fireplace1, mResourceManager.engine.getVertexBufferObjectManager() ) );
 		firePlaceSprite.attachTexture( new Sprite(FIREPLACE_X, FIREPLACE_Y, FIREPLACE_WIDTH, FIREPLACE_HEIGHT,
 				mResourceManager.fireplace2, mResourceManager.engine.getVertexBufferObjectManager() ) );
-		firePlaceSprite.animate(1.0f / 6f);
+		firePlaceSprite.animate(1.0f / 6f);		
 		attachChild(firePlaceSprite);
 		
 		sprite = new Sprite(STOCKING_X, STOCKING_Y, STOCKING_WIDTH, STOCKING_HEIGHT, 
@@ -118,6 +118,24 @@ public class Background extends Entity {
 		sprite = new Sprite(STOCKING_X + STOCKING_WIDTH*2 + STEP_X*2, STOCKING_Y+STEP_Y*2, STOCKING_WIDTH, STOCKING_HEIGHT, 
 				mResourceManager.stocking, mResourceManager.engine.getVertexBufferObjectManager());
 		sprite.setIgnoreUpdate(true);
+		attachChild(sprite);
+		
+		sprite = new Sprite(LAMP_X, LAMP_Y, LAMP_WIDTH, LAMP_HEIGHT, 
+				mResourceManager.lamp, mResourceManager.engine.getVertexBufferObjectManager());
+		RotationAtModifier rotationAtModifier = new RotationAtModifier(LAMP_ROTATION_SPEED, -LAMP_ROTATION_ANGLE, 
+				LAMP_ROTATION_ANGLE, LAMP_ROTATION_CENTER_X, LAMP_ROTATION_CENTER_Y) {
+			@Override
+			protected void onModifierFinished(IEntity pItem) {
+				reset(getDuration(), getToValue(), getFromValue());
+				super.onModifierFinished(pItem);
+			}
+		};
+		sprite.registerEntityModifier(rotationAtModifier);
+		Sprite lightLampSprite = new Sprite(LIGHT_MASK_X, LIGHT_MASK_Y, LIGHT_MASK_WIDTH, LIGHT_MASK_HEIGHT,
+				mResourceManager.lightLampMask, mResourceManager.engine.getVertexBufferObjectManager());
+		lightLampSprite.setBlendFunction(GLES20.GL_DST_COLOR, GLES20.GL_ONE);
+		lightLampSprite.setBlendingEnabled(true);
+		sprite.attachChild(lightLampSprite);
 		attachChild(sprite);
 	}
 	

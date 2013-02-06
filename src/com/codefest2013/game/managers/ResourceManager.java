@@ -43,6 +43,7 @@ public class ResourceManager extends Object {
      * Light
      */
     public ITextureRegion lightMask;
+    public ITextureRegion lightLampMask;
     
     /**
      * Goblin animation
@@ -251,9 +252,9 @@ public class ResourceManager extends Object {
         stocking = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/stocking.png", 500, 180);
         textureAtlas.load();
         
-        textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512,
+        textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        lightMask = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "LightMask.png", 0, 0);
+        lightLampMask = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "LightLampMask.png", 0, 0);
         textureAtlas.load();
         
         textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
@@ -313,7 +314,7 @@ public class ResourceManager extends Object {
             mBuildableBitmapTextureAtlas.load();
         } catch (final TextureAtlasBuilderException e) {
             Debug.e(e);
-        }        
+        }
         
         mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
