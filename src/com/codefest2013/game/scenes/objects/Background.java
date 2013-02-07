@@ -20,10 +20,10 @@ public class Background extends Entity {
 	private final float FIREPLACE_X = 1425.6f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float FIREPLACE_Y = 406.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	
-	private final float FIREPLACE_LIGHT_MASK_WIDTH = 959.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float FIREPLACE_LIGHT_MASK_HEIGHT = 289.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float FIREPLACE_LIGHT_MASK_X = 1095.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float FIREPLACE_LIGHT_MASK_Y = 705.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
+	private final float FIREPLACE_LIGHT_MASK_WIDTH = 685.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_HEIGHT = 451.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_X = 1283.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_Y = 533.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
 	
 	private final float TREE_WIDTH = 490.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float TREE_HEIGHT = 774.0f * mResourceManager.WORLD_SCALE_CONSTANT;
@@ -41,7 +41,7 @@ public class Background extends Entity {
 	private final float LAMP_Y = 0.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	
 	private final float LAMP_ROTATION_SPEED = 2.0f;
-	private final float LAMP_ROTATION_ANGLE = 8.0f;
+	private final float LAMP_ROTATION_ANGLE = 4.0f;
 	private final float LAMP_ROTATION_CENTER_X = LAMP_WIDTH/2;
 	private final float LAMP_ROTATION_CENTER_Y = -20f * mResourceManager.WORLD_SCALE_CONSTANT;
 	
