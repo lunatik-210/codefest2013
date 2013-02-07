@@ -44,7 +44,7 @@ public class ResourceManager extends Object {
      */
     public ITextureRegion lightMask;
     public ITextureRegion lampLightMask;
-    public ITiledTextureRegion fireplaceLightMask;
+    public ITiledTextureRegion[] fireplaceLightMask = new ITiledTextureRegion[2];
     
     /**
      * Goblin animation
@@ -260,9 +260,16 @@ public class ResourceManager extends Object {
         
         textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        fireplaceLightMask = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, context, 
-        		"background/FireplaceLightMask.png", 0, 0, 1, 2);
+        fireplaceLightMask[0] = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, context, 
+        		"background/FireplaceLightMaskTop.png", 0, 0, 1, 2);
         textureAtlas.load();
+        
+        textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 512,
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        fireplaceLightMask[1] = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(textureAtlas, context, 
+        		"background/FireplaceLightMaskBottom.png", 0, 0, 1, 2);
+        textureAtlas.load();
+        
         
         textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
@@ -351,6 +358,7 @@ public class ResourceManager extends Object {
 		unloadTextureArray(clock);
 		unloadTextureArray(squirrelLeftWalk);
 		unloadTextureArray(squirrelRightWalk);
+		unloadTextureArray(fireplaceLightMask);
 	}
 	
 	private void unloadTexture(ITextureRegion texture)

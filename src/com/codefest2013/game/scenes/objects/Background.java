@@ -20,10 +20,17 @@ public class Background extends Entity {
 	private final float FIREPLACE_X = 1425.6f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float FIREPLACE_Y = 406.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	
-	private final float FIREPLACE_LIGHT_MASK_WIDTH = 685.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float FIREPLACE_LIGHT_MASK_HEIGHT = 451.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float FIREPLACE_LIGHT_MASK_X = 1283.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float FIREPLACE_LIGHT_MASK_Y = 533.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
+	/*
+	private final float FIREPLACE_LIGHT_MASK_TOP_WIDTH = 610.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_TOP_HEIGHT = 407.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_TOP_X = 1418.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_TOP_Y = 445.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
+	*/
+	
+	private final float FIREPLACE_LIGHT_MASK_BOTTOM_WIDTH = 631.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_BOTTOM_HEIGHT = 168.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_BOTTOM_X = 1328.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float FIREPLACE_LIGHT_MASK_BOTTOM_Y = 820.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
 	
 	private final float TREE_WIDTH = 490.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float TREE_HEIGHT = 774.0f * mResourceManager.WORLD_SCALE_CONSTANT;
@@ -145,12 +152,24 @@ public class Background extends Entity {
 		sprite.attachChild(lightLampSprite);
 		attachChild(sprite);
 		
-		AnimatedSprite fireplaceLightSprite = new AnimatedSprite(FIREPLACE_LIGHT_MASK_X, FIREPLACE_LIGHT_MASK_Y, FIREPLACE_LIGHT_MASK_WIDTH,
-				FIREPLACE_LIGHT_MASK_HEIGHT, mResourceManager.fireplaceLightMask, mResourceManager.engine.getVertexBufferObjectManager());
+		/*
+		AnimatedSprite fireplaceLightSprite = new AnimatedSprite(FIREPLACE_LIGHT_MASK_TOP_X, FIREPLACE_LIGHT_MASK_TOP_Y, 
+				FIREPLACE_LIGHT_MASK_TOP_WIDTH, FIREPLACE_LIGHT_MASK_TOP_HEIGHT,
+				mResourceManager.fireplaceLightMask[0], mResourceManager.engine.getVertexBufferObjectManager());
 		fireplaceLightSprite.setBlendFunction(GLES20.GL_DST_COLOR, GLES20.GL_ONE);
 		fireplaceLightSprite.setBlendingEnabled(true);
 		fireplaceLightSprite.animate(75);
 		attachChild(fireplaceLightSprite);
+		*/
+		
+		AnimatedSprite fireplaceLightSprite = new AnimatedSprite(FIREPLACE_LIGHT_MASK_BOTTOM_X, FIREPLACE_LIGHT_MASK_BOTTOM_Y,
+				FIREPLACE_LIGHT_MASK_BOTTOM_WIDTH, FIREPLACE_LIGHT_MASK_BOTTOM_HEIGHT,
+				mResourceManager.fireplaceLightMask[1], mResourceManager.engine.getVertexBufferObjectManager());
+		fireplaceLightSprite.setBlendFunction(GLES20.GL_DST_COLOR, GLES20.GL_ONE);
+		fireplaceLightSprite.setBlendingEnabled(true);
+		fireplaceLightSprite.animate(75);
+		attachChild(fireplaceLightSprite);
+		
 	}
 	
 	public Sprite getClockSprite() {
