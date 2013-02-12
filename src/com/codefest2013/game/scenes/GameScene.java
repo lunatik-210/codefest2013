@@ -18,9 +18,11 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
+import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
+import org.andengine.util.color.Color;
 
 public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	private ResourceManager mResourceManager = ResourceManager.getInstance();
@@ -166,24 +168,38 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	
 	private void createWorld()
 	{
-		world = new FixedStepPhysicsWorld(60, new Vector2(0f, -SensorManager.GRAVITY_EARTH*2), false, 8, 3);
+		world = new FixedStepPhysicsWorld(60, new Vector2(0f, SensorManager.GRAVITY_EARTH*2), false, 8, 3);
 		registerUpdateHandler(world);
 		
-		final FixtureDef WALL_FIXTURE_DEF = PhysicsFactory.createFixtureDef(0, 0.0f, 1.0f);
-		final Rectangle ground = new Rectangle(0f, mResourceManager.WORLD_HEIGHT, mResourceManager.WORLD_WIDTH, 1f,
+		final FixtureDef WALL_FIXTURE_DEF = PhysicsFactory.createFixtureDef(0.0f, 0.0f, 1.0f);
+		final Rectangle ground = new Rectangle(0f, mResourceManager.WORLD_HEIGHT-1f, mResourceManager.WORLD_WIDTH, 1f,
 				mResourceManager.engine.getVertexBufferObjectManager());
 		final Rectangle roof = new Rectangle(0f, 0f, mResourceManager.WORLD_WIDTH, 1f, 
 				mResourceManager.engine.getVertexBufferObjectManager());
 		final Rectangle left = new Rectangle(0f, 0f, 1f, mResourceManager.WORLD_HEIGHT,
 				mResourceManager.engine.getVertexBufferObjectManager());
-		final Rectangle right = new Rectangle(mResourceManager.WORLD_WIDTH, 0f, 1f, mResourceManager.WORLD_HEIGHT,
+		final Rectangle right = new Rectangle(mResourceManager.WORLD_WIDTH-1f, 0f, 1f, mResourceManager.WORLD_HEIGHT,
 				mResourceManager.engine.getVertexBufferObjectManager());
 		
-		final Body groundWallBody = PhysicsFactory.createBoxBody(world, ground, BodyType.StaticBody, WALL_FIXTURE_DEF);
-		final Body roofWallBody = PhysicsFactory.createBoxBody(world, roof, BodyType.StaticBody, WALL_FIXTURE_DEF);
-		final Body leftWallBody = PhysicsFactory.createBoxBody(world, left, BodyType.StaticBody, WALL_FIXTURE_DEF);
-		final Body rightWallBody = PhysicsFactory.createBoxBody(world, right, BodyType.StaticBody, WALL_FIXTURE_DEF);
+		PhysicsFactory.createBoxBody(world, ground, BodyType.StaticBody, WALL_FIXTURE_DEF);
+		PhysicsFactory.createBoxBody(world, roof, BodyType.StaticBody, WALL_FIXTURE_DEF);
+		PhysicsFactory.createBoxBody(world, left, BodyType.StaticBody, WALL_FIXTURE_DEF);
+		PhysicsFactory.createBoxBody(world, right, BodyType.StaticBody, WALL_FIXTURE_DEF);
 		
+		attachChild(ground);
+		attachChild(roof);
+		attachChild(left);
+		attachChild(right);
 		
+		FixtureDef BALL_FIXTURE_DEF = PhysicsFactory.createFixtureDef(1, 0.0f, 1.0f);
+		
+		final Rectangle ball = new Rectangle(100, 100, 10, 10, mResourceManager.engine.getVertexBufferObjectManager());
+		ball.setColor(Color.WHITE);
+		final Body body =  PhysicsFactory.createBoxBody(world, ball, BodyType.DynamicBody, BALL_FIXTURE_DEF);
+		
+		attachChild(ball);
+		body.setLinearVelocity(10, 0);
+		
+		world.registerPhysicsConnector(new PhysicsConnector(ball, body, true, true));
 	}
 }
