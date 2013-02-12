@@ -1,5 +1,11 @@
 package com.codefest2013.game.scenes;
 
+import android.hardware.SensorManager;
+
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.codefest2013.game.managers.ResourceManager;
 import com.codefest2013.game.scenes.objects.Background;
 import com.codefest2013.game.scenes.objects.Squirrel;
@@ -11,6 +17,9 @@ import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
+import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
+import org.andengine.extension.physics.box2d.PhysicsFactory;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 
 public class GameScene extends ManagedScene implements IOnSceneTouchListener {
@@ -25,6 +34,7 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
     private final float PLAYER_START_X = mResourceManager.CAMERA_WIDTH/2;
     private final float PLAYER_START_Y = mResourceManager.CAMERA_HEIGHT-mResourceManager.CAMERA_HEIGHT/5;
 			
+    private PhysicsWorld world = null;
     
     public GameScene()
     {
@@ -95,6 +105,8 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		
 		registerUpdateHandler(mPlayer);
 		mResourceManager.engine.getCamera().setChaseEntity(mPlayer);
+		
+		createWorld();
 	}
 
 	@Override
@@ -150,5 +162,28 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		else {
 			music.setVolume(1-(val/threshold));
 		}
+	}
+	
+	private void createWorld()
+	{
+		world = new FixedStepPhysicsWorld(60, new Vector2(0f, -SensorManager.GRAVITY_EARTH*2), false, 8, 3);
+		registerUpdateHandler(world);
+		
+		final FixtureDef WALL_FIXTURE_DEF = PhysicsFactory.createFixtureDef(0, 0.0f, 1.0f);
+		final Rectangle ground = new Rectangle(0f, mResourceManager.WORLD_HEIGHT, mResourceManager.WORLD_WIDTH, 1f,
+				mResourceManager.engine.getVertexBufferObjectManager());
+		final Rectangle roof = new Rectangle(0f, 0f, mResourceManager.WORLD_WIDTH, 1f, 
+				mResourceManager.engine.getVertexBufferObjectManager());
+		final Rectangle left = new Rectangle(0f, 0f, 1f, mResourceManager.WORLD_HEIGHT,
+				mResourceManager.engine.getVertexBufferObjectManager());
+		final Rectangle right = new Rectangle(mResourceManager.WORLD_WIDTH, 0f, 1f, mResourceManager.WORLD_HEIGHT,
+				mResourceManager.engine.getVertexBufferObjectManager());
+		
+		final Body groundWallBody = PhysicsFactory.createBoxBody(world, ground, BodyType.StaticBody, WALL_FIXTURE_DEF);
+		final Body roofWallBody = PhysicsFactory.createBoxBody(world, roof, BodyType.StaticBody, WALL_FIXTURE_DEF);
+		final Body leftWallBody = PhysicsFactory.createBoxBody(world, left, BodyType.StaticBody, WALL_FIXTURE_DEF);
+		final Body rightWallBody = PhysicsFactory.createBoxBody(world, right, BodyType.StaticBody, WALL_FIXTURE_DEF);
+		
+		
 	}
 }
