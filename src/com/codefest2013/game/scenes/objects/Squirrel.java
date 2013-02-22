@@ -10,7 +10,6 @@ import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.util.color.Color;
-import org.andengine.util.debug.Debug;
 
 import com.codefest2013.game.managers.ResourceManager;
 
