@@ -1,5 +1,8 @@
 package com.codefest2013.game.scenes;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import android.hardware.SensorManager;
 
 import com.badlogic.gdx.math.Vector2;
@@ -64,32 +67,31 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 
 	@Override
 	public void onLoadScene() {
-		WayPoint wps[] = {
-			new WayPoint(112, 230, 0, 0, false),
-			new WayPoint(170, 260, 0, 0, false),
-			new WayPoint(238, 120, 0, 0, false),
-			new WayPoint(264, 77, 0, 0, true),
-			new WayPoint(400, 110, 0, 0, false),
-			new WayPoint(424, 154, 45, 0, false),
-			new WayPoint(444, 218, 60, 0, false),
-			new WayPoint(474, 256, 0, 0, true),
-			new WayPoint(512, 182, 0, 0, false),
-			new WayPoint(526, 126, 0, 0, false),
-			new WayPoint(548, 210, 0, 45, false),
-			new WayPoint(595, 286, 0, 0, true),
-			new WayPoint(632, 366, 60, 0, false),
-			new WayPoint(668, 372, 0, 0, false),
-			new WayPoint(726, 264, 0, 0, false),
-			new WayPoint(948, 264, 0, 0, true),
-			new WayPoint(980, 370, 60, 45, false),
-			new WayPoint(1031, 450, 0, 0, false),
-			new WayPoint(1078, 494, 0, 0, false),
-			new WayPoint(1288, 528, 60, 0, true),
-			new WayPoint(1376, 482, 0, 0, false),
-			new WayPoint(1430, 406, 0, 0, false),
-			new WayPoint(1582, 264, 0, 0, false),
-			new WayPoint(1726, 190, 0, 0, true),
-		};
+		ArrayList<WayPoint> wps = new ArrayList<WayPoint>();
+		wps.add(new WayPoint(Arrays.asList(1), 112, 230, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(0,2), 170, 260, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(1,3), 238, 120, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(2,4), 264, 77, 0, 0, true));
+		wps.add(new WayPoint(Arrays.asList(3,5), 400, 110, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(4,6), 424, 154, 45, 0, false));
+		wps.add(new WayPoint(Arrays.asList(5,7), 444, 218, 60, 0, false));
+		wps.add(new WayPoint(Arrays.asList(6,8), 474, 256, 0, 0, true));
+		wps.add(new WayPoint(Arrays.asList(7,9), 512, 182, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(8,10), 526, 126, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(9,11), 548, 210, 0, 45, false));
+		wps.add(new WayPoint(Arrays.asList(10,12), 595, 286, 0, 0, true));
+		wps.add(new WayPoint(Arrays.asList(11,13), 632, 366, 60, 0, false));
+		wps.add(new WayPoint(Arrays.asList(12,14), 668, 372, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(13,15), 726, 264, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(14,16), 948, 264, 0, 0, true));
+		wps.add(new WayPoint(Arrays.asList(15,17), 980, 370, 60, 45, false));
+		wps.add(new WayPoint(Arrays.asList(16,18), 1031, 450, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(17,19), 1078, 494, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(18,20), 1288, 528, 60, 0, true));
+		wps.add(new WayPoint(Arrays.asList(19,21), 1376, 482, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(20,22), 1430, 406, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(21,23), 1582, 264, 0, 0, false));
+		wps.add(new WayPoint(Arrays.asList(22), 1726, 190, 0, 0, true));
 		
     	mBackground = new Background();
     	mPlayer = new Player(PLAYER_START_X, PLAYER_START_Y);
@@ -97,11 +99,11 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		
     	attachChild(mBackground);
 		attachChild(mPlayer);
-		for(int i=0; i<wps.length; i++)
+		for(int i=0; i<wps.size(); i++)
 		{
-			wps[i].x = wps[i].x * mResourceManager.WORLD_SCALE_CONSTANT;
-			wps[i].y = wps[i].y * mResourceManager.WORLD_SCALE_CONSTANT;
-			attachChild(new Rectangle(wps[i].x, wps[i].y, 8, 8, ResourceManager.getInstance().engine.getVertexBufferObjectManager()));
+			wps.get(i).x = wps.get(i).x * mResourceManager.WORLD_SCALE_CONSTANT;
+			wps.get(i).y = wps.get(i).y * mResourceManager.WORLD_SCALE_CONSTANT;
+			attachChild(new Rectangle(wps.get(i).x, wps.get(i).y, 8, 8, ResourceManager.getInstance().engine.getVertexBufferObjectManager()));
 		}
 		attachChild(mSquirrel);
 		
