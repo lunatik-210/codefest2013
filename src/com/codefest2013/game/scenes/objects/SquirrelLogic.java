@@ -76,6 +76,7 @@ public class SquirrelLogic {
 			pos = comeFrom.get(pos);
 		}
 		path.addFirst(currentPos);
+		
 		currentPos = nextGoal;
 		return path;
 	}
