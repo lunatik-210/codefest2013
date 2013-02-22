@@ -10,6 +10,7 @@ import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.util.color.Color;
+import org.andengine.util.debug.Debug;
 
 import com.codefest2013.game.managers.ResourceManager;
 
@@ -29,6 +30,7 @@ public class Squirrel extends Entity {
 	
 	public Squirrel(ArrayList<WayPoint> wayPointsArray, int startIndex, int speed){
 		logic = new SquirrelLogic(wayPointsArray, startIndex);
+		previousPos = startIndex;
 		
 		wps = wayPointsArray;
 		this.speed = speed;
@@ -37,7 +39,6 @@ public class Squirrel extends Entity {
 			
 			@Override
 			public void onPathWaypointStarted(PathModifier pPathModifier, IEntity pEntity, int index) {
-				previousPos = currentPath.get(index);
 			}
 			
 			@Override
@@ -52,6 +53,7 @@ public class Squirrel extends Entity {
 				{
 					rotate(currentWP.langle);
 				}
+				previousPos = currentPath.get(index);
 			}
 			
 			@Override
