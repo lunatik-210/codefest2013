@@ -1,5 +1,6 @@
 package com.codefest2013.game.scenes.objects;
 
+import org.andengine.audio.music.Music;
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
 import org.andengine.entity.modifier.RotationAtModifier;
@@ -61,8 +62,12 @@ public class Background extends Entity {
 	private MegaAnimatedSprite clockSprite;
 	private MegaAnimatedSprite firePlaceSprite;
 	
-	public Background()
+	private Player mPlayer = null;
+	
+	public Background( Player player )
 	{
+		setPlayer(player);
+		
 		Sprite sprite = null;
 		
 		sprite = new Sprite(0, 0, mResourceManager.WORLD_WIDTH/2, mResourceManager.WORLD_HEIGHT/2,
@@ -161,5 +166,44 @@ public class Background extends Entity {
 
 	public Sprite getFirePlaceSprite() {
 		return firePlaceSprite.getCurrentSprite();
+	}
+	
+	public void start() {
+		mResourceManager.fireplaceMusic.play();
+		mResourceManager.tickTookMusic.play();
+		mResourceManager.fireplaceMusic.setVolume(0.0f);
+		mResourceManager.tickTookMusic.setVolume(0.0f);
+		mResourceManager.fireplaceMusic.setLooping(true);
+		mResourceManager.tickTookMusic.setLooping(true);
+	}
+	
+	public void stop() {
+		mResourceManager.fireplaceMusic.pause();
+		mResourceManager.tickTookMusic.pause();
+	}
+	
+	public void update() {
+		manageMusicValue(this.getFirePlaceSprite(), mResourceManager.fireplaceMusic, 1000.0f);
+		manageMusicValue(this.getClockSprite(), mResourceManager.tickTookMusic, 600.0f);
+	}
+	
+	private void manageMusicValue( final Entity object, Music music, final float distance )
+	{
+		final float val = Math.abs(object.getSceneCenterCoordinates()[0]-getPlayer().getX());
+		final float threshold = distance*mResourceManager.WORLD_SCALE_CONSTANT;
+		if(val > threshold) {
+			music.setVolume(0.0f);
+		}
+		else {
+			music.setVolume(1-(val/threshold));
+		}
+	}
+	
+	private Player getPlayer() {
+		return mPlayer;
+	}
+
+	private void setPlayer(Player player) {
+		this.mPlayer = player;
 	}
 }

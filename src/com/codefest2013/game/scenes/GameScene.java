@@ -15,8 +15,6 @@ import com.codefest2013.game.scenes.objects.Background;
 import com.codefest2013.game.scenes.objects.Squirrel;
 import com.codefest2013.game.scenes.objects.Player;
 
-import org.andengine.audio.music.Music;
-import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
@@ -106,9 +104,10 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		wps.add(30, new WayPoint(Arrays.asList(13,31), 783, 337, 0, 0, true));
 		wps.add(31, new WayPoint(Arrays.asList(30,16), 853, 343, 0, 0, true));
 		
-    	mBackground = new Background();
+    	
     	mPlayer = new Player(PLAYER_START_X, PLAYER_START_Y);
 		mSquirrel = new Squirrel(wps);
+		mBackground = new Background(mPlayer);
 		
     	attachChild(mBackground);
 		attachChild(mPlayer);
@@ -129,23 +128,15 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	@Override
 	public void onShowScene() {
 		setOnSceneTouchListener(this);
-		
 		mSquirrel.start();
-		
-		mResourceManager.fireplaceMusic.play();
-		mResourceManager.tickTookMusic.play();
-		mResourceManager.fireplaceMusic.setVolume(0.0f);
-		mResourceManager.tickTookMusic.setVolume(0.0f);
-		mResourceManager.fireplaceMusic.setLooping(true);
-		mResourceManager.tickTookMusic.setLooping(true);
+		mBackground.start();
 	}
 
 	@Override
 	public void onHideScene() {
 		mPlayer.setPosition(PLAYER_START_X, PLAYER_START_Y);
 		mSquirrel.stop();
-		mResourceManager.fireplaceMusic.pause();
-		mResourceManager.tickTookMusic.pause();
+		mBackground.stop();
 	}
 
 	@Override
@@ -164,21 +155,8 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	
 	@Override
 	protected void onManagedUpdate(float pSecondsElapsed) {
-		manageMusicValue(mBackground.getFirePlaceSprite(), mResourceManager.fireplaceMusic, 1000.0f);
-		manageMusicValue(mBackground.getClockSprite(), mResourceManager.tickTookMusic, 600.0f);
+		mBackground.update();
 		super.onManagedUpdate(pSecondsElapsed);
-	}
-	
-	private void manageMusicValue( final Entity object, Music music, final float distance )
-	{
-		final float val = Math.abs(object.getSceneCenterCoordinates()[0]-mPlayer.getX());
-		final float threshold = distance*mResourceManager.WORLD_SCALE_CONSTANT;
-		if(val > threshold) {
-			music.setVolume(0.0f);
-		}
-		else {
-			music.setVolume(1-(val/threshold));
-		}
 	}
 	
 	private void createWorld()
