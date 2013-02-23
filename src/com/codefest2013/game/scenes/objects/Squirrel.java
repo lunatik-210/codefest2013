@@ -11,6 +11,8 @@ import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.util.color.Color;
 
+import com.codefest2013.game.logic.SquirrelLogic;
+import com.codefest2013.game.logic.WayPoint;
 import com.codefest2013.game.managers.ResourceManager;
 
 public class Squirrel extends Entity {

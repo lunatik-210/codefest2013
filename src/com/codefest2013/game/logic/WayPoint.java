@@ -1,4 +1,4 @@
-package com.codefest2013.game.scenes.objects;
+package com.codefest2013.game.logic;
 import java.util.List;
 
 /*
