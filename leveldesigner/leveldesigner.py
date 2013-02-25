@@ -27,8 +27,6 @@ class Model(QAbstractTableModel):
     TRACK_X = 3
     TRACK_Y = 4
     TRACK_IS_THROWABLE = 5
-    TRACK_NEIGHBORS = 6
-    TRACK_OBJECTS = 7
 
     def __init__(self, array, parent=None):
         super(Model, self).__init__(parent)
@@ -38,7 +36,7 @@ class Model(QAbstractTableModel):
         return len(self.array)
 
     def columnCount(self, parent):
-        return 8
+        return 6
 
     def data(self, index, role):
         if role == Qt.DisplayRole or role == Qt.EditRole:
@@ -54,10 +52,6 @@ class Model(QAbstractTableModel):
                 return self.array[index.row()-1].rangle
             if index.column() == Model.TRACK_IS_THROWABLE:
                 return self.array[index.row()-1].isThrowable
-            if index.column() == Model.TRACK_NEIGHBORS:
-                return self.array[index.row()-1].neighbors
-            if index.column() == Model.TRACK_OBJECTS:
-                return self.array[index.row()-1].objects
         return None
 
     def setData(self, index, value, role=Qt.EditRole):
@@ -74,16 +68,76 @@ class Model(QAbstractTableModel):
                 self.array[index.row()-1].rangle = value
             if index.column() == Model.TRACK_IS_THROWABLE:
                 self.array[index.row()-1].isThrowable = value
-            if index.column() == Model.TRACK_NEIGHBORS:
-                self.array[index.row()-1].neighbors = value
-            if index.column() == Model.TRACK_OBJECTS:
-                self.array[index.row()-1].objects = value
             self.dataChanged.emit(index, index)
             return True
         return False
 
     def flags(self, index):
         return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsEditable
+
+class ObjectsModel(QAbstractTableModel):
+    def __init__(self, array, parent=None):
+        super(ObjectsModel, self).__init__(parent)
+        self.array = array
+        self.index = -1
+
+    def setIndex(self, index):
+        self.index = index
+        self.reset()
+
+    def rowCount(self, parent):
+        if self.index < 0:
+            return 0
+        return len(self.array[self.index].objects)
+
+    def columnCount(self, parent):
+        return 1
+
+    def data(self, index, role):
+        if role == Qt.DisplayRole or role == Qt.EditRole:
+            return self.array[self.index].objects[index.row()]
+
+    def setData(self, index, value, role=Qt.EditRole):
+        if role == Qt.EditRole:
+            self.array[self.index].objects[index.row()] = value
+            self.dataChanged.emit(index, index)
+            return True
+        return False
+
+    def flags(self, index):
+        return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsEditable 
+
+class NeighborsModel(QAbstractTableModel):
+    def __init__(self, array, parent=None):
+        super(NeighborsModel, self).__init__(parent)
+        self.array = array
+        self.index = -1
+
+    def setIndex(self, index):
+        self.index = index
+        self.reset()
+
+    def rowCount(self, parent):
+        if self.index < 0:
+            return 0
+        return len(self.array[self.index].neighbors)
+
+    def columnCount(self, parent):
+        return 1
+
+    def data(self, index, role):
+        if role == Qt.DisplayRole or role == Qt.EditRole:
+            return self.array[self.index].neighbors[index.row()]
+
+    def setData(self, index, value, role=Qt.EditRole):
+        if role == Qt.EditRole:
+            self.array[self.index].neighbors[index.row()] = value
+            self.dataChanged.emit(index, index)
+            return True
+        return False
+
+    def flags(self, index):
+        return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsEditable 
 
 class ImageViewer(QWidget, Ui_ImageViewer):
     def __init__(self, parent=None):
@@ -137,9 +191,18 @@ class ObjectBrowser(QDockWidget, Ui_ObjectBrowser):
 
     def setSelection(self, current):
         self.dataMapper.setCurrentModelIndex(current)
+        self.objectsModel.setIndex(current.row())
+        self.neighborsModel.setIndex(current.row())
 
-    def setModel(self, model):
+    def setModel(self, array):
+        model = Model(array, self)
+        self.objectsModel = ObjectsModel(array, self)
+        self.neighborsModel = NeighborsModel(array, self)
+        
         self.listView.setModel(model)
+        self.objects.setModel(self.objectsModel)
+        self.neighbors.setModel(self.neighborsModel)
+
         self.dataMapper.setModel(model)
         self.dataMapper.addMapping(self.xLine, Model.TRACK_X)
         self.dataMapper.addMapping(self.yLine, Model.TRACK_Y)
@@ -164,10 +227,7 @@ class MainWindow(QMainWindow):
         array.append(Object(1,2,7))
         array.append(Object(1,2,8))
 
-        model = Model(array, self)
-        dock.setModel(model)
-
-
+        dock.setModel(array)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
