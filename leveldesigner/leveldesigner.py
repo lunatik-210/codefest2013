@@ -32,11 +32,13 @@ class Object():
         etree.SubElement(root, "id").text = str(self.id)
         
         list = etree.Element("list")
+        list.attrib['type']='neighbor'
         for id in self.neighbors:
             etree.SubElement(list, "id").text = str(id)
         root.append(list)
 
         list = etree.Element("list")
+        list.attrib['type']='object'
         for object in self.objects:
             etree.SubElement(list, "object").text = object
         root.append(list)
