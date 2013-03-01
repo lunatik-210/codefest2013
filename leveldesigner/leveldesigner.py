@@ -9,6 +9,8 @@ from PyQt4.QtCore import *
 from ImageViewer import Ui_ImageViewer
 from ObjectBrowser import Ui_ObjectBrowser
 
+from lxml import etree
+
 class Object():
     def __init__(self, x, y, id):
         self.langle = 0.234
@@ -19,6 +21,30 @@ class Object():
         self.neighbors = [1,2,3]
         self.id = id
         self.objects = ["hello", "bomb"]
+
+    def serializeToXml(self, file):
+        root = etree.Element("waypoint")
+        etree.SubElement(root, "langle").text = str(self.langle)
+        etree.SubElement(root, "rangle").text = str(self.rangle)
+        etree.SubElement(root, "x").text = str(self.x)
+        etree.SubElement(root, "y").text = str(self.y)
+        etree.SubElement(root, "isThrowable").text = str(self.isThrowable)
+        etree.SubElement(root, "id").text = str(self.id)
+        
+        list = etree.Element("list")
+        for id in self.neighbors:
+            etree.SubElement(list, "id").text = str(id)
+        root.append(list)
+
+        list = etree.Element("list")
+        for object in self.objects:
+            etree.SubElement(list, "object").text = object
+        root.append(list)
+
+        handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)
+        applic = open("./"+file, "w")
+        applic.writelines(handle)
+        applic.close()
 
 class Model(QAbstractTableModel):
     TRACK_ID = 0
@@ -144,6 +170,7 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         super(ImageViewer, self).__init__(parent)
         self.setupUi(self)
         self.init()
+        self.data = []
 
     def init(self):
         self.zoomingSize = QSize(100,100)
@@ -153,6 +180,18 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         self.imageView.setPixmap(self.image.scaled(self.ratio, Qt.KeepAspectRatio, Qt.FastTransformation))
         self.setConnections()
 
+    def setData(self, data):
+        self.data = data
+
+    def paintEvent(self, qpaintevent):
+        painter = QPainter(self.imageView.pixmap())
+        painter.setBrush(QBrush(Qt.red))
+        area = 4
+        for object in self.data:
+            x = (object.x*self.imageView.pixmap().width())/self.image.width()
+            y = (object.y*self.imageView.pixmap().height())/self.image.height()
+            painter.drawRect(x-area, y-area, 2*area, 2*area)
+
     def setConnections(self):
         self.connect(self.plusButton, SIGNAL("clicked()"), self.onPlusBotton)
         self.connect(self.minusButton, SIGNAL("clicked()"), self.onMinusButton)
@@ -161,14 +200,19 @@ class ImageViewer(QWidget, Ui_ImageViewer):
     def onPlusBotton(self):
         self.ratio+=self.zoomingSize
         self.imageView.setPixmap(self.image.scaled(self.ratio, Qt.KeepAspectRatio, Qt.FastTransformation))
+        self.update()
 
     def onMinusButton(self):
-        self.ratio-=self.zoomingSize
+        temp = self.ratio-self.zoomingSize
+        if temp.width() > 0 and temp.height() > 0:
+            self.ratio-=self.zoomingSize
         self.imageView.setPixmap(self.image.scaled(self.ratio, Qt.KeepAspectRatio, Qt.FastTransformation))
+        self.update()
 
     def onResetButton(self):
         self.imageView.setPixmap(self.image.scaled(self.size(), Qt.KeepAspectRatio, Qt.FastTransformation))
         self.ratio = self.imageView.pixmap().size()
+        self.update()
 
     def mousePressEvent(self, event):
         super(ImageViewer, self).mousePressEvent(event)
@@ -216,18 +260,22 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(parent)
         w = ImageViewer(self)
         dock = ObjectBrowser(self)
-        self.setCentralWidget(w)
-        self.addDockWidget(Qt.RightDockWidgetArea, dock)
 
         array = []
-        array.append(Object(1,2,3))
-        array.append(Object(1,2,4))
-        array.append(Object(1,2,5))
-        array.append(Object(1,2,6))
-        array.append(Object(1,2,7))
-        array.append(Object(1,2,8))
+        array.append(Object(100,100,1))
+        array.append(Object(200,200,2))
+        array.append(Object(300,300,3))
+        array.append(Object(350,300,4))
+        array.append(Object(450,500,5))
+        array.append(Object(1024,600,6))
+        array.append(Object(1500,500,7))
+        array.append(Object(1800,500,8))
 
         dock.setModel(array)
+        w.setData(array)
+
+        self.setCentralWidget(w)
+        self.addDockWidget(Qt.RightDockWidgetArea, dock)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
