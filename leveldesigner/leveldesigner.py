@@ -1,6 +1,6 @@
 
 import sys
-
+import math
 import PyQt4
 
 from PyQt4.QtGui import *
@@ -90,11 +90,11 @@ class ImageViewer(QWidget, Ui_ImageViewer):
 
 
     def setConnections(self):
-        self.connect(self.plusButton, SIGNAL("clicked()"), self.onPlusBotton)
+        self.connect(self.plusButton, SIGNAL("clicked()"), self.onPlusButton)
         self.connect(self.minusButton, SIGNAL("clicked()"), self.onMinusButton)
         self.connect(self.resetButton, SIGNAL("clicked()"), self.onResetButton)
 
-    def onPlusBotton(self):
+    def onPlusButton(self):
         self.ratio+=self.zoomingSize
         self.imageView.setPixmap(self.image.scaled(self.ratio, Qt.KeepAspectRatio, Qt.FastTransformation))
         self.update()
@@ -212,9 +212,12 @@ class WayPointModel(QAbstractTableModel):
         super(WayPointModel, self).__init__(parent)
         self.wayPoint = wayPoint
 
-    def insertRows(self, row, count, index=None):
-        for i in range(count):
-            self.wayPoint.objects.append("empty")
+    def appendRow(self):
+        self.wayPoint.objects.append("empty")
+        self.reset()
+
+    def removeRow(self, index):
+        self.wayPoint.objects.pop(index)
         self.reset()
 
     def rowCount(self, parent):
@@ -243,6 +246,7 @@ class WayPointEditor(QDialog, Ui_WayPointEditor):
         super(WayPointEditor, self).__init__(parent)
         self.setupUi(self)
         self.wayPoint = wayPoint
+        self.currentIndex = None
         self.fillByData()
         self.setConnections()
 
@@ -256,12 +260,18 @@ class WayPointEditor(QDialog, Ui_WayPointEditor):
         self.connect(self.deleteButton, SIGNAL("clicked()"), self.onDeleteButton)
         self.connect(self.addObjectButton, SIGNAL("clicked()"), self.onAddObjectButton)
         self.connect(self.deleteObjectButton, SIGNAL("clicked()"), self.onDeleteObjectButton)
+        self.connect(self.objects, SIGNAL("clicked(QModelIndex)"), self.setSelection)
+
+    def setSelection(self, index):
+        self.currentIndex = index.row()
 
     def onAddObjectButton(self):
-        self.model.insertRows(0,1)
+        self.model.appendRow()
 
     def onDeleteObjectButton(self):
-        pass
+        if self.currentIndex != None:
+            self.model.removeRow(self.currentIndex)
+        self.currentIndex = None
 
     def onDeleteButton(self):
         self.done(WayPointEditor.DELETE)
