@@ -24,7 +24,7 @@ class WayPoint():
         self.objects = []
 
     def serializeToXml(self):
-        root = etree.Element("waypoint")
+        root = etree.Element("WayPoint")
         etree.SubElement(root, "langle").text = str(self.langle)
         etree.SubElement(root, "rangle").text = str(self.rangle)
         etree.SubElement(root, "x").text = str(self.x)
@@ -53,7 +53,7 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         self.setUpdatesEnabled(True)
         self.init()
         self.data = []
-        self.currentObject = None
+        self.currentWayPoint = None
         self.area = 4
         self.onResetButton()
 
@@ -124,32 +124,32 @@ class ImageViewer(QWidget, Ui_ImageViewer):
     def mouseReleaseEvent(self, event):
         super(ImageViewer, self).mouseReleaseEvent(event)
         if event.button() == Qt.LeftButton:
-            self.currentObject = None
+            self.currentWayPoint = None
         if event.button() == Qt.RightButton:
-            if self.currentObject != None:
-                for object in self.data:
-                    if object.id == self.currentObject.id:
+            if self.currentWayPoint != None:
+                for wayPoint in self.data:
+                    if wayPoint.id == self.currentWayPoint.id:
                         continue
                     localX, localY = self.getMousePos(event)
-                    x, y = self.localPos(object.x, object.y)
-                    if x-self.area <= localX <= x+self.area and y-self.area <= localY <= y+self.area:
-                        if self.currentObject.id not in object.neighbors:
-                            object.neighbors.append(self.currentObject.id)
-                            self.currentObject.neighbors.append(object.id)
+                    x, y = self.localPos(wayPoint.x, wayPoint.y)
+                    if self.checkPointInArea(x, y, localX, localY):
+                        if self.currentWayPoint.id not in wayPoint.neighbors:
+                            wayPoint.neighbors.append(self.currentWayPoint.id)
+                            self.currentWayPoint.neighbors.append(wayPoint.id)
                         else:
-                            object.neighbors.remove(self.currentObject.id)
-                            self.currentObject.neighbors.remove(object.id)
+                            wayPoint.neighbors.remove(self.currentWayPoint.id)
+                            self.currentWayPoint.neighbors.remove(wayPoint.id)
                         self.onResetButton()
                         break
-                self.currentObject=None
+                self.currentWayPoint=None
 
     def mouseMoveEvent(self, event):
         super(ImageViewer, self).mouseMoveEvent(event)
-        if event.buttons() == Qt.LeftButton and self.currentObject!= None:
+        if event.buttons() == Qt.LeftButton and self.currentWayPoint!= None:
             localX, localY = self.getMousePos(event)
             x, y = self.realPos(localX, localY)
-            self.currentObject.x = x
-            self.currentObject.y = y
+            self.currentWayPoint.x = x
+            self.currentWayPoint.y = y
             self.onResetButton()
 
     def mousePressEvent(self, event):
@@ -158,18 +158,8 @@ class ImageViewer(QWidget, Ui_ImageViewer):
             localX, localY = self.getMousePos(event)
             realX, realY = self.realPos(localX, localY)
             self.posLabel.setText("X: " + str(realX) + " Y: " + str(realY))
-            if event.buttons() == Qt.LeftButton:
-                for object in self.data:
-                    x, y = self.localPos(object.x, object.y)
-                    if x-self.area <= localX <= x+self.area and y-self.area <= localY <= y+self.area:
-                        self.currentObject = object
-                        break
-            if event.buttons() == Qt.RightButton:
-                for object in self.data:
-                    x, y = self.localPos(object.x, object.y)
-                    if x-self.area <= localX <= x+self.area and y-self.area <= localY <= y+self.area:
-                        self.currentObject = object
-                        break
+            if event.buttons() == Qt.LeftButton or event.buttons() == Qt.RightButton:
+                self.currentWayPoint = self.findWayPointWith(localX, localY)
 
     def mouseDoubleClickEvent(self, event):
         super(ImageViewer, self).mouseDoubleClickEvent(event)
@@ -204,6 +194,16 @@ class ImageViewer(QWidget, Ui_ImageViewer):
                     break
         self.onResetButton()
                 
+    def findWayPointWith(self, localX, localY):
+        for wayPoint in self.data:
+            x, y = self.localPos(wayPoint.x, wayPoint.y)
+            if self.checkPointInArea(x, y, localX, localY):
+                return wayPoint
+        return None
+
+    def checkPointInArea(self, x1, y1, x2, y2):
+        return (x1-self.area <= x2 <= x1+self.area and y1-self.area <= y2 <= y1+self.area)
+
     def getMousePos(self, event):
         pos = self.imageView.mapFromGlobal(event.globalPos())
         return pos.x(), pos.y()
