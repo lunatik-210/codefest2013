@@ -42,8 +42,27 @@ class WayPoint():
         for object in self.objects:
             etree.SubElement(list, "object").text = str(object)
         root.append(list)
-
         return root
+
+    def deserializeFromXml(self, wayPointXml):
+        for element in wayPointXml.getchildren():
+            if element.tag == 'langle':
+                self.langle = float(element.text)
+            elif element.tag == 'rangle':
+                self.rangle = float(element.text)
+            elif  element.tag == 'x':
+                self.x = int(element.text)
+            elif element.tag == 'y':
+                self.y = int(element.text)
+            elif element.tag == 'isThrowable':
+                self.isThrowable = bool(element.text)
+            elif element.tag == 'list':
+                if element.get('type') == 'neighbor':
+                    for id in element.findall('id'):
+                        self.neighbors.append(int(id.text))
+                elif element.get('type') == 'object':
+                    for object in element.findall('object'):
+                        self.objects.append(str(object.text))
 
 class ImageViewer(QWidget, Ui_ImageViewer):
     def __init__(self, parent=None):
@@ -90,6 +109,18 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         self.connect(self.minusButton, SIGNAL("clicked()"), self.onMinusButton)
         self.connect(self.resetButton, SIGNAL("clicked()"), self.onResetButton)
         self.connect(self.saveButton, SIGNAL("clicked()"), self.onSaveButton)
+        self.connect(self.openButton, SIGNAL("clicked()"), self.onOpenButton)
+
+    def onOpenButton(self):
+        self.data = []
+        stream = open("./level.xml", "r")
+        tree = etree.parse(stream)
+        for wayPointXml in tree.findall('WayPoint'):
+            wp = WayPoint(0,0,0)
+            wp.deserializeFromXml(wayPointXml)
+            self.data.append(wp)
+        stream.close()
+        self.onResetButton()
 
     def onSaveButton(self):
         root = etree.Element("level")
