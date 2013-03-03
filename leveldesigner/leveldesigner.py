@@ -23,7 +23,7 @@ class WayPoint():
         self.id = id
         self.objects = []
 
-    def serializeToXml(self, file):
+    def serializeToXml(self):
         root = etree.Element("waypoint")
         etree.SubElement(root, "langle").text = str(self.langle)
         etree.SubElement(root, "rangle").text = str(self.rangle)
@@ -41,13 +41,10 @@ class WayPoint():
         list = etree.Element("list")
         list.attrib['type']='object'
         for object in self.objects:
-            etree.SubElement(list, "object").text = object
+            etree.SubElement(list, "object").text = str(object)
         root.append(list)
 
-        handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)
-        applic = open("./"+file, "w")
-        applic.writelines(handle)
-        applic.close()
+        return root
 
 class ImageViewer(QWidget, Ui_ImageViewer):
     def __init__(self, parent=None):
@@ -93,6 +90,19 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         self.connect(self.plusButton, SIGNAL("clicked()"), self.onPlusButton)
         self.connect(self.minusButton, SIGNAL("clicked()"), self.onMinusButton)
         self.connect(self.resetButton, SIGNAL("clicked()"), self.onResetButton)
+        self.connect(self.saveButton, SIGNAL("clicked()"), self.onSaveButton)
+
+    def onSaveButton(self):
+        root = etree.Element("level")
+        root.attrib['name']='level1'
+
+        for wayPoint in self.data:
+            root.append(wayPoint.serializeToXml())
+
+        handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)
+        applic = open("./level.xml", "w")
+        applic.writelines(handle)
+        applic.close()
 
     def onPlusButton(self):
         self.ratio+=self.zoomingSize
@@ -187,10 +197,9 @@ class ImageViewer(QWidget, Ui_ImageViewer):
                     elif QDialog.Accepted == ret:
                         pass
                     else:
-                        for neigbor in wayPoint.neighbors:
-                            for wp in self.data:
-                                if neigbor in wp.neighbors:
-                                    wp.neighbors.remove(neigbor)
+                        for wp in self.data:
+                            if wayPoint.id in wp.neighbors:
+                                wp.neighbors.remove(wayPoint.id)
                         self.data.remove(wayPoint)
                     break
         self.onResetButton()

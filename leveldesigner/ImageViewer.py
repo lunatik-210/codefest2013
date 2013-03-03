@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ImageViewer.ui'
 #
-# Created: Sun Feb 24 16:29:01 2013
+# Created: Sun Mar  3 18:59:28 2013
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,6 +27,9 @@ class Ui_ImageViewer(object):
         self.resetButton = QtGui.QPushButton(ImageViewer)
         self.resetButton.setObjectName("resetButton")
         self.horizontalLayout.addWidget(self.resetButton)
+        self.saveButton = QtGui.QPushButton(ImageViewer)
+        self.saveButton.setObjectName("saveButton")
+        self.horizontalLayout.addWidget(self.saveButton)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.posLabel = QtGui.QLabel(ImageViewer)
@@ -65,5 +68,6 @@ class Ui_ImageViewer(object):
         self.plusButton.setText(QtGui.QApplication.translate("ImageViewer", "+", None, QtGui.QApplication.UnicodeUTF8))
         self.minusButton.setText(QtGui.QApplication.translate("ImageViewer", "-", None, QtGui.QApplication.UnicodeUTF8))
         self.resetButton.setText(QtGui.QApplication.translate("ImageViewer", "Reset", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveButton.setText(QtGui.QApplication.translate("ImageViewer", "Save to xml", None, QtGui.QApplication.UnicodeUTF8))
         self.posLabel.setText(QtGui.QApplication.translate("ImageViewer", "X: 0 Y: 0", None, QtGui.QApplication.UnicodeUTF8))
 
