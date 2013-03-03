@@ -7,7 +7,6 @@ from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 
 from ImageViewer import Ui_ImageViewer
-from ObjectBrowser import Ui_ObjectBrowser
 from WayPointEditor import Ui_WayPointEditor
 
 from lxml import etree
