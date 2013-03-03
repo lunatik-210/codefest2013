@@ -260,6 +260,10 @@ class WayPointEditor(QDialog, Ui_WayPointEditor):
 
     def fillByData(self):
         self.id.setText(self.id.text()+str(self.wayPoint.id))
+        self.x.setText(self.x.text()+str(self.wayPoint.x))
+        self.y.setText(self.y.text()+str(self.wayPoint.y))
+        self.langle.setText(self.langle.text()+str(self.wayPoint.langle))
+        self.rangle.setText(self.rangle.text()+str(self.wayPoint.rangle))
         self.model = WayPointModel(self.wayPoint, self)
         self.objects.setModel(self.model)
 
