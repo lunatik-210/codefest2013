@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ImageViewer.ui'
 #
-# Created: Sun Mar  3 19:58:33 2013
+# Created: Wed Mar  6 19:55:10 2013
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,12 +27,15 @@ class Ui_ImageViewer(object):
         self.resetButton = QtGui.QPushButton(ImageViewer)
         self.resetButton.setObjectName("resetButton")
         self.horizontalLayout.addWidget(self.resetButton)
-        self.saveButton = QtGui.QPushButton(ImageViewer)
-        self.saveButton.setObjectName("saveButton")
-        self.horizontalLayout.addWidget(self.saveButton)
-        self.openButton = QtGui.QPushButton(ImageViewer)
-        self.openButton.setObjectName("openButton")
-        self.horizontalLayout.addWidget(self.openButton)
+        self.saveXmlButton = QtGui.QPushButton(ImageViewer)
+        self.saveXmlButton.setObjectName("saveXmlButton")
+        self.horizontalLayout.addWidget(self.saveXmlButton)
+        self.openXmlButton = QtGui.QPushButton(ImageViewer)
+        self.openXmlButton.setObjectName("openXmlButton")
+        self.horizontalLayout.addWidget(self.openXmlButton)
+        self.openBackgroundButton = QtGui.QPushButton(ImageViewer)
+        self.openBackgroundButton.setObjectName("openBackgroundButton")
+        self.horizontalLayout.addWidget(self.openBackgroundButton)
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem)
         self.posLabel = QtGui.QLabel(ImageViewer)
@@ -71,7 +74,8 @@ class Ui_ImageViewer(object):
         self.plusButton.setText(QtGui.QApplication.translate("ImageViewer", "+", None, QtGui.QApplication.UnicodeUTF8))
         self.minusButton.setText(QtGui.QApplication.translate("ImageViewer", "-", None, QtGui.QApplication.UnicodeUTF8))
         self.resetButton.setText(QtGui.QApplication.translate("ImageViewer", "Reset", None, QtGui.QApplication.UnicodeUTF8))
-        self.saveButton.setText(QtGui.QApplication.translate("ImageViewer", "Save to xml", None, QtGui.QApplication.UnicodeUTF8))
-        self.openButton.setText(QtGui.QApplication.translate("ImageViewer", "Open xml", None, QtGui.QApplication.UnicodeUTF8))
+        self.saveXmlButton.setText(QtGui.QApplication.translate("ImageViewer", "Save to xml", None, QtGui.QApplication.UnicodeUTF8))
+        self.openXmlButton.setText(QtGui.QApplication.translate("ImageViewer", "Open xml", None, QtGui.QApplication.UnicodeUTF8))
+        self.openBackgroundButton.setText(QtGui.QApplication.translate("ImageViewer", "Open background", None, QtGui.QApplication.UnicodeUTF8))
         self.posLabel.setText(QtGui.QApplication.translate("ImageViewer", "X: 0 Y: 0", None, QtGui.QApplication.UnicodeUTF8))
 

@@ -24,6 +24,7 @@ import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.color.Color;
+import org.andengine.util.debug.Debug;
 
 public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	private ResourceManager mResourceManager = ResourceManager.getInstance();
@@ -73,10 +74,10 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		wps.add(3, new WayPoint(Arrays.asList(2,4), 264, 77, 0, 0, true));
 		wps.add(4, new WayPoint(Arrays.asList(3,5), 400, 110, 0, 0, false));
 		wps.add(5, new WayPoint(Arrays.asList(4,6), 424, 154, 0, 0, false));
-		wps.add(6, new WayPoint(Arrays.asList(5,7), 444, 218, 0, -50, false));
-		wps.add(7, new WayPoint(Arrays.asList(6,8), 474, 256, 0, 20, true));
-		wps.add(8, new WayPoint(Arrays.asList(7,9), 512, 182, 0, 45, false));
-		wps.add(9, new WayPoint(Arrays.asList(8,10), 526, 126, 0, 80, false));
+		wps.add(6, new WayPoint(Arrays.asList(5,7), 444, 218, 0, 0, false));
+		wps.add(7, new WayPoint(Arrays.asList(6,8), 474, 256, 0, 0, true));
+		wps.add(8, new WayPoint(Arrays.asList(7,9), 512, 182, 0, 0, false));
+		wps.add(9, new WayPoint(Arrays.asList(8,10), 526, 126, 0, 0, false));
 		wps.add(10, new WayPoint(Arrays.asList(9,11), 548, 210, 0, 0, false));
 		wps.add(11, new WayPoint(Arrays.asList(10,12), 595, 286, 0, 0, true));
 		wps.add(12, new WayPoint(Arrays.asList(11,13), 632, 366, 0, 0, false));
@@ -84,10 +85,10 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		wps.add(14, new WayPoint(Arrays.asList(13,15), 726, 264, 0, 0, false));
 		wps.add(15, new WayPoint(Arrays.asList(14,16), 948, 264, 0, 0, true));
 		wps.add(16, new WayPoint(Arrays.asList(15,17,31), 980, 370, 0, 0, false));
-		wps.add(17, new WayPoint(Arrays.asList(16,18), 1031, 450, 20, 0, false));
-		wps.add(18, new WayPoint(Arrays.asList(17,19), 1078, 494, 30, 0, false));
-		wps.add(19, new WayPoint(Arrays.asList(18,20), 1288, 528, 40, 0, true));
-		wps.add(20, new WayPoint(Arrays.asList(19,21), 1376, 482, 50, 0, false));
+		wps.add(17, new WayPoint(Arrays.asList(16,18), 1031, 450, 0, 0, false));
+		wps.add(18, new WayPoint(Arrays.asList(17,19), 1078, 494, 0, 0, false));
+		wps.add(19, new WayPoint(Arrays.asList(18,20), 1288, 528, 0, 0, true));
+		wps.add(20, new WayPoint(Arrays.asList(19,21), 1376, 482, 0, 0, false));
 		wps.add(21, new WayPoint(Arrays.asList(20,22,28), 1430, 406, 0, 0, false));
 		wps.add(22, new WayPoint(Arrays.asList(21,23), 1582, 264, 0, 0, false));
 		wps.add(23, new WayPoint(Arrays.asList(22,24), 1726, 190, 0, 0, true));

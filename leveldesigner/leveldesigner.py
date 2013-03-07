@@ -13,8 +13,8 @@ from lxml import etree
 
 class WayPoint():
     def __init__(self, x, y, id):
-        self.langle = 0.234
-        self.rangle = 0.234
+        self.langle = 0.0
+        self.rangle = 0.0
         self.x = x
         self.y = y
         self.isThrowable = False
@@ -103,15 +103,20 @@ class ImageViewer(QWidget, Ui_ImageViewer):
                         x2, y2 = self.localPos(object2.x, object2.y)
                         painter.drawLine(x1,y1,x2,y2)
 
-
     def setConnections(self):
         self.connect(self.plusButton, SIGNAL("clicked()"), self.onPlusButton)
         self.connect(self.minusButton, SIGNAL("clicked()"), self.onMinusButton)
         self.connect(self.resetButton, SIGNAL("clicked()"), self.onResetButton)
-        self.connect(self.saveButton, SIGNAL("clicked()"), self.onSaveButton)
-        self.connect(self.openButton, SIGNAL("clicked()"), self.onOpenButton)
+        self.connect(self.saveXmlButton, SIGNAL("clicked()"), self.onSaveXmlButton)
+        self.connect(self.openXmlButton, SIGNAL("clicked()"), self.onOpenXmlButton)
+        self.connect(self.openBackgroundButton, SIGNAL("clicked()"), self.onOpenBackgroundButton)
 
-    def onOpenButton(self):
+    def onOpenBackgroundButton(self):
+        dialog = QFileDialog(self)
+        dialog.setAcceptMode(QFileDialog.AcceptSave)
+        dialog.exec_()
+
+    def onOpenXmlButton(self):
         self.data = []
         stream = open("./level.xml", "r")
         tree = etree.parse(stream)
@@ -122,7 +127,7 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         stream.close()
         self.onResetButton()
 
-    def onSaveButton(self):
+    def onSaveXmlButton(self):
         root = etree.Element("level")
         root.attrib['name']='level1'
 
@@ -151,6 +156,16 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         self.ratio = self.imageView.pixmap().size()
         self.update()
 
+    def calcAngles(self, wp1, wp2):
+        if wp1.x - wp2.x >= 0:
+            self.calcAngles(wp2, wp1)
+            return
+        wp1.rangle = self.calcAngle((wp2.x-wp1.x, wp2.y-wp1.y),(wp2.x-wp1.x, 0))
+        wp2.langle = -wp1.rangle
+
+    def calcAngle(self, p1, p2):
+        return math.degrees(math.acos((p1[0]*p2[0]+p1[1]*p2[1])/(math.sqrt(p1[0]**2+p1[1]**2)*math.sqrt(p2[0]**2+p2[1]**2))))
+
     def mouseReleaseEvent(self, event):
         super(ImageViewer, self).mouseReleaseEvent(event)
         if event.button() == Qt.LeftButton:
@@ -166,6 +181,7 @@ class ImageViewer(QWidget, Ui_ImageViewer):
                         if self.currentWayPoint.id not in wayPoint.neighbors:
                             wayPoint.neighbors.append(self.currentWayPoint.id)
                             self.currentWayPoint.neighbors.append(wayPoint.id)
+                            self.calcAngles(self.currentWayPoint, wayPoint)
                         else:
                             wayPoint.neighbors.remove(self.currentWayPoint.id)
                             self.currentWayPoint.neighbors.remove(wayPoint.id)

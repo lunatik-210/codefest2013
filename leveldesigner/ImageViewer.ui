@@ -44,16 +44,23 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="saveButton">
+      <widget class="QPushButton" name="saveXmlButton">
        <property name="text">
         <string>Save to xml</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="openButton">
+      <widget class="QPushButton" name="openXmlButton">
        <property name="text">
         <string>Open xml</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="openBackgroundButton">
+       <property name="text">
+        <string>Open background</string>
        </property>
       </widget>
      </item>
