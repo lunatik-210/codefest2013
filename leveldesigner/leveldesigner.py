@@ -77,11 +77,14 @@ class ImageViewer(QWidget, Ui_ImageViewer):
 
     def init(self):
         self.zoomingSize = QSize(100,100)
-        self.image = QPixmap("./background-full-new.png")
+        self.setBackground("./background-full-new.png")
+        self.setConnections()
+
+    def setBackground(self, filename):
+        self.image = QPixmap(filename)
         self.debugLabel.setText("Width: " + str(self.image.width()) + " Height: " + str(self.image.height()))
         self.ratio = self.image.size()
         self.imageView.setPixmap(self.image.scaled(self.ratio, Qt.KeepAspectRatio, Qt.FastTransformation))
-        self.setConnections()
 
     def setData(self, data):
         self.data = data
@@ -112,13 +115,17 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         self.connect(self.openBackgroundButton, SIGNAL("clicked()"), self.onOpenBackgroundButton)
 
     def onOpenBackgroundButton(self):
-        dialog = QFileDialog(self)
-        dialog.setAcceptMode(QFileDialog.AcceptSave)
-        dialog.exec_()
+        fileName = str(QFileDialog.getOpenFileName(self, "Open Image", "/home/", "Image Files (*.png *.jpg *.bmp)"))
+        if fileName:
+            self.setBackground(fileName)
 
     def onOpenXmlButton(self):
+        fileName = str(QFileDialog.getOpenFileName(self, "Open Level", "/home/", "Xml Files (*.xml)"))
+        if not fileName:
+            return
+        print fileName
         self.data = []
-        stream = open("./level.xml", "r")
+        stream = open(fileName, "r")
         tree = etree.parse(stream)
         for wayPointXml in tree.findall('WayPoint'):
             wp = WayPoint(0,0,0)
