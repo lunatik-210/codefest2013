@@ -287,7 +287,7 @@ class WayPointModel(QAbstractTableModel):
 
     def setData(self, index, value, role=Qt.EditRole):
         if role == Qt.EditRole:
-            self.wayPoint.objects[index.row()] = value
+            self.wayPoint.objects[index.row()] = str(value.toString())
             self.dataChanged.emit(index, index)
             return True
         return False
