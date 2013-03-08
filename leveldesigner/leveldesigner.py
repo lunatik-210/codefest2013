@@ -56,6 +56,8 @@ class WayPoint():
                 self.y = int(element.text)
             elif element.tag == 'isThrowable':
                 self.isThrowable = bool(element.text)
+            elif element.tag == 'id':
+                self.id = int(element.text)
             elif element.tag == 'list':
                 if element.get('type') == 'neighbor':
                     for id in element.findall('id'):
@@ -97,13 +99,12 @@ class ImageViewer(QWidget, Ui_ImageViewer):
             painter.drawRect(x-self.area, y-self.area, 2*self.area, 2*self.area)
 
         painter.setPen(Qt.green)
-        for object1 in self.data:
-            x1, y1 = self.localPos(object1.x, object1.y)
-            neighbors = object1.neighbors
-            for neighbor in neighbors:
-                for object2 in self.data:
-                    if neighbor == object2.id:
-                        x2, y2 = self.localPos(object2.x, object2.y)
+        for wp1 in self.data:
+            x1, y1 = self.localPos(wp1.x, wp1.y)
+            for neighbor in wp1.neighbors:
+                for wp2 in self.data:
+                    if neighbor == wp2.id:
+                        x2, y2 = self.localPos(wp2.x, wp2.y)
                         painter.drawLine(x1,y1,x2,y2)
 
     def setConnections(self):
@@ -113,6 +114,11 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         self.connect(self.saveXmlButton, SIGNAL("clicked()"), self.onSaveXmlButton)
         self.connect(self.openXmlButton, SIGNAL("clicked()"), self.onOpenXmlButton)
         self.connect(self.openBackgroundButton, SIGNAL("clicked()"), self.onOpenBackgroundButton)
+        self.connect(self.clearButton, SIGNAL("clicked()"), self.onClearButton)
+
+    def onClearButton(self):
+        del self.data[:]
+        self.onResetButton()
 
     def onOpenBackgroundButton(self):
         fileName = str(QFileDialog.getOpenFileName(self, "Open Image", "/home/", "Image Files (*.png *.jpg *.bmp)"))
@@ -123,7 +129,6 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         fileName = str(QFileDialog.getOpenFileName(self, "Open Level", "/home/", "Xml Files (*.xml)"))
         if not fileName:
             return
-        print fileName
         self.data = []
         stream = open(fileName, "r")
         tree = etree.parse(stream)
@@ -135,6 +140,9 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         self.onResetButton()
 
     def onSaveXmlButton(self):
+        fileName = str(QFileDialog.getSaveFileName(self, "Save Level", "/home/", "Xml Files (*.xml)"))
+        if not fileName:
+            return
         root = etree.Element("level")
         root.attrib['name']='level1'
 
@@ -142,7 +150,7 @@ class ImageViewer(QWidget, Ui_ImageViewer):
             root.append(wayPoint.serializeToXml())
 
         handle = etree.tostring(root, pretty_print=True, encoding='utf-8', xml_declaration=True)
-        applic = open("./level.xml", "w")
+        applic = open(fileName, "w")
         applic.writelines(handle)
         applic.close()
 
