@@ -1,7 +1,6 @@
 package com.codefest2013.game.scenes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 import android.hardware.SensorManager;
 
@@ -10,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.codefest2013.game.logic.WayPoint;
+import com.codefest2013.game.logic.tools.LevelLoader;
 import com.codefest2013.game.managers.ResourceManager;
 import com.codefest2013.game.scenes.objects.Background;
 import com.codefest2013.game.scenes.objects.Squirrel;
@@ -24,7 +24,6 @@ import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.util.color.Color;
-import org.andengine.util.debug.Debug;
 
 public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	private ResourceManager mResourceManager = ResourceManager.getInstance();
@@ -66,46 +65,9 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 
 	@Override
 	public void onLoadScene() {
-		ArrayList<WayPoint> wps = new ArrayList<WayPoint>();
-		// main path
-		wps.add(0, new WayPoint(Arrays.asList(1), 112, 230, 0, 0, true));
-		wps.add(1, new WayPoint(Arrays.asList(0,2), 170, 260, 0, 0, false));
-		wps.add(2, new WayPoint(Arrays.asList(1,3), 238, 120, 0, 0, false));
-		wps.add(3, new WayPoint(Arrays.asList(2,4), 264, 77, 0, 0, true));
-		wps.add(4, new WayPoint(Arrays.asList(3,5), 400, 110, 0, 0, false));
-		wps.add(5, new WayPoint(Arrays.asList(4,6), 424, 154, 0, 0, false));
-		wps.add(6, new WayPoint(Arrays.asList(5,7), 444, 218, 0, 0, false));
-		wps.add(7, new WayPoint(Arrays.asList(6,8), 474, 256, 0, 0, true));
-		wps.add(8, new WayPoint(Arrays.asList(7,9), 512, 182, 0, 0, false));
-		wps.add(9, new WayPoint(Arrays.asList(8,10), 526, 126, 0, 0, false));
-		wps.add(10, new WayPoint(Arrays.asList(9,11), 548, 210, 0, 0, false));
-		wps.add(11, new WayPoint(Arrays.asList(10,12), 595, 286, 0, 0, true));
-		wps.add(12, new WayPoint(Arrays.asList(11,13), 632, 366, 0, 0, false));
-		wps.add(13, new WayPoint(Arrays.asList(12,14,30), 668, 372, 0, 0, false));
-		wps.add(14, new WayPoint(Arrays.asList(13,15), 726, 264, 0, 0, false));
-		wps.add(15, new WayPoint(Arrays.asList(14,16), 948, 264, 0, 0, true));
-		wps.add(16, new WayPoint(Arrays.asList(15,17,31), 980, 370, 0, 0, false));
-		wps.add(17, new WayPoint(Arrays.asList(16,18), 1031, 450, 0, 0, false));
-		wps.add(18, new WayPoint(Arrays.asList(17,19), 1078, 494, 0, 0, false));
-		wps.add(19, new WayPoint(Arrays.asList(18,20), 1288, 528, 0, 0, true));
-		wps.add(20, new WayPoint(Arrays.asList(19,21), 1376, 482, 0, 0, false));
-		wps.add(21, new WayPoint(Arrays.asList(20,22,28), 1430, 406, 0, 0, false));
-		wps.add(22, new WayPoint(Arrays.asList(21,23), 1582, 264, 0, 0, false));
-		wps.add(23, new WayPoint(Arrays.asList(22,24), 1726, 190, 0, 0, true));
-		wps.add(24, new WayPoint(Arrays.asList(23,25), 1937, 320, 0, 0, false));
-		wps.add(25, new WayPoint(Arrays.asList(24,26,29), 2000, 422, 0, 0, false));
-		wps.add(26, new WayPoint(Arrays.asList(25), 2010, 920, 0, 0, true));
-
-		// fire place
-		wps.add(27, new WayPoint(Arrays.asList(21,28), 1555, 422, 0, 0, true));
-		wps.add(28, new WayPoint(Arrays.asList(27,29), 1713, 422, 0, 0, true));
-		wps.add(29, new WayPoint(Arrays.asList(28,25), 1875, 422, 0, 0, true));
-		
-		// books
-		wps.add(30, new WayPoint(Arrays.asList(13,31), 783, 337, 0, 0, true));
-		wps.add(31, new WayPoint(Arrays.asList(30,16), 853, 343, 0, 0, true));
-		
-    	
+		List<WayPoint> wps = null;
+		wps = LevelLoader.getInstance().load("levels/level.xml");
+	
     	mPlayer = new Player(PLAYER_START_X, PLAYER_START_Y);
 		mSquirrel = new Squirrel(wps);
 		mBackground = new Background(mPlayer);

@@ -1,7 +1,7 @@
 package com.codefest2013.game.scenes.objects;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.andengine.entity.Entity;
 import org.andengine.entity.IEntity;
@@ -19,7 +19,7 @@ public class Squirrel extends Entity {
 
 	private ResourceManager mResourceManager = ResourceManager.getInstance();
 		
-	private ArrayList<WayPoint> wps;
+	private List<WayPoint> wps;
 	private LinkedList<Integer> currentPath;
 	private int previousPos;
 	private int speed; // pixels per second.
@@ -29,7 +29,7 @@ public class Squirrel extends Entity {
 	
 	private SquirrelLogic logic;
 	
-	public Squirrel(ArrayList<WayPoint> wayPointsArray, int startIndex, int speed){
+	public Squirrel(List<WayPoint> wayPointsArray, int startIndex, int speed){
 		logic = new SquirrelLogic(wayPointsArray, startIndex);
 		previousPos = startIndex;
 		
@@ -72,11 +72,11 @@ public class Squirrel extends Entity {
 		attachChild(rect);
 	}
 	
-	public Squirrel(ArrayList<WayPoint> wayPointsArray, int startIndex){
+	public Squirrel(List<WayPoint> wayPointsArray, int startIndex){
 		this(wayPointsArray, 0, 100);
 	}
 	
-	public Squirrel(ArrayList<WayPoint> wayPointsArray){
+	public Squirrel(List<WayPoint> wayPointsArray){
 		this(wayPointsArray, 0);
 	}
 		

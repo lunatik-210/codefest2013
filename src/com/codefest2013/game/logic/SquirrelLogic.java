@@ -3,21 +3,22 @@ package com.codefest2013.game.logic;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Random;
 
 public class SquirrelLogic {
 
-	private ArrayList<WayPoint> wpnList;
-	private ArrayList<Integer> goals;
+	private List<WayPoint> wpnList = null;
+	private List<Integer> goals = null;
 
 	private Integer currentPos;
 	private Integer nextGoal = null;
 	
 	private Random r = new Random();
 	
-	public SquirrelLogic(ArrayList<WayPoint> wpn, Integer _currentPos) {
+	public SquirrelLogic(List<WayPoint> wpn, Integer _currentPos) {
 		wpnList = wpn;
 		currentPos = _currentPos;
 		goals = new ArrayList<Integer>();

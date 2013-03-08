@@ -1,14 +1,15 @@
 package com.codefest2013.game.logic;
-import java.util.ArrayList;
+
 import java.util.Comparator;
+import java.util.List;
 
 
 public class HeuristicFunction implements Comparator<Integer>
 {
-	ArrayList<WayPoint> wps = null;
+	List<WayPoint> wps = null;
 	Integer goal = null;
 	
-	HeuristicFunction(ArrayList<WayPoint> wps, Integer goal)
+	HeuristicFunction(List<WayPoint> wps, Integer goal)
 	{
 		this.wps = wps;
 		this.goal = goal;

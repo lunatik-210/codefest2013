@@ -1,0 +1,534 @@
+<?xml version='1.0' encoding='utf-8'?>
+<level name="level1">
+  <WayPoint>
+    <x>120</x>
+    <y>243</y>
+    <isThrowable>True</isThrowable>
+    <id>0</id>
+    <list type="neighbor">
+      <id>1</id>
+    </list>
+    <list type="object">
+      <object>bomb</object>
+      <object>bomb</object>
+      <object>bomb</object>
+    </list>
+  </WayPoint>
+  <WayPoint>
+    <x>172</x>
+    <y>275</y>
+    <isThrowable>False</isThrowable>
+    <id>1</id>
+    <list type="neighbor">
+      <id>0</id>
+      <id>2</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>199</x>
+    <y>238</y>
+    <isThrowable>False</isThrowable>
+    <id>2</id>
+    <list type="neighbor">
+      <id>1</id>
+      <id>3</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>221</x>
+    <y>189</y>
+    <isThrowable>False</isThrowable>
+    <id>3</id>
+    <list type="neighbor">
+      <id>2</id>
+      <id>4</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>247</x>
+    <y>111</y>
+    <isThrowable>False</isThrowable>
+    <id>4</id>
+    <list type="neighbor">
+      <id>3</id>
+      <id>5</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>276</x>
+    <y>81</y>
+    <isThrowable>False</isThrowable>
+    <id>5</id>
+    <list type="neighbor">
+      <id>4</id>
+      <id>45</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>404</x>
+    <y>113</y>
+    <isThrowable>False</isThrowable>
+    <id>6</id>
+    <list type="neighbor">
+      <id>7</id>
+      <id>45</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>424</x>
+    <y>152</y>
+    <isThrowable>False</isThrowable>
+    <id>7</id>
+    <list type="neighbor">
+      <id>6</id>
+      <id>8</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>436</x>
+    <y>213</y>
+    <isThrowable>False</isThrowable>
+    <id>8</id>
+    <list type="neighbor">
+      <id>7</id>
+      <id>9</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>465</x>
+    <y>261</y>
+    <isThrowable>False</isThrowable>
+    <id>9</id>
+    <list type="neighbor">
+      <id>8</id>
+      <id>40</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>623</x>
+    <y>448</y>
+    <isThrowable>False</isThrowable>
+    <id>10</id>
+    <list type="neighbor">
+      <id>11</id>
+      <id>44</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>660</x>
+    <y>408</y>
+    <isThrowable>False</isThrowable>
+    <id>11</id>
+    <list type="neighbor">
+      <id>10</id>
+      <id>12</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>692</x>
+    <y>331</y>
+    <isThrowable>False</isThrowable>
+    <id>12</id>
+    <list type="neighbor">
+      <id>11</id>
+      <id>14</id>
+      <id>13</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>718</x>
+    <y>331</y>
+    <isThrowable>False</isThrowable>
+    <id>13</id>
+    <list type="neighbor">
+      <id>12</id>
+      <id>15</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>719</x>
+    <y>267</y>
+    <isThrowable>False</isThrowable>
+    <id>14</id>
+    <list type="neighbor">
+      <id>12</id>
+      <id>17</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>820</x>
+    <y>340</y>
+    <isThrowable>False</isThrowable>
+    <id>15</id>
+    <list type="neighbor">
+      <id>13</id>
+      <id>16</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>920</x>
+    <y>350</y>
+    <isThrowable>False</isThrowable>
+    <id>16</id>
+    <list type="neighbor">
+      <id>15</id>
+      <id>19</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>817</x>
+    <y>268</y>
+    <isThrowable>True</isThrowable>
+    <id>17</id>
+    <list type="neighbor">
+      <id>14</id>
+      <id>18</id>
+    </list>
+    <list type="object">
+      <object>bomb</object>
+      <object>bomb</object>
+      <object>bomb</object>
+      <object>bomb</object>
+    </list>
+  </WayPoint>
+  <WayPoint>
+    <x>945</x>
+    <y>267</y>
+    <isThrowable>False</isThrowable>
+    <id>18</id>
+    <list type="neighbor">
+      <id>17</id>
+      <id>19</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>974</x>
+    <y>354</y>
+    <isThrowable>False</isThrowable>
+    <id>19</id>
+    <list type="neighbor">
+      <id>18</id>
+      <id>16</id>
+      <id>20</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1009</x>
+    <y>421</y>
+    <isThrowable>False</isThrowable>
+    <id>20</id>
+    <list type="neighbor">
+      <id>19</id>
+      <id>21</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1048</x>
+    <y>471</y>
+    <isThrowable>False</isThrowable>
+    <id>21</id>
+    <list type="neighbor">
+      <id>20</id>
+      <id>22</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1076</x>
+    <y>496</y>
+    <isThrowable>False</isThrowable>
+    <id>22</id>
+    <list type="neighbor">
+      <id>21</id>
+      <id>23</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1175</x>
+    <y>509</y>
+    <isThrowable>True</isThrowable>
+    <id>23</id>
+    <list type="neighbor">
+      <id>22</id>
+      <id>24</id>
+    </list>
+    <list type="object">
+      <object>bomb</object>
+      <object>bomb</object>
+    </list>
+  </WayPoint>
+  <WayPoint>
+    <x>1287</x>
+    <y>530</y>
+    <isThrowable>False</isThrowable>
+    <id>24</id>
+    <list type="neighbor">
+      <id>23</id>
+      <id>25</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1347</x>
+    <y>507</y>
+    <isThrowable>False</isThrowable>
+    <id>25</id>
+    <list type="neighbor">
+      <id>24</id>
+      <id>26</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1387</x>
+    <y>477</y>
+    <isThrowable>False</isThrowable>
+    <id>26</id>
+    <list type="neighbor">
+      <id>25</id>
+      <id>27</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1432</x>
+    <y>414</y>
+    <isThrowable>False</isThrowable>
+    <id>27</id>
+    <list type="neighbor">
+      <id>26</id>
+      <id>28</id>
+      <id>32</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1552</x>
+    <y>418</y>
+    <isThrowable>False</isThrowable>
+    <id>28</id>
+    <list type="neighbor">
+      <id>27</id>
+      <id>29</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1657</x>
+    <y>423</y>
+    <isThrowable>True</isThrowable>
+    <id>29</id>
+    <list type="neighbor">
+      <id>28</id>
+      <id>30</id>
+    </list>
+    <list type="object">
+      <object>bomb</object>
+      <object>bomb</object>
+    </list>
+  </WayPoint>
+  <WayPoint>
+    <x>1768</x>
+    <y>425</y>
+    <isThrowable>True</isThrowable>
+    <id>30</id>
+    <list type="neighbor">
+      <id>29</id>
+      <id>31</id>
+    </list>
+    <list type="object">
+      <object>bomb</object>
+    </list>
+  </WayPoint>
+  <WayPoint>
+    <x>1871</x>
+    <y>430</y>
+    <isThrowable>False</isThrowable>
+    <id>31</id>
+    <list type="neighbor">
+      <id>30</id>
+      <id>39</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1498</x>
+    <y>349</y>
+    <isThrowable>False</isThrowable>
+    <id>32</id>
+    <list type="neighbor">
+      <id>27</id>
+      <id>33</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1561</x>
+    <y>293</y>
+    <isThrowable>False</isThrowable>
+    <id>33</id>
+    <list type="neighbor">
+      <id>32</id>
+      <id>34</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1630</x>
+    <y>234</y>
+    <isThrowable>False</isThrowable>
+    <id>34</id>
+    <list type="neighbor">
+      <id>33</id>
+      <id>35</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1730</x>
+    <y>197</y>
+    <isThrowable>True</isThrowable>
+    <id>35</id>
+    <list type="neighbor">
+      <id>34</id>
+      <id>36</id>
+    </list>
+    <list type="object">
+      <object>bomb</object>
+      <object>bomb</object>
+    </list>
+  </WayPoint>
+  <WayPoint>
+    <x>1844</x>
+    <y>222</y>
+    <isThrowable>False</isThrowable>
+    <id>36</id>
+    <list type="neighbor">
+      <id>35</id>
+      <id>37</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1907</x>
+    <y>275</y>
+    <isThrowable>False</isThrowable>
+    <id>37</id>
+    <list type="neighbor">
+      <id>36</id>
+      <id>38</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1950</x>
+    <y>334</y>
+    <isThrowable>False</isThrowable>
+    <id>38</id>
+    <list type="neighbor">
+      <id>37</id>
+      <id>39</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>1995</x>
+    <y>425</y>
+    <isThrowable>False</isThrowable>
+    <id>39</id>
+    <list type="neighbor">
+      <id>31</id>
+      <id>38</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>508</x>
+    <y>290</y>
+    <isThrowable>False</isThrowable>
+    <id>40</id>
+    <list type="neighbor">
+      <id>9</id>
+      <id>41</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>540</x>
+    <y>316</y>
+    <isThrowable>False</isThrowable>
+    <id>41</id>
+    <list type="neighbor">
+      <id>40</id>
+      <id>42</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>555</x>
+    <y>349</y>
+    <isThrowable>False</isThrowable>
+    <id>42</id>
+    <list type="neighbor">
+      <id>41</id>
+      <id>43</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>564</x>
+    <y>382</y>
+    <isThrowable>False</isThrowable>
+    <id>43</id>
+    <list type="neighbor">
+      <id>42</id>
+      <id>44</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>577</x>
+    <y>418</y>
+    <isThrowable>False</isThrowable>
+    <id>44</id>
+    <list type="neighbor">
+      <id>43</id>
+      <id>10</id>
+    </list>
+    <list type="object"/>
+  </WayPoint>
+  <WayPoint>
+    <x>344</x>
+    <y>98</y>
+    <isThrowable>True</isThrowable>
+    <id>45</id>
+    <list type="neighbor">
+      <id>5</id>
+      <id>6</id>
+    </list>
+    <list type="object">
+      <object>bomb</object>
+      <object>bomb</object>
+    </list>
+  </WayPoint>
+</level>
