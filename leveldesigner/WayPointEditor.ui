@@ -72,24 +72,6 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3">
-        <item>
-         <widget class="QLabel" name="langle">
-          <property name="text">
-           <string>Left angle:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="rangle">
-          <property name="text">
-           <string>Right angle:</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
          <widget class="QLabel" name="x">
@@ -102,6 +84,13 @@
          <widget class="QLabel" name="y">
           <property name="text">
            <string>Y:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="isThrowable">
+          <property name="text">
+           <string>throwable</string>
           </property>
          </widget>
         </item>

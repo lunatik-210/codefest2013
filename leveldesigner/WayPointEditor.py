@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'WayPointEditor.ui'
 #
-# Created: Sun Mar  3 19:47:37 2013
+# Created: Fri Mar  8 16:56:40 2013
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -40,15 +40,6 @@ class Ui_WayPointEditor(object):
         self.groupBox.setObjectName("groupBox")
         self.horizontalLayout_3 = QtGui.QHBoxLayout(self.groupBox)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.verticalLayout_3 = QtGui.QVBoxLayout()
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.langle = QtGui.QLabel(self.groupBox)
-        self.langle.setObjectName("langle")
-        self.verticalLayout_3.addWidget(self.langle)
-        self.rangle = QtGui.QLabel(self.groupBox)
-        self.rangle.setObjectName("rangle")
-        self.verticalLayout_3.addWidget(self.rangle)
-        self.horizontalLayout_3.addLayout(self.verticalLayout_3)
         self.verticalLayout_4 = QtGui.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.x = QtGui.QLabel(self.groupBox)
@@ -57,6 +48,9 @@ class Ui_WayPointEditor(object):
         self.y = QtGui.QLabel(self.groupBox)
         self.y.setObjectName("y")
         self.verticalLayout_4.addWidget(self.y)
+        self.isThrowable = QtGui.QCheckBox(self.groupBox)
+        self.isThrowable.setObjectName("isThrowable")
+        self.verticalLayout_4.addWidget(self.isThrowable)
         self.horizontalLayout_3.addLayout(self.verticalLayout_4)
         self.verticalLayout_2.addWidget(self.groupBox)
         spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
@@ -82,10 +76,9 @@ class Ui_WayPointEditor(object):
         self.deleteObjectButton.setText(QtGui.QApplication.translate("WayPointEditor", "Delete", None, QtGui.QApplication.UnicodeUTF8))
         self.addObjectButton.setText(QtGui.QApplication.translate("WayPointEditor", "Add", None, QtGui.QApplication.UnicodeUTF8))
         self.groupBox.setTitle(QtGui.QApplication.translate("WayPointEditor", "Properties", None, QtGui.QApplication.UnicodeUTF8))
-        self.langle.setText(QtGui.QApplication.translate("WayPointEditor", "Left angle:", None, QtGui.QApplication.UnicodeUTF8))
-        self.rangle.setText(QtGui.QApplication.translate("WayPointEditor", "Right angle:", None, QtGui.QApplication.UnicodeUTF8))
         self.x.setText(QtGui.QApplication.translate("WayPointEditor", "X:", None, QtGui.QApplication.UnicodeUTF8))
         self.y.setText(QtGui.QApplication.translate("WayPointEditor", "Y:", None, QtGui.QApplication.UnicodeUTF8))
+        self.isThrowable.setText(QtGui.QApplication.translate("WayPointEditor", "throwable", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteButton.setText(QtGui.QApplication.translate("WayPointEditor", "Delete", None, QtGui.QApplication.UnicodeUTF8))
         self.okButton.setText(QtGui.QApplication.translate("WayPointEditor", "Ok", None, QtGui.QApplication.UnicodeUTF8))
 

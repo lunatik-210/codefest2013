@@ -24,8 +24,6 @@ class WayPoint():
 
     def serializeToXml(self):
         root = etree.Element("WayPoint")
-        etree.SubElement(root, "langle").text = str(self.langle)
-        etree.SubElement(root, "rangle").text = str(self.rangle)
         etree.SubElement(root, "x").text = str(self.x)
         etree.SubElement(root, "y").text = str(self.y)
         etree.SubElement(root, "isThrowable").text = str(self.isThrowable)
@@ -46,16 +44,14 @@ class WayPoint():
 
     def deserializeFromXml(self, wayPointXml):
         for element in wayPointXml.getchildren():
-            if element.tag == 'langle':
-                self.langle = float(element.text)
-            elif element.tag == 'rangle':
-                self.rangle = float(element.text)
-            elif  element.tag == 'x':
+            if  element.tag == 'x':
                 self.x = int(element.text)
             elif element.tag == 'y':
                 self.y = int(element.text)
             elif element.tag == 'isThrowable':
-                self.isThrowable = bool(element.text)
+                if element.text == 'True':
+                    self.isThrowable = True
+                else: self.isThrowable = False
             elif element.tag == 'id':
                 self.id = int(element.text)
             elif element.tag == 'list':
@@ -171,16 +167,6 @@ class ImageViewer(QWidget, Ui_ImageViewer):
         self.ratio = self.imageView.pixmap().size()
         self.update()
 
-    def calcAngles(self, wp1, wp2):
-        if wp1.x - wp2.x >= 0:
-            self.calcAngles(wp2, wp1)
-            return
-        wp1.rangle = self.calcAngle((wp2.x-wp1.x, wp2.y-wp1.y),(wp2.x-wp1.x, 0))
-        wp2.langle = -wp1.rangle
-
-    def calcAngle(self, p1, p2):
-        return math.degrees(math.acos((p1[0]*p2[0]+p1[1]*p2[1])/(math.sqrt(p1[0]**2+p1[1]**2)*math.sqrt(p2[0]**2+p2[1]**2))))
-
     def mouseReleaseEvent(self, event):
         super(ImageViewer, self).mouseReleaseEvent(event)
         if event.button() == Qt.LeftButton:
@@ -196,7 +182,6 @@ class ImageViewer(QWidget, Ui_ImageViewer):
                         if self.currentWayPoint.id not in wayPoint.neighbors:
                             wayPoint.neighbors.append(self.currentWayPoint.id)
                             self.currentWayPoint.neighbors.append(wayPoint.id)
-                            self.calcAngles(self.currentWayPoint, wayPoint)
                         else:
                             wayPoint.neighbors.remove(self.currentWayPoint.id)
                             self.currentWayPoint.neighbors.remove(wayPoint.id)
@@ -324,8 +309,9 @@ class WayPointEditor(QDialog, Ui_WayPointEditor):
         self.id.setText(self.id.text()+str(self.wayPoint.id))
         self.x.setText(self.x.text()+str(self.wayPoint.x))
         self.y.setText(self.y.text()+str(self.wayPoint.y))
-        self.langle.setText(self.langle.text()+str(self.wayPoint.langle))
-        self.rangle.setText(self.rangle.text()+str(self.wayPoint.rangle))
+        if self.wayPoint.isThrowable == True:
+            self.isThrowable.setCheckState(Qt.Checked)
+        else: self.isThrowable.setCheckState(Qt.Unchecked)
         self.model = WayPointModel(self.wayPoint, self)
         self.objects.setModel(self.model)
 
@@ -335,6 +321,12 @@ class WayPointEditor(QDialog, Ui_WayPointEditor):
         self.connect(self.addObjectButton, SIGNAL("clicked()"), self.onAddObjectButton)
         self.connect(self.deleteObjectButton, SIGNAL("clicked()"), self.onDeleteObjectButton)
         self.connect(self.objects, SIGNAL("clicked(QModelIndex)"), self.setSelection)
+        self.connect(self.isThrowable, SIGNAL("stateChanged(int)"), self.onStateChanged)
+
+    def onStateChanged(self, state):
+        if state == Qt.Checked:
+            self.wayPoint.isThrowable = True
+        else: self.wayPoint.isThrowable = False
 
     def setSelection(self, index):
         self.currentIndex = index.row()
