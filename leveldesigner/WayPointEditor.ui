@@ -90,7 +90,7 @@
         <item>
          <widget class="QCheckBox" name="isThrowable">
           <property name="text">
-           <string>throwable</string>
+           <string>Is throwable</string>
           </property>
          </widget>
         </item>

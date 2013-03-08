@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'WayPointEditor.ui'
 #
-# Created: Fri Mar  8 16:56:40 2013
+# Created: Fri Mar  8 18:01:43 2013
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -78,7 +78,7 @@ class Ui_WayPointEditor(object):
         self.groupBox.setTitle(QtGui.QApplication.translate("WayPointEditor", "Properties", None, QtGui.QApplication.UnicodeUTF8))
         self.x.setText(QtGui.QApplication.translate("WayPointEditor", "X:", None, QtGui.QApplication.UnicodeUTF8))
         self.y.setText(QtGui.QApplication.translate("WayPointEditor", "Y:", None, QtGui.QApplication.UnicodeUTF8))
-        self.isThrowable.setText(QtGui.QApplication.translate("WayPointEditor", "throwable", None, QtGui.QApplication.UnicodeUTF8))
+        self.isThrowable.setText(QtGui.QApplication.translate("WayPointEditor", "Is throwable", None, QtGui.QApplication.UnicodeUTF8))
         self.deleteButton.setText(QtGui.QApplication.translate("WayPointEditor", "Delete", None, QtGui.QApplication.UnicodeUTF8))
         self.okButton.setText(QtGui.QApplication.translate("WayPointEditor", "Ok", None, QtGui.QApplication.UnicodeUTF8))
 
