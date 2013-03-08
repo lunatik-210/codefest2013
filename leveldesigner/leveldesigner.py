@@ -89,8 +89,10 @@ class ImageViewer(QWidget, Ui_ImageViewer):
 
     def paintEvent(self, qpaintevent):
         painter = QPainter(self.imageView.pixmap())
-        painter.setBrush(QBrush(Qt.red))
         for object in self.data:
+            if object.isThrowable:
+                painter.setBrush(QBrush(Qt.blue))
+            else: painter.setBrush(QBrush(Qt.red))
             x,y = self.localPos(object.x, object.y)
             painter.drawRect(x-self.area, y-self.area, 2*self.area, 2*self.area)
 
