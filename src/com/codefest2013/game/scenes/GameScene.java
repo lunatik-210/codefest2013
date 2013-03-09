@@ -5,7 +5,6 @@ import java.util.List;
 import android.hardware.SensorManager;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.codefest2013.game.logic.WayPoint;
@@ -19,7 +18,6 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
-import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
@@ -65,27 +63,36 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 
 	@Override
 	public void onLoadScene() {
+		createWorld();
+		
 		List<WayPoint> wps = null;
 		wps = LevelLoader.getInstance().load("levels/level.xml");
 	
     	mPlayer = new Player(PLAYER_START_X, PLAYER_START_Y);
-		mSquirrel = new Squirrel(wps);
+		mSquirrel = new Squirrel(wps, world, mPlayer);
 		mBackground = new Background(mPlayer);
 		
     	attachChild(mBackground);
 		attachChild(mPlayer);
+		
 		for(int i=0; i<wps.size(); i++)
 		{
-			wps.get(i).x = wps.get(i).x * mResourceManager.WORLD_SCALE_CONSTANT;
-			wps.get(i).y = wps.get(i).y * mResourceManager.WORLD_SCALE_CONSTANT;
-			attachChild(new Rectangle(wps.get(i).x, wps.get(i).y, 8, 8, ResourceManager.getInstance().engine.getVertexBufferObjectManager()));
+			WayPoint wp = wps.get(i);
+			wp.x *= mResourceManager.WORLD_SCALE_CONSTANT;
+			wp.y *= mResourceManager.WORLD_SCALE_CONSTANT;
+			Rectangle r = new Rectangle(wp.x, wp.y, 8, 8, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
+			r.setIgnoreUpdate(true);
+			if(wp.isThrowable) {
+				r.setColor(Color.BLUE);
+			} else {
+				r.setColor(Color.WHITE);
+			}
+			attachChild(r);
 		}
 		attachChild(mSquirrel);
 		
 		registerUpdateHandler(mPlayer);
 		mResourceManager.engine.getCamera().setChaseEntity(mPlayer);
-		
-		createWorld();
 	}
 
 	@Override
@@ -146,16 +153,5 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		attachChild(roof);
 		attachChild(left);
 		attachChild(right);
-		
-		FixtureDef BALL_FIXTURE_DEF = PhysicsFactory.createFixtureDef(1, 0.0f, 1.0f);
-		
-		final Rectangle ball = new Rectangle(100, 100, 10, 10, mResourceManager.engine.getVertexBufferObjectManager());
-		ball.setColor(Color.WHITE);
-		final Body body =  PhysicsFactory.createBoxBody(world, ball, BodyType.DynamicBody, BALL_FIXTURE_DEF);
-		
-		attachChild(ball);
-		body.setLinearVelocity(10, 0);
-		
-		world.registerPhysicsConnector(new PhysicsConnector(ball, body, true, true));
 	}
 }

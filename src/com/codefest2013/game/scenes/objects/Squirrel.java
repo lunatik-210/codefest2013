@@ -9,8 +9,14 @@ import org.andengine.entity.modifier.PathModifier;
 import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.andengine.entity.primitive.Rectangle;
+import org.andengine.extension.physics.box2d.PhysicsConnector;
+import org.andengine.extension.physics.box2d.PhysicsFactory;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.util.color.Color;
 
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.codefest2013.game.logic.SquirrelLogic;
 import com.codefest2013.game.logic.WayPoint;
 import com.codefest2013.game.managers.ResourceManager;
@@ -28,7 +34,13 @@ public class Squirrel extends Entity {
 	
 	private SquirrelLogic logic;
 	
-	public Squirrel(List<WayPoint> wayPointsArray, int startIndex, int speed){
+	private PhysicsWorld mWorld = null;
+	private Player mPlayer = null;
+	
+	public Squirrel(List<WayPoint> wayPointsArray, PhysicsWorld world, Player player, int startIndex, int speed){
+		this.mWorld = world;
+		this.mPlayer = player;
+		
 		logic = new SquirrelLogic(wayPointsArray, startIndex);
 		
 		wps = wayPointsArray;
@@ -69,6 +81,25 @@ public class Squirrel extends Entity {
 			
 			@Override
 			public void onPathFinished(PathModifier pPathModifier, IEntity pEntity) {
+				WayPoint wp = wps.get(currentPath.get(currentPath.size()-1));
+				if( wp.isThrowable )
+				{
+					FixtureDef BALL_FIXTURE_DEF = PhysicsFactory.createFixtureDef(1, 0.0f, 1.0f);
+					
+					final Rectangle ball = new Rectangle(wp.x, wp.y, 10, 10, mResourceManager.engine.getVertexBufferObjectManager());
+					ball.setColor(Color.WHITE);
+					final Body body =  PhysicsFactory.createBoxBody(mWorld, ball, BodyType.DynamicBody, BALL_FIXTURE_DEF);
+					
+					attachChild(ball);
+					
+					if( wp.x - mPlayer.getX() < 0.0f ) {
+						body.setLinearVelocity(6, -8);
+					} else {
+						body.setLinearVelocity(-6, -8);
+					}
+					
+					mWorld.registerPhysicsConnector(new PhysicsConnector(ball, body, true, true));
+				}
 				setNextGoal();
 			}
 		};
@@ -78,12 +109,12 @@ public class Squirrel extends Entity {
 		attachChild(rect);
 	}
 	
-	public Squirrel(List<WayPoint> wayPointsArray, int startIndex){
-		this(wayPointsArray, 0, 100);
+	public Squirrel(List<WayPoint> wayPointsArray, PhysicsWorld world, Player player, int startIndex){
+		this(wayPointsArray, world, player, 0, 100);
 	}
 	
-	public Squirrel(List<WayPoint> wayPointsArray){
-		this(wayPointsArray, 0);
+	public Squirrel(List<WayPoint> wayPointsArray, PhysicsWorld world, Player player ){
+		this(wayPointsArray, world, player, 0);
 	}
 		
 	public void start(){
