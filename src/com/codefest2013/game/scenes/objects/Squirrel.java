@@ -21,7 +21,6 @@ public class Squirrel extends Entity {
 		
 	private List<WayPoint> wps;
 	private LinkedList<Integer> currentPath;
-	private int previousPos;
 	private int speed; // pixels per second.
 
 	private Rectangle rect;
@@ -31,7 +30,6 @@ public class Squirrel extends Entity {
 	
 	public Squirrel(List<WayPoint> wayPointsArray, int startIndex, int speed){
 		logic = new SquirrelLogic(wayPointsArray, startIndex);
-		previousPos = startIndex;
 		
 		wps = wayPointsArray;
 		this.speed = speed;
@@ -40,21 +38,24 @@ public class Squirrel extends Entity {
 			
 			@Override
 			public void onPathWaypointStarted(PathModifier pPathModifier, IEntity pEntity, int index) {
+				if( index+1 < currentPath.size()) 
+				{
+					WayPoint currentWP = wps.get(currentPath.get(index));
+					WayPoint nextWP = wps.get(currentPath.get(index+1));
+					
+					float x1 = nextWP.x-currentWP.x;
+					float y1 = nextWP.y-currentWP.y;
+					float x1pow = x1*x1;
+					
+					float degree = (float)Math.toDegrees(Math.acos((x1pow/(Math.sqrt(x1pow+y1*y1)*Math.sqrt(x1pow)))));
+					
+					//Debug.d("debug", "degree: " + degree);
+					rotate(degree);
+				}
 			}
 			
 			@Override
 			public void onPathWaypointFinished(PathModifier pPathModifier, IEntity pEntity, int index) {
-				WayPoint currentWP = wps.get(currentPath.get(index));
-				WayPoint previousWP = wps.get(previousPos);
-				if(currentWP.x-previousWP.x > 0.0f)
-				{
-					rotate(currentWP.rangle);
-				}
-				else
-				{
-					rotate(currentWP.langle);
-				}
-				previousPos = currentPath.get(index);
 			}
 			
 			@Override
