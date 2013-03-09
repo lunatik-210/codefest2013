@@ -148,10 +148,5 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		PhysicsFactory.createBoxBody(world, roof, BodyType.StaticBody, WALL_FIXTURE_DEF);
 		PhysicsFactory.createBoxBody(world, left, BodyType.StaticBody, WALL_FIXTURE_DEF);
 		PhysicsFactory.createBoxBody(world, right, BodyType.StaticBody, WALL_FIXTURE_DEF);
-		
-		attachChild(ground);
-		attachChild(roof);
-		attachChild(left);
-		attachChild(right);
 	}
 }

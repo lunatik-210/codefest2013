@@ -42,8 +42,6 @@ public class ResourceManager extends Object {
     /**
      * Light
      */
-    public ITextureRegion lightMask;
-    public ITextureRegion lampLightMask;
     public ITiledTextureRegion fireplaceLightMask;
     
     /**
@@ -251,11 +249,6 @@ public class ResourceManager extends Object {
         tree = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/tree.png", 0, 0);
         lamp = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/lamp.png", 500, 0);
         stocking = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/stocking.png", 500, 180);
-        textureAtlas.load();
-        
-        textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        lampLightMask = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/LampLightMask.png", 0, 0);
         textureAtlas.load();
         
         textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,

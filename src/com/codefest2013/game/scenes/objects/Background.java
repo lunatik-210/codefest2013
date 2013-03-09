@@ -2,8 +2,6 @@ package com.codefest2013.game.scenes.objects;
 
 import org.andengine.audio.music.Music;
 import org.andengine.entity.Entity;
-import org.andengine.entity.IEntity;
-import org.andengine.entity.modifier.RotationAtModifier;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
 
@@ -40,16 +38,6 @@ public class Background extends Entity {
 	private final float LAMP_HEIGHT = 170.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float LAMP_X = 870.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float LAMP_Y = 0.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	
-	private final float LAMP_ROTATION_SPEED = 2.0f;
-	private final float LAMP_ROTATION_ANGLE = 4.0f;
-	private final float LAMP_ROTATION_CENTER_X = LAMP_WIDTH/2;
-	private final float LAMP_ROTATION_CENTER_Y = -20f * mResourceManager.WORLD_SCALE_CONSTANT;
-	
-	private final float LAMP_LIGHT_MASK_WIDTH = 629.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float LAMP_LIGHT_MASK_HEIGHT = 839.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float LAMP_LIGHT_MASK_X = -191.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float LAMP_LIGHT_MASK_Y = 113.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
 	
 	private final float STOCKING_WIDTH = 90.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float STOCKING_HEIGHT = 140.0f * mResourceManager.WORLD_SCALE_CONSTANT;
@@ -133,21 +121,7 @@ public class Background extends Entity {
 		
 		sprite = new Sprite(LAMP_X, LAMP_Y, LAMP_WIDTH, LAMP_HEIGHT, 
 				mResourceManager.lamp, mResourceManager.engine.getVertexBufferObjectManager());
-		RotationAtModifier rotationAtModifier = new RotationAtModifier(LAMP_ROTATION_SPEED, -LAMP_ROTATION_ANGLE, 
-				LAMP_ROTATION_ANGLE, LAMP_ROTATION_CENTER_X, LAMP_ROTATION_CENTER_Y) {
-			@Override
-			protected void onModifierFinished(IEntity pItem) {
-				reset(getDuration(), getToValue(), getFromValue());
-				super.onModifierFinished(pItem);
-			}
-		};
-		
-		sprite.registerEntityModifier(rotationAtModifier);
-		Sprite lightLampSprite = new Sprite(LAMP_LIGHT_MASK_X, LAMP_LIGHT_MASK_Y, LAMP_LIGHT_MASK_WIDTH, LAMP_LIGHT_MASK_HEIGHT,
-				mResourceManager.lampLightMask, mResourceManager.engine.getVertexBufferObjectManager());
-		lightLampSprite.setBlendFunction(GLES20.GL_ONE_MINUS_SRC_ALPHA, GLES20.GL_ONE);
-		lightLampSprite.setBlendingEnabled(true);
-		sprite.attachChild(lightLampSprite);
+		sprite.setIgnoreUpdate(true);
 		attachChild(sprite);
 		
 		AnimatedSprite fireplaceLightSprite = new AnimatedSprite(FIREPLACE_LIGHT_MASK_X, FIREPLACE_LIGHT_MASK_Y,
