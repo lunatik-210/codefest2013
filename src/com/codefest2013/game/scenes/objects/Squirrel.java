@@ -1,6 +1,5 @@
 package com.codefest2013.game.scenes.objects;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.andengine.entity.Entity;
@@ -26,7 +25,7 @@ public class Squirrel extends Entity {
 	private ResourceManager mResourceManager = ResourceManager.getInstance();
 		
 	private List<WayPoint> wps;
-	private LinkedList<Integer> currentPath;
+	private List<Integer> currentPath;
 	private int speed; // pixels per second.
 
 	private Rectangle rect;
@@ -67,7 +66,6 @@ public class Squirrel extends Entity {
 					} else {
 						rotate(-degree);
 					}
-					 
 				}
 			}
 			
@@ -105,6 +103,7 @@ public class Squirrel extends Entity {
 		};
 		
 		rect = new Rectangle(wps.get(0).x, wps.get(0).y, 20, 20, mResourceManager.engine.getVertexBufferObjectManager());
+		rect.setRotationCenter(rect.getWidth()/2, rect.getHeight());
 		rect.setColor(Color.YELLOW);
 		attachChild(rect);
 	}

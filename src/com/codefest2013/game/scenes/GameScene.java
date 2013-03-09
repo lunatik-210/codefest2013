@@ -120,6 +120,7 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 				thisManagedGameScene.clearEntityModifiers();
 				thisManagedGameScene.clearTouchAreas();
 				thisManagedGameScene.clearUpdateHandlers();
+				((GameScene) thisManagedGameScene).destroyWorld();
 			}});
 	}
 	
@@ -148,5 +149,13 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		PhysicsFactory.createBoxBody(world, roof, BodyType.StaticBody, WALL_FIXTURE_DEF);
 		PhysicsFactory.createBoxBody(world, left, BodyType.StaticBody, WALL_FIXTURE_DEF);
 		PhysicsFactory.createBoxBody(world, right, BodyType.StaticBody, WALL_FIXTURE_DEF);
+	}
+	
+	private void destroyWorld()
+	{
+		world.clearForces();
+		world.clearPhysicsConnectors();
+		world.reset();
+		world.dispose();
 	}
 }

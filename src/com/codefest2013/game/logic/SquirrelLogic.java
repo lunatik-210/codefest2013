@@ -8,13 +8,20 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Random;
 
+import org.andengine.util.debug.Debug;
+
+import com.codefest2013.game.managers.ResourceManager;
+
 public class SquirrelLogic {
 
+	private int DISTANCE_FACTOR = (int) (ResourceManager.getInstance().WORLD_WIDTH/5);
+	
 	private List<WayPoint> wpnList = null;
 	private List<Integer> goals = null;
 
 	private Integer currentPos;
 	private Integer nextGoal = null;
+	private Anchor anchor = null;
 	
 	private Random r = new Random();
 	
@@ -29,18 +36,65 @@ public class SquirrelLogic {
 				goals.add(wpnList.indexOf(wayPoint));
 			}
 		}
+		anchor = new Anchor(2, 7);
 	}
 	
 	public Integer pickNextGoal()
 	{
-		do
+		int weight = 0;
+		switch(anchor.getBalance()) 
 		{
-			nextGoal = goals.get(r.nextInt(goals.size()));
-		} while( this.currentPos == nextGoal );
+			case LEFT_SHIFT:
+				do
+				{
+					nextGoal = goals.get(r.nextInt(goals.size()));
+					weight = getPointWeight(nextGoal);
+				} while( this.currentPos == nextGoal || weight < 0 );
+				break;
+			case RIGHT_SHIFT:
+				do
+				{
+					nextGoal = goals.get(r.nextInt(goals.size()));
+					weight = getPointWeight(nextGoal);
+				} while( this.currentPos == nextGoal || weight > 0 );
+			case STABLE:
+				do
+				{
+					nextGoal = goals.get(r.nextInt(goals.size()));
+					weight = getPointWeight(nextGoal);
+				} while( this.currentPos == nextGoal );
+				break;
+			default:
+				weight = 0;
+				break;
+		}
+		anchor.addWeight(weight);
+		Debug.d("debug", "Anchor: " + anchor.getValue() + " Weight: " + weight);
 		return nextGoal;
 	}
 	
-	public LinkedList<Integer> getPath()
+	private int getPointWeight(int index)
+	{
+		WayPoint next = wpnList.get(index);
+		WayPoint cur = wpnList.get(currentPos);
+		switch((int)(Math.sqrt(Math.pow(next.x-cur.x,2)+Math.pow(next.y-cur.y,2))/DISTANCE_FACTOR))
+		{
+			case 0:
+				return -3;
+			case 1:
+				return -5;
+			case 2:
+				return 1;
+			case 3:
+				return 2;
+			case 4:
+				return 3;
+			default:
+				return 4;
+		}
+	}
+	
+	public List<Integer> getPath()
 	{
 		//A* path search implementation
 		
@@ -48,7 +102,7 @@ public class SquirrelLogic {
 		ArrayList<Integer> visited = new ArrayList<Integer>();
 
 		// sort itself by using HeuristicFunction rule
-		PriorityQueue<Integer> toVisit = new PriorityQueue<Integer>(wpnList.size(), new HeuristicFunction(wpnList, nextGoal));
+		PriorityQueue<Integer> toVisit = new PriorityQueue<Integer>(wpnList.size(), new AStarHeuristic(wpnList, nextGoal));
 		
 		Map<Integer, Integer> comeFrom = new HashMap<Integer, Integer>();
 		

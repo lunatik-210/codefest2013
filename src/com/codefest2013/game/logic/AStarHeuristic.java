@@ -4,12 +4,12 @@ import java.util.Comparator;
 import java.util.List;
 
 
-public class HeuristicFunction implements Comparator<Integer>
+public class AStarHeuristic implements Comparator<Integer>
 {
 	List<WayPoint> wps = null;
 	Integer goal = null;
 	
-	HeuristicFunction(List<WayPoint> wps, Integer goal)
+	AStarHeuristic(List<WayPoint> wps, Integer goal)
 	{
 		this.wps = wps;
 		this.goal = goal;
