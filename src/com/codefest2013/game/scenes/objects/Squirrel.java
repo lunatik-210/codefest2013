@@ -43,14 +43,19 @@ public class Squirrel extends Entity {
 					WayPoint currentWP = wps.get(currentPath.get(index));
 					WayPoint nextWP = wps.get(currentPath.get(index+1));
 					
-					float x1 = nextWP.x-currentWP.x;
-					float y1 = nextWP.y-currentWP.y;
-					float x1pow = x1*x1;
+					float x = nextWP.x-currentWP.x;
+					float y = nextWP.y-currentWP.y;
+					float xpow2 = x*x;
 					
-					float degree = (float)Math.toDegrees(Math.acos((x1pow/(Math.sqrt(x1pow+y1*y1)*Math.sqrt(x1pow)))));
+					float degree = (float)Math.toDegrees(Math.acos((xpow2/(Math.sqrt(xpow2+y*y)*Math.sqrt(xpow2)))));
 					
 					//Debug.d("debug", "degree: " + degree);
-					rotate(degree);
+					if( x < 0.0f && y < 0.0f || x > 0.0f && y > 0.0f ) {
+						rotate(degree);
+					} else {
+						rotate(-degree);
+					}
+					 
 				}
 			}
 			
