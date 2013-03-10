@@ -80,17 +80,17 @@ public class SquirrelLogic {
 		switch((int)(Math.sqrt(Math.pow(next.x-cur.x,2)+Math.pow(next.y-cur.y,2))/DISTANCE_FACTOR))
 		{
 			case 0:
-				return -3;
+				return -1;
 			case 1:
-				return -5;
+				return -2;
 			case 2:
-				return 1;
-			case 3:
 				return 2;
-			case 4:
+			case 3:
 				return 3;
-			default:
+			case 4:
 				return 4;
+			default:
+				return 5;
 		}
 	}
 	

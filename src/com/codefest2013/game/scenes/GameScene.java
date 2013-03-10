@@ -80,7 +80,7 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 			WayPoint wp = wps.get(i);
 			wp.x *= mResourceManager.WORLD_SCALE_CONSTANT;
 			wp.y *= mResourceManager.WORLD_SCALE_CONSTANT;
-			Rectangle r = new Rectangle(wp.x, wp.y, 8, 8, ResourceManager.getInstance().engine.getVertexBufferObjectManager());
+			Rectangle r = new Rectangle(wp.x, wp.y, 8, 8, mResourceManager.engine.getVertexBufferObjectManager());
 			r.setIgnoreUpdate(true);
 			if(wp.isThrowable) {
 				r.setColor(Color.BLUE);
