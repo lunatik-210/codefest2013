@@ -176,9 +176,7 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		Path path = new Path(currentPath.size());
 		for( Integer i : currentPath )
 		{
-			float realX = getWps().get(i).x - getSquirrel().getRect().getWidth()/2;
-			float realY = getWps().get(i).y - getSquirrel().getRect().getHeight();
-			path.to(realX, realY);
+			path.to(getWps().get(i).x, getWps().get(i).y);
 		}
 		
 		float pathLength = 0;

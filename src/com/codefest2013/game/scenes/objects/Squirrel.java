@@ -18,9 +18,8 @@ public class Squirrel extends Entity {
 	public Squirrel(GameScene gameScene, int startIndex,  int speed){
 		this.gameScene = gameScene;
 		this.setSpeed(speed);
-		setRect(new Rectangle(0, 0, 20, 20, mResourceManager.engine.getVertexBufferObjectManager()));
+		setRect(new Rectangle(-10, -20, 20, 20, mResourceManager.engine.getVertexBufferObjectManager()));
 		setPosition(this.gameScene.getWps().get(startIndex).x, this.gameScene.getWps().get(startIndex).y);
-		setRotationCenter(getRect().getWidth()/2, getRect().getHeight());
 		getRect().setColor(Color.YELLOW);
 		attachChild(getRect());
 	}
