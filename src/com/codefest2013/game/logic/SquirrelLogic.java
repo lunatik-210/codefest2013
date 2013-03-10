@@ -16,7 +16,7 @@ public class SquirrelLogic {
 
 	private int DISTANCE_FACTOR = (int) (ResourceManager.getInstance().WORLD_WIDTH/5);
 	
-	private List<WayPoint> wpnList = null;
+	private List<WayPoint> wpsList = null;
 	private List<Integer> goals = null;
 
 	private Integer currentPos;
@@ -26,14 +26,14 @@ public class SquirrelLogic {
 	private Random r = new Random();
 	
 	public SquirrelLogic(List<WayPoint> wpn, Integer _currentPos) {
-		wpnList = wpn;
+		wpsList = wpn;
 		currentPos = _currentPos;
 		goals = new ArrayList<Integer>();
 		for( WayPoint wayPoint : wpn )
 		{
 			if(wayPoint.isThrowable)
 			{
-				goals.add(wpnList.indexOf(wayPoint));
+				goals.add(wpsList.indexOf(wayPoint));
 			}
 		}
 		anchor = new Anchor(2, 7);
@@ -75,8 +75,8 @@ public class SquirrelLogic {
 	
 	private int getPointWeight(int index)
 	{
-		WayPoint next = wpnList.get(index);
-		WayPoint cur = wpnList.get(currentPos);
+		WayPoint next = wpsList.get(index);
+		WayPoint cur = wpsList.get(currentPos);
 		switch((int)(Math.sqrt(Math.pow(next.x-cur.x,2)+Math.pow(next.y-cur.y,2))/DISTANCE_FACTOR))
 		{
 			case 0:
@@ -102,7 +102,7 @@ public class SquirrelLogic {
 		ArrayList<Integer> visited = new ArrayList<Integer>();
 
 		// sort itself by using HeuristicFunction rule
-		PriorityQueue<Integer> toVisit = new PriorityQueue<Integer>(wpnList.size(), new AStarHeuristic(wpnList, nextGoal));
+		PriorityQueue<Integer> toVisit = new PriorityQueue<Integer>(wpsList.size(), new AStarHeuristic(wpsList, nextGoal));
 		
 		Map<Integer, Integer> comeFrom = new HashMap<Integer, Integer>();
 		
@@ -123,7 +123,7 @@ public class SquirrelLogic {
 			// when we come to the a new position, add neighbors to visit queue
 			// and sort them so that position with the shortest distance would be picked
 			// Note: PriorityQueue - is sort itself
-			for( Integer i : wpnList.get(currentPos).neighbors )
+			for( Integer i : wpsList.get(currentPos).neighbors )
 			{
 				if(!visited.contains(i))
 				{
