@@ -1,17 +1,21 @@
 package com.codefest2013.game.scenes;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import android.hardware.SensorManager;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.codefest2013.game.logic.SquirrelLogic;
 import com.codefest2013.game.logic.WayPoint;
 import com.codefest2013.game.logic.tools.LevelLoader;
 import com.codefest2013.game.managers.ResourceManager;
 import com.codefest2013.game.scenes.objects.Background;
+import com.codefest2013.game.scenes.objects.Gift;
 import com.codefest2013.game.scenes.objects.Squirrel;
 import com.codefest2013.game.scenes.objects.Player;
 import com.codefest2013.game.scenes.objects.SquirrelPathModifierListener;
@@ -40,6 +44,8 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
     private int score = 0;
     private HUD hud;
     private Text scoreText;
+    private LinkedList<Gift> gifts;
+    private Rectangle ground;
     		
     private ManagedScene thisManagedGameScene = this;
     
@@ -73,6 +79,10 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	@Override
 	public void onLoadScene() {
 		createWorld();
+		
+		gifts = new LinkedList<Gift>();
+	    ground = new Rectangle(0f, mResourceManager.WORLD_HEIGHT-10f, mResourceManager.WORLD_WIDTH, 1f,
+				mResourceManager.engine.getVertexBufferObjectManager());
 		
 		setWps(LevelLoader.getInstance().load("levels/level.xml"));
 	
@@ -147,11 +157,27 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	}
 	
 	@Override
-	protected void onManagedUpdate(float pSecondsElapsed) 
-	{
+	protected void onManagedUpdate(float pSecondsElapsed) {
 		background.update();
 		String str = "Score: " + Integer.toString(score);
 		scoreText.setText(str);
+		Iterator<Gift> it = gifts.iterator();
+		while(it.hasNext()) {
+			Gift g = it.next();
+			if( g.sprite.collidesWith(player.getSprite()) )
+			{
+				score += 5;
+				g.sprite.detachSelf();
+				getWorld().destroyBody(g.body);
+				it.remove();
+			}
+			else if(g.sprite.collidesWith(ground))
+			{
+				g.sprite.detachSelf();
+				getWorld().destroyBody(g.body);
+				it.remove();				
+			}
+		}
 		super.onManagedUpdate(pSecondsElapsed);
 	}
 	
@@ -248,5 +274,9 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 
 	public void setWorld(PhysicsWorld world) {
 		this.world = world;
+	}
+	
+	public LinkedList<Gift> getGifts() {
+		return gifts;
 	}
 }

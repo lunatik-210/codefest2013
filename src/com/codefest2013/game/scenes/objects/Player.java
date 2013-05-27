@@ -137,4 +137,8 @@ public class Player extends Entity implements IOnSceneTouchListener {
                 break;
         }
     }
+    
+    public AnimatedSprite getSprite() {
+    	return leftSprite;
+    }
 }
