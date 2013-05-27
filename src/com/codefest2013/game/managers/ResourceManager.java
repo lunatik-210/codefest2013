@@ -52,6 +52,14 @@ public class ResourceManager extends Object {
     
     public ITextureRegion[] squirrelLeftWalk = new ITextureRegion[12];
     public ITextureRegion[] squirrelRightWalk = new ITextureRegion[12];
+    
+    public ITextureRegion gift;
+    
+    /**
+     * Squirrel
+     */
+    public ITextureRegion squirrelLeft;
+    public ITextureRegion squirrelRight;
        
     /**
      * Button animation
@@ -105,6 +113,7 @@ public class ResourceManager extends Object {
     public ITextureRegion splashTextureRegion;
     public Music splashMusic;
     public Font splashFont;
+    public Font gameFont;
     
 	private static final ResourceManager INSTANCE = new ResourceManager();
 	
@@ -228,6 +237,21 @@ public class ResourceManager extends Object {
 
     	textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        gift = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "gift.png", 0, 0);
+        textureAtlas.load();
+    	
+    	textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        squirrelLeft = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "squirrel/left.png", 0, 0);
+        textureAtlas.load();
+        
+    	textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        squirrelRight = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "squirrel/right.png", 0, 0);
+        textureAtlas.load();
+
+    	textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         bgLB = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/lb.png", 0, 0);
         bgLT = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/lt.png", 0, 496);
         textureAtlas.load();
@@ -245,7 +269,7 @@ public class ResourceManager extends Object {
         textureAtlas.load();
         
         textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.NEAREST);
         tree = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/tree.png", 0, 0);
         lamp = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/lamp.png", 500, 0);
         stocking = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/stocking.png", 500, 180);
@@ -330,6 +354,9 @@ public class ResourceManager extends Object {
 	
 	// ============================ UNLOAD TEXTURES (GAME) =============== //
 	private void unloadGameTextures(){
+		unloadTexture(squirrelLeft);
+		unloadTexture(squirrelRight);
+		unloadTexture(gift);
 		unloadTexture(goblinTiledLeftWalk);
 		unloadTexture(goblinTiledRightWalk);
 		unloadTexture(bgLB);
@@ -392,10 +419,14 @@ public class ResourceManager extends Object {
 
 	// ============================ LOAD FONTS ========================== //
 	private void loadGameFonts(){
+		gameFont = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), 
+				256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 40, Color.BLACK.hashCode());
+		gameFont.load();
 	}
 	
 	// ============================ UNLOAD FONTS ======================== //
 	private void unloadGameFonts(){
+		unloadFont(gameFont);
 	}
 	
 	private void unloadFont(Font font)

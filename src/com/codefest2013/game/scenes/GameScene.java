@@ -16,17 +16,17 @@ import com.codefest2013.game.scenes.objects.Squirrel;
 import com.codefest2013.game.scenes.objects.Player;
 import com.codefest2013.game.scenes.objects.SquirrelPathModifierListener;
 
+import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.modifier.PathModifier;
 import org.andengine.entity.modifier.PathModifier.Path;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
-import org.andengine.util.color.Color;
-import org.andengine.util.debug.Debug;
 
 public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	private ResourceManager mResourceManager = ResourceManager.getInstance();
@@ -37,6 +37,9 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	private Squirrel squirrel = null;
     private Background background = null;
     private List<WayPoint> wps = null;
+    private int score = 0;
+    private HUD hud;
+    private Text scoreText;
     		
     private ManagedScene thisManagedGameScene = this;
     
@@ -73,12 +76,13 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		
 		setWps(LevelLoader.getInstance().load("levels/level.xml"));
 	
-		setSquirrelLogic(new SquirrelLogic(getWps(), 0));
-		
+		setSquirrelLogic(new SquirrelLogic(getWps(), 0, 250));
 		
     	setPlayer(new Player(PLAYER_START_X, PLAYER_START_Y));
     	
 		setSquirrel(new Squirrel(this));
+		
+		scoreText = new Text(20, 20, mResourceManager.gameFont, "Score: 00000", mResourceManager.engine.getVertexBufferObjectManager());
 		
 		background = new Background(getPlayer());
 		
@@ -90,6 +94,7 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 			WayPoint wp = getWps().get(i);
 			wp.x *= mResourceManager.WORLD_SCALE_CONSTANT;
 			wp.y *= mResourceManager.WORLD_SCALE_CONSTANT;
+			/*
 			Rectangle r = new Rectangle(wp.x, wp.y, 8, 8, mResourceManager.engine.getVertexBufferObjectManager());
 			r.setIgnoreUpdate(true);
 			if(wp.isThrowable) {
@@ -98,15 +103,22 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 				r.setColor(Color.WHITE);
 			}
 			attachChild(r);
+			*/
 		}
 		attachChild(getSquirrel());
 		
 		registerUpdateHandler(getPlayer());
 		mResourceManager.engine.getCamera().setChaseEntity(getPlayer());
+		
+		hud = new HUD();
+		hud.attachChild(scoreText);
+		
+		mResourceManager.engine.getCamera().setHUD(hud);
 	}
 
 	@Override
 	public void onShowScene() {
+		score = 0;
 		setOnSceneTouchListener(this);
 		getSquirrel().start();
 		background.start();
@@ -138,6 +150,8 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 	protected void onManagedUpdate(float pSecondsElapsed) 
 	{
 		background.update();
+		String str = "Score: " + Integer.toString(score);
+		scoreText.setText(str);
 		super.onManagedUpdate(pSecondsElapsed);
 	}
 	
@@ -187,7 +201,7 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 				WayPoint next = getWps().get(currentPath.get(i));
 				pathLength += Math.sqrt(Math.pow(next.x-previous.x, 2)  +  Math.pow(next.y-previous.y, 2));
 			}
-			relativeSpeed = pathLength/getSquirrel().getSpeed();
+			relativeSpeed = pathLength/getSquirrelLogic().getSpeed();
 		}
 		
 		PathModifier pathModifier = new PathModifier(relativeSpeed, path, new SquirrelPathModifierListener(this, currentPath));

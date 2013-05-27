@@ -19,15 +19,17 @@ public class SquirrelLogic {
 	private List<WayPoint> wpsList = null;
 	private List<Integer> goals = null;
 
-	private Integer currentPos;
+	private Integer speed = null;
+	private Integer currentPos = null;
 	private Integer nextGoal = null;
 	private Anchor anchor = null;
 	
 	private Random r = new Random();
 	
-	public SquirrelLogic(List<WayPoint> wpn, Integer _currentPos) {
+	public SquirrelLogic(List<WayPoint> wpn, Integer currentPos, Integer initialSpeed) {
 		wpsList = wpn;
-		currentPos = _currentPos;
+		this.currentPos = currentPos;
+		setSpeed(initialSpeed);
 		goals = new ArrayList<Integer>();
 		for( WayPoint wayPoint : wpn )
 		{
@@ -145,6 +147,14 @@ public class SquirrelLogic {
 		
 		currentPos = nextGoal;
 		return path;
+	}
+
+	public Integer getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(Integer speed) {
+		this.speed = speed;
 	}
 	
 }
