@@ -25,12 +25,12 @@ public class Background extends Entity {
 	private final float FIREPLACE_LIGHT_MASK_Y = 820.0f * mResourceManager.WORLD_SCALE_CONSTANT;	
 	
 	private final float TREE_WIDTH = 490.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float TREE_HEIGHT = 774.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float TREE_HEIGHT = 772.5f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float TREE_X = 280.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float TREE_Y = 97.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	
 	private final float CLOCK_WIDTH = 150.0f * mResourceManager.WORLD_SCALE_CONSTANT;
-	private final float CLOCK_HEIGHT = 608.0f * mResourceManager.WORLD_SCALE_CONSTANT;
+	private final float CLOCK_HEIGHT = 606.5f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float CLOCK_X = 32.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	private final float CLOCK_Y = 232.0f * mResourceManager.WORLD_SCALE_CONSTANT;
 	

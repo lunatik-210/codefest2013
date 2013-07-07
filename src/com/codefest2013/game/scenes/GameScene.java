@@ -122,8 +122,6 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		
 		hud = new HUD();
 		hud.attachChild(scoreText);
-		
-		mResourceManager.engine.getCamera().setHUD(hud);
 	}
 
 	@Override
@@ -132,6 +130,7 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		setOnSceneTouchListener(this);
 		getSquirrel().start();
 		background.start();
+		mResourceManager.engine.getCamera().setHUD(hud);
 	}
 
 	@Override
@@ -139,6 +138,8 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 		getPlayer().setPosition(PLAYER_START_X, PLAYER_START_Y);
 		getSquirrel().stop();
 		background.stop();
+		mResourceManager.engine.getCamera().getHUD().clearChildScene();
+		mResourceManager.engine.getCamera().setHUD(null);
 	}
 
 	@Override

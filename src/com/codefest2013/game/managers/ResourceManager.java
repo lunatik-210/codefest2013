@@ -269,7 +269,7 @@ public class ResourceManager extends Object {
         textureAtlas.load();
         
         textureAtlas = new BitmapTextureAtlas(engine.getTextureManager(), 1024, 1024,
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.NEAREST);
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         tree = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/tree.png", 0, 0);
         lamp = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/lamp.png", 500, 0);
         stocking = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, context, "background/stocking.png", 500, 180);
@@ -420,7 +420,7 @@ public class ResourceManager extends Object {
 	// ============================ LOAD FONTS ========================== //
 	private void loadGameFonts(){
 		gameFont = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), 
-				256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 40, Color.BLACK.hashCode());
+				256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 40, Color.WHITE.hashCode());
 		gameFont.load();
 	}
 	
