@@ -49,9 +49,8 @@ public class ResourceManager extends Object {
      */
     public ITiledTextureRegion goblinTiledLeftWalk;
     public ITiledTextureRegion goblinTiledRightWalk;
-    
-    public ITextureRegion[] squirrelLeftWalk = new ITextureRegion[12];
-    public ITextureRegion[] squirrelRightWalk = new ITextureRegion[12];
+    public ITiledTextureRegion goblinTiledLeftJump;
+    public ITiledTextureRegion goblinTiledRightJump;
     
     public ITextureRegion gift;
     
@@ -302,35 +301,6 @@ public class ResourceManager extends Object {
         // leftWalk fox
         BuildableBitmapTextureAtlas mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
         		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        for(int i=0; i<12; ++i)
-        {
-        	String name = "squirrel/leftWalk/" + i + ".png";
-        	squirrelLeftWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, context, name);
-        }
-        try {
-            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
-            mBuildableBitmapTextureAtlas.load();
-        } catch (final TextureAtlasBuilderException e) {
-            Debug.e(e);
-        }
-        
-        // rightWalk fox
-        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
-        for(int i=0; i<12; ++i)
-        {
-        	String name = "squirrel/rightWalk/" + i + ".png";
-        	squirrelRightWalk[i] = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mBuildableBitmapTextureAtlas, context, name);
-        }
-        try {
-            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
-            mBuildableBitmapTextureAtlas.load();
-        } catch (final TextureAtlasBuilderException e) {
-            Debug.e(e);
-        }
-        
-        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
-        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
         goblinTiledRightWalk = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mBuildableBitmapTextureAtlas, context, 
         		"goblin/rightWalk/rightWalk.png", 3, 4);
         try {
@@ -350,6 +320,28 @@ public class ResourceManager extends Object {
         } catch (final TextureAtlasBuilderException e) {
             Debug.e(e);
         }
+        
+        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        goblinTiledLeftJump = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mBuildableBitmapTextureAtlas, context, 
+        		"goblin/leftJump/leftJump.png", 3, 5);
+        try {
+            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+            mBuildableBitmapTextureAtlas.load();
+        } catch (final TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
+        
+        mBuildableBitmapTextureAtlas = new BuildableBitmapTextureAtlas(engine.getTextureManager(), 1024, 1024, 
+        		BitmapTextureFormat.RGBA_8888, TextureOptions.BILINEAR);
+        goblinTiledRightJump = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(mBuildableBitmapTextureAtlas, context, 
+        		"goblin/rightJump/rightJump.png", 3, 5);
+        try {
+            mBuildableBitmapTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+            mBuildableBitmapTextureAtlas.load();
+        } catch (final TextureAtlasBuilderException e) {
+            Debug.e(e);
+        }
 	}
 	
 	// ============================ UNLOAD TEXTURES (GAME) =============== //
@@ -359,6 +351,8 @@ public class ResourceManager extends Object {
 		unloadTexture(gift);
 		unloadTexture(goblinTiledLeftWalk);
 		unloadTexture(goblinTiledRightWalk);
+		unloadTexture(goblinTiledLeftJump);
+		unloadTexture(goblinTiledRightJump);
 		unloadTexture(bgLB);
 		unloadTexture(bgLT);
 		unloadTexture(bgRB);
@@ -370,8 +364,6 @@ public class ResourceManager extends Object {
 		unloadTexture(stocking);
 		unloadTexture(fireplaceLightMask);
 		unloadTextureArray(clock);
-		unloadTextureArray(squirrelLeftWalk);
-		unloadTextureArray(squirrelRightWalk);
 	}
 	
 	private void unloadTexture(ITextureRegion texture)

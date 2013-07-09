@@ -16,10 +16,14 @@ public class Player extends Entity implements IOnSceneTouchListener {
     
     private final float SPEED = mResourceManager.CAMERA_WIDTH*0.2f;
     private final long ANIMATION_SPEED = 120;
-    private final float RATIO = 1.7f;
+    private final float RATIO1 = 1.7f;
+    private final float RATIO2 = 1.1f;
     
     private AnimatedSprite leftSprite;
     private AnimatedSprite rightSprite;
+    private AnimatedSprite leftJumpSprite;
+    private AnimatedSprite rightJumpSprite;
+    
     
     private float speed = 0;
     private int currentDirection = LEFT_DIRECTION;
@@ -29,26 +33,57 @@ public class Player extends Entity implements IOnSceneTouchListener {
     {   
     	super(x, y);
     	
-        float height = mResourceManager.CAMERA_HEIGHT/6;
+        float height1 = mResourceManager.CAMERA_HEIGHT/6;
+        float height2 = height1+height1*1.0f/3.0f;
         
-        leftSprite = new AnimatedSprite(0, 0, RATIO*height, height, 
+        leftSprite = new AnimatedSprite(0, 0, RATIO1*height1, height1, 
         		mResourceManager.goblinTiledLeftWalk,
         		mResourceManager.engine.getVertexBufferObjectManager());
         
-        rightSprite = new AnimatedSprite(0, 0, RATIO*height, height,
+        rightSprite = new AnimatedSprite(0, 0, RATIO1*height1, height1,
         		mResourceManager.goblinTiledRightWalk,
+        		mResourceManager.engine.getVertexBufferObjectManager());
+        
+        leftJumpSprite = new AnimatedSprite(0, 0, RATIO2*height2, height2, 
+        		mResourceManager.goblinTiledLeftJump,
+        		mResourceManager.engine.getVertexBufferObjectManager());
+        
+        rightJumpSprite = new AnimatedSprite(0, 0, RATIO2*height2, height2,
+        		mResourceManager.goblinTiledRightJump,
         		mResourceManager.engine.getVertexBufferObjectManager());
 
 		leftSprite.setVisible(true);
 		rightSprite.setVisible(false);
+		leftJumpSprite.setVisible(false);
+		rightJumpSprite.setVisible(false);
 		attachChild(leftSprite);
 		attachChild(rightSprite);
+		attachChild(leftJumpSprite);
+		attachChild(rightJumpSprite);
     }
     
     @Override
     protected void onManagedUpdate(float pSecondsElapsed) {
     	move(pSecondsElapsed);
     	super.onManagedUpdate(pSecondsElapsed);
+    }
+    
+    public void jump()
+    {
+    	stop();
+    	leftSprite.setVisible(false);
+    	rightSprite.setVisible(false);
+        switch(currentDirection)
+        {
+            case LEFT_DIRECTION:
+            	leftJumpSprite.setVisible(true);
+            	leftJumpSprite.animate(ANIMATION_SPEED, false);
+                break;
+            case RIGHT_DIRECTION:
+            	rightJumpSprite.setVisible(true);
+            	rightJumpSprite.animate(ANIMATION_SPEED, false);
+                break;
+        }
     }
 
 	@Override
@@ -57,6 +92,10 @@ public class Player extends Entity implements IOnSceneTouchListener {
         {
             case TouchEvent.ACTION_DOWN:
                 ++fingersNumber;
+        		if(rightJumpSprite.isAnimationRunning() || leftJumpSprite.isAnimationRunning())
+        		{
+        			return false;
+        		}
                 if( arg1.getX() < mResourceManager.engine.getCamera().getCenterX() )
                 {
                 	setDirection(LEFT_DIRECTION);
@@ -67,7 +106,12 @@ public class Player extends Entity implements IOnSceneTouchListener {
                 }
                 return true;
             case TouchEvent.ACTION_UP:
-                if( --fingersNumber == 0 )
+            	--fingersNumber;
+        		if(rightJumpSprite.isAnimationRunning() || leftJumpSprite.isAnimationRunning())
+        		{
+        			return false;
+        		}
+                if( fingersNumber == 0 )
                 {
                 	stop();
                 }
@@ -80,7 +124,10 @@ public class Player extends Entity implements IOnSceneTouchListener {
     {
         currentDirection = direction;
         speed = SPEED;
-        
+        leftJumpSprite.setVisible(false);
+        rightJumpSprite.setVisible(false);
+        leftJumpSprite.stopAnimation();
+        rightJumpSprite.stopAnimation();
         switch( currentDirection )
         {
             case LEFT_DIRECTION:

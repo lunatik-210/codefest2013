@@ -171,6 +171,7 @@ public class GameScene extends ManagedScene implements IOnSceneTouchListener {
 				g.sprite.detachSelf();
 				getWorld().destroyBody(g.body);
 				it.remove();
+				player.jump();
 			}
 			else if(g.sprite.collidesWith(ground))
 			{
